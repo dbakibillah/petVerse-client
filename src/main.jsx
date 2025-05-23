@@ -9,6 +9,12 @@ import AuthProvider from "./providers/AuthProviders";
 import ThemeProvider from "./providers/ThemeProvider";
 import Login from "./pages/common/Login";
 import Registration from "./pages/common/Registration";
+import Shop from "./pages/shop/shop";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ProductDetails from "./components/shop/ProductDetails";
+
+// tanstackQuery
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
     {
@@ -26,7 +32,15 @@ const router = createBrowserRouter([
             {
                 path: "/register",
                 element: <Registration />,
-            }
+            },
+            {
+                path: "/shop",
+                element: <Shop />,
+            },
+            {
+                path: "/product/:productId",
+                element: <ProductDetails />,
+            },
         ],
     },
 ]);
@@ -34,9 +48,11 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
     <StrictMode>
         <ThemeProvider>
-            <AuthProvider>
-                <RouterProvider router={router} />
-            </AuthProvider>
+            <QueryClientProvider client={queryClient}>
+                <AuthProvider>
+                    <RouterProvider router={router} />
+                </AuthProvider>
+            </QueryClientProvider>
         </ThemeProvider>
     </StrictMode>
 );
