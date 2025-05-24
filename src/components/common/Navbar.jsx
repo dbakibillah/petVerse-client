@@ -195,7 +195,7 @@ const Navbar = () => {
                             <span className="flex gap-2">
                                 <Link
                                     to="/login"
-                                    className="px-6 py-2 text-black rounded-full bg-gradient-to-r from-secondary to-primary text-white font-semibold hover:bg-gradient-to-l border-none"
+                                    className="px-6 py-2 rounded-full bg-gradient-to-r from-secondary to-primary text-white font-semibold hover:bg-gradient-to-l border-none"
                                 >
                                     Login
                                 </Link>
