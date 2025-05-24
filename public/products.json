@@ -1,146 +1,1462 @@
 [
   {
-    "id": "1",
-    "name": "Organic Dog Shampoo",
-    "description": "Gentle, organic dog shampoo made with oatmeal and aloe to soothe dry skin.",
-    "price": 12.99,
+    "id": "2",
+    "name": "Flea & Tick Spray",
+    "description": "Naturally repels and eliminates fleas and ticks using a powerful blend of essential oils. Formulated with safe, plant-based ingredients...",
+    "price": 18.62,
+    "discount": 10,
+    "rating": 4.4,
+    "totalSold": 1893,
+    "availableStock": 81,
+    "category": "Grooming",
+    "petType": [
+      "puppy"
+    ],
+    "brand": "PawPurity",
+    "tags": [
+      "natural",
+      "spray"
+    ],
+    "image": "https://i.ibb.co/pvgKF6CB/Flea-Tick-Spray.jpg",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 3.22,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2027-11-04",
+    "weight": "500ml",
+    "returnPolicy": "15-day return policy for unused items",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "3",
+    "name": "Natural Cat Shampoo",
+    "description": "Specially formulated for cats with delicate, easily irritated skin, this gentle shampoo provides a soothing and nourishing cleanse without harsh chemicals or artificial fragrances. Made with mild, natural ingredients like aloe vera, oatmeal, and chamomile, it helps relieve itching, dryness, and discomfort while maintaining your cat's healthy coat and skin balance. The tear-free, hypoallergenic formula is safe for regular use and leaves your feline friend feeling soft, clean, and comforted—perfect for even the most sensitive kitties.",
+    "price": 22.49,
+    "discount": 15,
+    "rating": 4.0,
+    "totalSold": 1640,
+    "availableStock": 66,
+    "category": "Grooming",
+    "petType": [
+      "kitten"
+    ],
+    "brand": "PawPurity",
+    "tags": [
+      "shampoo",
+      "cat"
+    ],
+    "image": "https://i.ibb.co/4nKScZL5/Natural-Cat-Shampoo.jpg",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 4.11,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2026-06-15",
+    "weight": "250ml",
+    "returnPolicy": "Return within 7 days with proof of purchase",
+    "warrantyInfo": "N/A"
+  },
+  {
+    "id": "4",
+    "name": "Dog Dental Chews",
+    "description": "Keep your dog’s mouth healthy and breath fresh with this effective dental care solution. Specially designed to reduce plaque and tartar buildup, it helps maintain clean teeth and healthy gums with regular use. Infused with natural ingredients like parsley, peppermint, and baking soda, it targets bad breath at the source while promoting overall oral hygiene. Safe, gentle, and easy to use, it’s the perfect addition to your dog’s daily routine—supporting a cleaner mouth and a happier, healthier pup.",
+    "price": 10.02,
+    "discount": 20,
+    "rating": 4.4,
+    "totalSold": 376,
+    "availableStock": 46,
+    "category": "Accessories",
+    "petType": [
+      "puppy"
+    ],
+    "brand": "PawPurity",
+    "tags": [
+      "chew",
+      "dog",
+      "dental"
+    ],
+    "image": "https://i.ibb.co/B2ps3PdM/Dog-Dental-Chews.jpg",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 4.58,
+      "estimatedDelivery": "3-5 business days"
+    },
+    "expirationDate": "2027-12-13",
+    "weight": "250ml",
+    "returnPolicy": "15-day return policy for unused items",
+    "warrantyInfo": "N/A"
+  },
+  {
+    "id": "5",
+    "name": "Pet Cologne Spray",
+    "description": "Long-lasting fragrance spray for pets.",
+    "price": 28.98,
+    "discount": 15,
+    "rating": 5.0,
+    "totalSold": 642,
+    "availableStock": 77,
+    "category": "Health",
+    "petType": [
+      "kitten"
+    ],
+    "brand": "HappyPaws",
+    "tags": [
+      "cologne",
+      "pet"
+    ],
+    "image": "https://i.ibb.co/1fYNQ7Pz/Pet-Cologne-Spray.jpg",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 0,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2027-05-02",
+    "weight": "750ml",
+    "returnPolicy": "15-day return policy for unused items",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "6",
+    "name": "Hypoallergenic Dog Shampoo",
+    "description": "Hypoallergenic formula perfect for dogs with allergies.",
+    "price": 25.34,
+    "discount": 0,
+    "rating": 4.2,
+    "totalSold": 970,
+    "availableStock": 91,
+    "category": "Health",
+    "petType": [
+      "dog",
+      "cat"
+    ],
+    "brand": "CleanTail",
+    "tags": [
+      "hypoallergenic",
+      "dog"
+    ],
+    "image": "https://i.ibb.co/XhNbhr5/Hypoallergenic-Dog-Shampoo.jpg",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 0,
+      "estimatedDelivery": "2-4 business days"
+    },
+    "expirationDate": "2028-02-03",
+    "weight": "1000ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "N/A"
+  },
+  {
+    "id": "7",
+    "name": "Cat Grooming Brush",
+    "description": "Soft-bristle grooming brush for cats.",
+    "price": 22.38,
+    "discount": 5,
+    "rating": 4.2,
+    "totalSold": 1661,
+    "availableStock": 87,
+    "category": "Accessories",
+    "petType": [
+      "kitten"
+    ],
+    "brand": "CleanTail",
+    "tags": [
+      "brush",
+      "cat"
+    ],
+    "image": "https://i.ibb.co/qL8VqJX8/Cat-Grooming-Brush.jpg",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 0,
+      "estimatedDelivery": "3-5 business days"
+    },
+    "expirationDate": "2026-11-28",
+    "weight": "1000ml",
+    "returnPolicy": "30-day return window with original packaging",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "8",
+    "name": "Pet Ear Cleaner",
+    "description": "Cleans and deodorizes pet ears safely.",
+    "price": 27.88,
+    "discount": 20,
+    "rating": 4.7,
+    "totalSold": 578,
+    "availableStock": 52,
+    "category": "Health",
+    "petType": [
+      "kitten"
+    ],
+    "brand": "HappyPaws",
+    "tags": [
+      "cleaner",
+      "ear"
+    ],
+    "image": "https://i.ibb.co/mCP2L6R6/Pet-Ear-Cleaner.jpg",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 0,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2026-06-30",
+    "weight": "750ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "9",
+    "name": "Puppy Tearless Shampoo",
+    "description": "Tearless formula for puppies, gentle on eyes.",
+    "price": 27.13,
+    "discount": 0,
+    "rating": 4.2,
+    "totalSold": 401,
+    "availableStock": 70,
+    "category": "Grooming",
+    "petType": [
+      "dog"
+    ],
+    "brand": "CleanTail",
+    "tags": [
+      "tearless",
+      "puppy"
+    ],
+    "image": "https://i.ibb.co/Gw80ckh/Puppy-Tearless-Shampoo.jpg",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 2.42,
+      "estimatedDelivery": "2-4 business days"
+    },
+    "expirationDate": "2028-02-20",
+    "weight": "750ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "N/A"
+  },
+  {
+    "id": "10",
+    "name": "Dog Deodorizing Spray",
+    "description": "Neutralizes pet odors and leaves coat fresh.",
+    "price": 12.77,
+    "discount": 15,
+    "rating": 4.2,
+    "totalSold": 175,
+    "availableStock": 93,
+    "category": "Grooming",
+    "petType": [
+      "puppy"
+    ],
+    "brand": "FurWell",
+    "tags": [
+      "deodorizing",
+      "dog"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/9.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 0,
+      "estimatedDelivery": "2-4 business days"
+    },
+    "expirationDate": "2027-03-30",
+    "weight": "500ml",
+    "returnPolicy": "Return within 7 days with proof of purchase",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "11",
+    "name": "Organic Paw Balm",
+    "description": "Soothes and moisturizes cracked paws naturally.",
+    "price": 7.94,
+    "discount": 20,
+    "rating": 4.9,
+    "totalSold": 357,
+    "availableStock": 95,
+    "category": "Health",
+    "petType": [
+      "cat"
+    ],
+    "brand": "HappyPaws",
+    "tags": [
+      "balm",
+      "paw"
+    ],
+    "image": "https://i.ibb.co/hRyLSTrR/Organic-Paw-Balm.jpg",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 0,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2026-12-10",
+    "weight": "1000ml",
+    "returnPolicy": "15-day return policy for unused items",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "12",
+    "name": "Flea & Tick Spray",
+    "description": "Helps remove fleas and ticks naturally with essential oils.",
+    "price": 10.44,
+    "discount": 10,
+    "rating": 5.0,
+    "totalSold": 676,
+    "availableStock": 24,
+    "category": "Health",
+    "petType": [
+      "cat"
+    ],
+    "brand": "PawPurity",
+    "tags": [
+      "natural",
+      "spray"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/1.png",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 0,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2027-06-20",
+    "weight": "250ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "13",
+    "name": "Natural Cat Shampoo",
+    "description": "Gentle shampoo for cats with sensitive skin.",
+    "price": 14.69,
+    "discount": 5,
+    "rating": 4.4,
+    "totalSold": 878,
+    "availableStock": 60,
+    "category": "Accessories",
+    "petType": [
+      "dog"
+    ],
+    "brand": "HappyPaws",
+    "tags": [
+      "shampoo",
+      "cat"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/2.png",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 2.23,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2028-02-18",
+    "weight": "1000ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "14",
+    "name": "Dog Dental Chews",
+    "description": "Cleans teeth and freshens breath for dogs.",
+    "price": 14.73,
+    "discount": 10,
+    "rating": 3.6,
+    "totalSold": 312,
+    "availableStock": 85,
+    "category": "Health",
+    "petType": [
+      "kitten"
+    ],
+    "brand": "PawPurity",
+    "tags": [
+      "chew",
+      "dog",
+      "dental"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/3.png",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 2.73,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2028-03-10",
+    "weight": "250ml",
+    "returnPolicy": "30-day return window with original packaging",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "15",
+    "name": "Pet Cologne Spray",
+    "description": "Long-lasting fragrance spray for pets.",
+    "price": 19.35,
     "discount": 10,
     "rating": 4.7,
-    "totalSold": 700,
-    "availableStock": 40,
+    "totalSold": 257,
+    "availableStock": 25,
+    "category": "Health",
+    "petType": [
+      "puppy"
+    ],
+    "brand": "HappyPaws",
+    "tags": [
+      "cologne",
+      "pet"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/4.png",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 2.63,
+      "estimatedDelivery": "3-5 business days"
+    },
+    "expirationDate": "2027-02-27",
+    "weight": "1000ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "16",
+    "name": "Hypoallergenic Dog Shampoo",
+    "description": "Hypoallergenic formula perfect for dogs with allergies.",
+    "price": 19.69,
+    "discount": 10,
+    "rating": 4.1,
+    "totalSold": 627,
+    "availableStock": 85,
     "category": "Grooming",
-    "petType": ["dog"],
+    "petType": [
+      "puppy"
+    ],
+    "brand": "HappyPaws",
+    "tags": [
+      "hypoallergenic",
+      "dog"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/5.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 4.13,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2026-08-15",
+    "weight": "750ml",
+    "returnPolicy": "15-day return policy for unused items",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "17",
+    "name": "Cat Grooming Brush",
+    "description": "Soft-bristle grooming brush for cats.",
+    "price": 11.45,
+    "discount": 20,
+    "rating": 3.8,
+    "totalSold": 464,
+    "availableStock": 33,
+    "category": "Accessories",
+    "petType": [
+      "kitten"
+    ],
+    "brand": "FurWell",
+    "tags": [
+      "brush",
+      "cat"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/6.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 0,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2027-07-26",
+    "weight": "500ml",
+    "returnPolicy": "Return within 7 days with proof of purchase",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "18",
+    "name": "Pet Ear Cleaner",
+    "description": "Cleans and deodorizes pet ears safely.",
+    "price": 18.0,
+    "discount": 15,
+    "rating": 4.8,
+    "totalSold": 160,
+    "availableStock": 19,
+    "category": "Accessories",
+    "petType": [
+      "puppy"
+    ],
+    "brand": "FurWell",
+    "tags": [
+      "cleaner",
+      "ear"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/7.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 2.16,
+      "estimatedDelivery": "3-5 business days"
+    },
+    "expirationDate": "2027-01-27",
+    "weight": "1000ml",
+    "returnPolicy": "30-day return window with original packaging",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "19",
+    "name": "Puppy Tearless Shampoo",
+    "description": "Tearless formula for puppies, gentle on eyes.",
+    "price": 22.54,
+    "discount": 20,
+    "rating": 4.7,
+    "totalSold": 868,
+    "availableStock": 28,
+    "category": "Grooming",
+    "petType": [
+      "cat"
+    ],
+    "brand": "FurWell",
+    "tags": [
+      "tearless",
+      "puppy"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/8.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 0,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2026-09-11",
+    "weight": "750ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "20",
+    "name": "Dog Deodorizing Spray",
+    "description": "Neutralizes pet odors and leaves coat fresh.",
+    "price": 15.32,
+    "discount": 20,
+    "rating": 4.3,
+    "totalSold": 297,
+    "availableStock": 33,
+    "category": "Health",
+    "petType": [
+      "puppy"
+    ],
+    "brand": "FurWell",
+    "tags": [
+      "deodorizing",
+      "dog"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/9.png",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 0,
+      "estimatedDelivery": "3-5 business days"
+    },
+    "expirationDate": "2026-11-13",
+    "weight": "250ml",
+    "returnPolicy": "30-day return window with original packaging",
+    "warrantyInfo": "N/A"
+  },
+  {
+    "id": "21",
+    "name": "Organic Paw Balm",
+    "description": "Soothes and moisturizes cracked paws naturally.",
+    "price": 28.74,
+    "discount": 5,
+    "rating": 4.0,
+    "totalSold": 331,
+    "availableStock": 13,
+    "category": "Health",
+    "petType": [
+      "kitten"
+    ],
+    "brand": "CleanTail",
+    "tags": [
+      "balm",
+      "paw"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/10.png",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 0,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2026-12-20",
+    "weight": "250ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "N/A"
+  },
+  {
+    "id": "22",
+    "name": "Flea & Tick Spray",
+    "description": "Helps remove fleas and ticks naturally with essential oils.",
+    "price": 21.44,
+    "discount": 20,
+    "rating": 3.9,
+    "totalSold": 698,
+    "availableStock": 19,
+    "category": "Health",
+    "petType": [
+      "kitten"
+    ],
+    "brand": "PetNature",
+    "tags": [
+      "natural",
+      "spray"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/1.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 4.31,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2027-06-22",
+    "weight": "1000ml",
+    "returnPolicy": "Return within 7 days with proof of purchase",
+    "warrantyInfo": "N/A"
+  },
+  {
+    "id": "23",
+    "name": "Natural Cat Shampoo",
+    "description": "Gentle shampoo for cats with sensitive skin.",
+    "price": 20.82,
+    "discount": 0,
+    "rating": 3.6,
+    "totalSold": 751,
+    "availableStock": 48,
+    "category": "Grooming",
+    "petType": [
+      "cat"
+    ],
     "brand": "PawPurity",
-    "tags": ["organic", "shampoo", "dog"],
+    "tags": [
+      "shampoo",
+      "cat"
+    ],
     "image": "https://i.ibb.co.com/9vQYQmF/2.png",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 0,
+      "estimatedDelivery": "2-4 business days"
+    },
+    "expirationDate": "2026-07-25",
+    "weight": "250ml",
+    "returnPolicy": "Return within 7 days with proof of purchase",
+    "warrantyInfo": "N/A"
+  },
+  {
+    "id": "24",
+    "name": "Dog Dental Chews",
+    "description": "Cleans teeth and freshens breath for dogs.",
+    "price": 28.42,
+    "discount": 5,
+    "rating": 3.5,
+    "totalSold": 930,
+    "availableStock": 89,
+    "category": "Health",
+    "petType": [
+      "kitten"
+    ],
+    "brand": "HappyPaws",
+    "tags": [
+      "chew",
+      "dog",
+      "dental"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/3.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 0,
+      "estimatedDelivery": "2-4 business days"
+    },
+    "expirationDate": "2026-12-02",
+    "weight": "1000ml",
+    "returnPolicy": "Return within 7 days with proof of purchase",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "25",
+    "name": "Pet Cologne Spray",
+    "description": "Long-lasting fragrance spray for pets.",
+    "price": 19.47,
+    "discount": 20,
+    "rating": 4.2,
+    "totalSold": 417,
+    "availableStock": 32,
+    "category": "Accessories",
+    "petType": [
+      "puppy"
+    ],
+    "brand": "PawPurity",
+    "tags": [
+      "cologne",
+      "pet"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/4.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 0,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2027-10-29",
+    "weight": "1000ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "26",
+    "name": "Hypoallergenic Dog Shampoo",
+    "description": "Hypoallergenic formula perfect for dogs with allergies.",
+    "price": 21.29,
+    "discount": 15,
+    "rating": 3.7,
+    "totalSold": 279,
+    "availableStock": 59,
+    "category": "Accessories",
+    "petType": [
+      "cat"
+    ],
+    "brand": "CleanTail",
+    "tags": [
+      "hypoallergenic",
+      "dog"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/5.png",
     "shippingInfo": {
       "freeShipping": true,
       "shippingCost": 0,
       "estimatedDelivery": "3-5 business days"
     },
-    "expirationDate": "2026-12-31",
+    "expirationDate": "2026-06-28",
     "weight": "500ml",
+    "returnPolicy": "Return within 7 days with proof of purchase",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "27",
+    "name": "Cat Grooming Brush",
+    "description": "Soft-bristle grooming brush for cats.",
+    "price": 15.34,
+    "discount": 10,
+    "rating": 5.0,
+    "totalSold": 839,
+    "availableStock": 13,
+    "category": "Accessories",
+    "petType": [
+      "cat"
+    ],
+    "brand": "FurWell",
+    "tags": [
+      "brush",
+      "cat"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/6.png",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 3.53,
+      "estimatedDelivery": "2-4 business days"
+    },
+    "expirationDate": "2027-05-01",
+    "weight": "1000ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "28",
+    "name": "Pet Ear Cleaner",
+    "description": "Cleans and deodorizes pet ears safely.",
+    "price": 14.41,
+    "discount": 0,
+    "rating": 5.0,
+    "totalSold": 698,
+    "availableStock": 90,
+    "category": "Accessories",
+    "petType": [
+      "kitten"
+    ],
+    "brand": "PetNature",
+    "tags": [
+      "cleaner",
+      "ear"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/7.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 0,
+      "estimatedDelivery": "2-4 business days"
+    },
+    "expirationDate": "2028-02-15",
+    "weight": "250ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "29",
+    "name": "Puppy Tearless Shampoo",
+    "description": "Tearless formula for puppies, gentle on eyes.",
+    "price": 14.21,
+    "discount": 5,
+    "rating": 3.7,
+    "totalSold": 197,
+    "availableStock": 99,
+    "category": "Health",
+    "petType": [
+      "cat"
+    ],
+    "brand": "HappyPaws",
+    "tags": [
+      "tearless",
+      "puppy"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/8.png",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 2.35,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2028-03-31",
+    "weight": "250ml",
+    "returnPolicy": "30-day return window with original packaging",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "30",
+    "name": "Dog Deodorizing Spray",
+    "description": "Neutralizes pet odors and leaves coat fresh.",
+    "price": 20.47,
+    "discount": 10,
+    "rating": 4.2,
+    "totalSold": 313,
+    "availableStock": 25,
+    "category": "Health",
+    "petType": [
+      "puppy"
+    ],
+    "brand": "HappyPaws",
+    "tags": [
+      "deodorizing",
+      "dog"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/9.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 2.87,
+      "estimatedDelivery": "3-5 business days"
+    },
+    "expirationDate": "2026-10-19",
+    "weight": "250ml",
     "returnPolicy": "30-day return window with original packaging",
     "warrantyInfo": "N/A"
   },
   {
-    "id": "2",
-    "name": "Catnip Toy Mouse",
-    "description": "Interactive toy mouse filled with organic catnip to keep your cat entertained.",
-    "price": 6.5,
-    "discount": 0,
-    "rating": 4.5,
-    "totalSold": 240,
-    "availableStock": 100,
-    "category": "Toys",
-    "petType": ["cat"],
-    "brand": "WhiskerPlay",
-    "tags": ["toy", "catnip", "cat"],
-    "image": "https://i.ibb.co.com/bWKwVbC/1.png",
+    "id": "31",
+    "name": "Organic Paw Balm",
+    "description": "Soothes and moisturizes cracked paws naturally.",
+    "price": 7.82,
+    "discount": 5,
+    "rating": 3.7,
+    "totalSold": 513,
+    "availableStock": 96,
+    "category": "Grooming",
+    "petType": [
+      "dog"
+    ],
+    "brand": "HappyPaws",
+    "tags": [
+      "balm",
+      "paw"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/10.png",
     "shippingInfo": {
-      "freeShipping": false,
-      "shippingCost": 2.99,
+      "freeShipping": true,
+      "shippingCost": 2.43,
       "estimatedDelivery": "5-7 business days"
     },
-    "expirationDate": "N/A",
-    "weight": "100g",
-    "returnPolicy": "No returns for opened packages",
+    "expirationDate": "2026-09-03",
+    "weight": "750ml",
+    "returnPolicy": "Return within 7 days with proof of purchase",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "32",
+    "name": "Flea & Tick Spray",
+    "description": "Helps remove fleas and ticks naturally with essential oils.",
+    "price": 15.21,
+    "discount": 15,
+    "rating": 4.6,
+    "totalSold": 578,
+    "availableStock": 74,
+    "category": "Grooming",
+    "petType": [
+      "dog",
+      "cat"
+    ],
+    "brand": "PawPurity",
+    "tags": [
+      "natural",
+      "spray"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/1.png",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 0,
+      "estimatedDelivery": "3-5 business days"
+    },
+    "expirationDate": "2026-09-02",
+    "weight": "250ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "33",
+    "name": "Natural Cat Shampoo",
+    "description": "Gentle shampoo for cats with sensitive skin.",
+    "price": 13.69,
+    "discount": 0,
+    "rating": 4.1,
+    "totalSold": 605,
+    "availableStock": 44,
+    "category": "Accessories",
+    "petType": [
+      "dog",
+      "cat"
+    ],
+    "brand": "CleanTail",
+    "tags": [
+      "shampoo",
+      "cat"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/2.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 4.93,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2028-04-02",
+    "weight": "1000ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "34",
+    "name": "Dog Dental Chews",
+    "description": "Cleans teeth and freshens breath for dogs.",
+    "price": 23.86,
+    "discount": 15,
+    "rating": 4.4,
+    "totalSold": 132,
+    "availableStock": 99,
+    "category": "Accessories",
+    "petType": [
+      "cat"
+    ],
+    "brand": "FurWell",
+    "tags": [
+      "chew",
+      "dog",
+      "dental"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/3.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 3.61,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2027-01-12",
+    "weight": "1000ml",
+    "returnPolicy": "15-day return policy for unused items",
     "warrantyInfo": "N/A"
   },
   {
-    "id": "3",
-    "name": "Multivitamin Chews for Pets",
-    "description": "Delicious multivitamin chews for cats and dogs. Supports coat, immunity, and joints.",
-    "price": 18.99,
-    "discount": 5,
+    "id": "35",
+    "name": "Pet Cologne Spray",
+    "description": "Long-lasting fragrance spray for pets.",
+    "price": 11.19,
+    "discount": 15,
+    "rating": 4.3,
+    "totalSold": 753,
+    "availableStock": 86,
+    "category": "Grooming",
+    "petType": [
+      "puppy"
+    ],
+    "brand": "FurWell",
+    "tags": [
+      "cologne",
+      "pet"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/4.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 0,
+      "estimatedDelivery": "3-5 business days"
+    },
+    "expirationDate": "2027-09-01",
+    "weight": "1000ml",
+    "returnPolicy": "Return within 7 days with proof of purchase",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "36",
+    "name": "Hypoallergenic Dog Shampoo",
+    "description": "Hypoallergenic formula perfect for dogs with allergies.",
+    "price": 26.46,
+    "discount": 10,
+    "rating": 4.5,
+    "totalSold": 500,
+    "availableStock": 89,
+    "category": "Accessories",
+    "petType": [
+      "dog"
+    ],
+    "brand": "CleanTail",
+    "tags": [
+      "hypoallergenic",
+      "dog"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/5.png",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 2.69,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2027-06-05",
+    "weight": "750ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "37",
+    "name": "Cat Grooming Brush",
+    "description": "Soft-bristle grooming brush for cats.",
+    "price": 24.49,
+    "discount": 10,
     "rating": 4.8,
-    "totalSold": 320,
-    "availableStock": 60,
+    "totalSold": 648,
+    "availableStock": 84,
+    "category": "Accessories",
+    "petType": [
+      "puppy"
+    ],
+    "brand": "HappyPaws",
+    "tags": [
+      "brush",
+      "cat"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/6.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 3.31,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2028-03-30",
+    "weight": "750ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "38",
+    "name": "Pet Ear Cleaner",
+    "description": "Cleans and deodorizes pet ears safely.",
+    "price": 26.65,
+    "discount": 5,
+    "rating": 3.8,
+    "totalSold": 678,
+    "availableStock": 18,
+    "category": "Grooming",
+    "petType": [
+      "cat"
+    ],
+    "brand": "FurWell",
+    "tags": [
+      "cleaner",
+      "ear"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/7.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 4.48,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2026-07-23",
+    "weight": "250ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "39",
+    "name": "Puppy Tearless Shampoo",
+    "description": "Tearless formula for puppies, gentle on eyes.",
+    "price": 21.58,
+    "discount": 15,
+    "rating": 3.6,
+    "totalSold": 429,
+    "availableStock": 11,
+    "category": "Grooming",
+    "petType": [
+      "dog"
+    ],
+    "brand": "CleanTail",
+    "tags": [
+      "tearless",
+      "puppy"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/8.png",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 4.75,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2027-12-28",
+    "weight": "1000ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "40",
+    "name": "Dog Deodorizing Spray",
+    "description": "Neutralizes pet odors and leaves coat fresh.",
+    "price": 10.44,
+    "discount": 15,
+    "rating": 4.0,
+    "totalSold": 903,
+    "availableStock": 75,
+    "category": "Grooming",
+    "petType": [
+      "puppy"
+    ],
+    "brand": "CleanTail",
+    "tags": [
+      "deodorizing",
+      "dog"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/9.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 2.08,
+      "estimatedDelivery": "3-5 business days"
+    },
+    "expirationDate": "2027-08-24",
+    "weight": "750ml",
+    "returnPolicy": "Return within 7 days with proof of purchase",
+    "warrantyInfo": "N/A"
+  },
+  {
+    "id": "41",
+    "name": "Organic Paw Balm",
+    "description": "Soothes and moisturizes cracked paws naturally.",
+    "price": 8.1,
+    "discount": 0,
+    "rating": 4.5,
+    "totalSold": 488,
+    "availableStock": 64,
     "category": "Health",
-    "petType": ["dog", "cat"],
-    "brand": "VetCare Plus",
-    "tags": ["vitamin", "chews", "health", "cat", "dog"],
-    "image": "https://i.ibb.co.com/wK7gJZg/g18.webp",
+    "petType": [
+      "puppy"
+    ],
+    "brand": "PetNature",
+    "tags": [
+      "balm",
+      "paw"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/10.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 0,
+      "estimatedDelivery": "3-5 business days"
+    },
+    "expirationDate": "2026-07-31",
+    "weight": "1000ml",
+    "returnPolicy": "15-day return policy for unused items",
+    "warrantyInfo": "N/A"
+  },
+  {
+    "id": "42",
+    "name": "Flea & Tick Spray",
+    "description": "Helps remove fleas and ticks naturally with essential oils.",
+    "price": 15.82,
+    "discount": 10,
+    "rating": 3.5,
+    "totalSold": 144,
+    "availableStock": 92,
+    "category": "Health",
+    "petType": [
+      "dog"
+    ],
+    "brand": "CleanTail",
+    "tags": [
+      "natural",
+      "spray"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/1.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 3.88,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2027-12-13",
+    "weight": "500ml",
+    "returnPolicy": "Return within 7 days with proof of purchase",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "43",
+    "name": "Natural Cat Shampoo",
+    "description": "Gentle shampoo for cats with sensitive skin.",
+    "price": 26.99,
+    "discount": 0,
+    "rating": 3.8,
+    "totalSold": 855,
+    "availableStock": 46,
+    "category": "Grooming",
+    "petType": [
+      "dog",
+      "cat"
+    ],
+    "brand": "HappyPaws",
+    "tags": [
+      "shampoo",
+      "cat"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/2.png",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 0,
+      "estimatedDelivery": "3-5 business days"
+    },
+    "expirationDate": "2028-05-12",
+    "weight": "500ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "44",
+    "name": "Dog Dental Chews",
+    "description": "Cleans teeth and freshens breath for dogs.",
+    "price": 12.02,
+    "discount": 20,
+    "rating": 3.9,
+    "totalSold": 241,
+    "availableStock": 59,
+    "category": "Grooming",
+    "petType": [
+      "puppy"
+    ],
+    "brand": "PetNature",
+    "tags": [
+      "chew",
+      "dog",
+      "dental"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/3.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 2.94,
+      "estimatedDelivery": "3-5 business days"
+    },
+    "expirationDate": "2026-12-18",
+    "weight": "1000ml",
+    "returnPolicy": "30-day return window with original packaging",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "45",
+    "name": "Pet Cologne Spray",
+    "description": "Long-lasting fragrance spray for pets.",
+    "price": 29.39,
+    "discount": 0,
+    "rating": 4.9,
+    "totalSold": 996,
+    "availableStock": 83,
+    "category": "Health",
+    "petType": [
+      "cat"
+    ],
+    "brand": "PetNature",
+    "tags": [
+      "cologne",
+      "pet"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/4.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 2.12,
+      "estimatedDelivery": "3-5 business days"
+    },
+    "expirationDate": "2026-06-21",
+    "weight": "250ml",
+    "returnPolicy": "Return within 7 days with proof of purchase",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "46",
+    "name": "Hypoallergenic Dog Shampoo",
+    "description": "Hypoallergenic formula perfect for dogs with allergies.",
+    "price": 29.35,
+    "discount": 0,
+    "rating": 4.3,
+    "totalSold": 266,
+    "availableStock": 11,
+    "category": "Health",
+    "petType": [
+      "puppy"
+    ],
+    "brand": "PetNature",
+    "tags": [
+      "hypoallergenic",
+      "dog"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/5.png",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 2.77,
+      "estimatedDelivery": "3-5 business days"
+    },
+    "expirationDate": "2026-12-18",
+    "weight": "750ml",
+    "returnPolicy": "30-day return window with original packaging",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "47",
+    "name": "Cat Grooming Brush",
+    "description": "Soft-bristle grooming brush for cats.",
+    "price": 7.61,
+    "discount": 0,
+    "rating": 4.8,
+    "totalSold": 892,
+    "availableStock": 73,
+    "category": "Accessories",
+    "petType": [
+      "kitten"
+    ],
+    "brand": "CleanTail",
+    "tags": [
+      "brush",
+      "cat"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/6.png",
+    "shippingInfo": {
+      "freeShipping": false,
+      "shippingCost": 4.45,
+      "estimatedDelivery": "3-5 business days"
+    },
+    "expirationDate": "2026-08-12",
+    "weight": "500ml",
+    "returnPolicy": "30-day return window with original packaging",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "48",
+    "name": "Pet Ear Cleaner",
+    "description": "Cleans and deodorizes pet ears safely.",
+    "price": 25.58,
+    "discount": 5,
+    "rating": 4.4,
+    "totalSold": 865,
+    "availableStock": 43,
+    "category": "Health",
+    "petType": [
+      "cat"
+    ],
+    "brand": "PetNature",
+    "tags": [
+      "cleaner",
+      "ear"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/7.png",
     "shippingInfo": {
       "freeShipping": true,
       "shippingCost": 0,
       "estimatedDelivery": "2-4 business days"
     },
-    "expirationDate": "2026-09-30",
-    "weight": "250g",
-    "returnPolicy": "Refundable within 15 days if unopened",
+    "expirationDate": "2026-10-08",
+    "weight": "250ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "6-month warranty"
+  },
+  {
+    "id": "49",
+    "name": "Puppy Tearless Shampoo",
+    "description": "Tearless formula for puppies, gentle on eyes.",
+    "price": 29.25,
+    "discount": 10,
+    "rating": 4.4,
+    "totalSold": 284,
+    "availableStock": 96,
+    "category": "Health",
+    "petType": [
+      "dog",
+      "cat"
+    ],
+    "brand": "PetNature",
+    "tags": [
+      "tearless",
+      "puppy"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/8.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 4.29,
+      "estimatedDelivery": "3-5 business days"
+    },
+    "expirationDate": "2026-06-15",
+    "weight": "750ml",
+    "returnPolicy": "No returns after seal is broken",
+    "warrantyInfo": "1-year limited warranty"
+  },
+  {
+    "id": "50",
+    "name": "Dog Deodorizing Spray",
+    "description": "Neutralizes pet odors and leaves coat fresh.",
+    "price": 22.54,
+    "discount": 15,
+    "rating": 4.2,
+    "totalSold": 806,
+    "availableStock": 86,
+    "category": "Health",
+    "petType": [
+      "cat"
+    ],
+    "brand": "FurWell",
+    "tags": [
+      "deodorizing",
+      "dog"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/9.png",
+    "shippingInfo": {
+      "freeShipping": true,
+      "shippingCost": 2.21,
+      "estimatedDelivery": "5-7 business days"
+    },
+    "expirationDate": "2028-01-09",
+    "weight": "500ml",
+    "returnPolicy": "No returns after seal is broken",
     "warrantyInfo": "N/A"
   },
   {
-    "id": "4",
-    "name": "Multivitamin Chews for Pets",
-    "description": "Delicious multivitamin chews for cats and dogs. Supports coat, immunity, and joints.",
-    "price": 18.99,
-    "discount": 5,
-    "rating": 4.8,
-    "totalSold": 320,
-    "availableStock": 60,
-    "category": "Health",
-    "petType": ["dog", "cat"],
-    "brand": "VetCare Plus",
-    "tags": ["vitamin", "chews", "health", "cat", "dog"],
-    "image": "https://i.ibb.co.com/wK7gJZg/g18.webp",
+    "id": "51",
+    "name": "Organic Paw Balm",
+    "description": "Soothes and moisturizes cracked paws naturally.",
+    "price": 8.25,
+    "discount": 10,
+    "rating": 4.2,
+    "totalSold": 528,
+    "availableStock": 43,
+    "category": "Accessories",
+    "petType": [
+      "kitten"
+    ],
+    "brand": "CleanTail",
+    "tags": [
+      "balm",
+      "paw"
+    ],
+    "image": "https://i.ibb.co.com/9vQYQmF/10.png",
     "shippingInfo": {
       "freeShipping": true,
-      "shippingCost": 0,
-      "estimatedDelivery": "2-4 business days"
+      "shippingCost": 4.77,
+      "estimatedDelivery": "3-5 business days"
     },
-    "expirationDate": "2026-09-30",
-    "weight": "250g",
-    "returnPolicy": "Refundable within 15 days if unopened",
-    "warrantyInfo": "N/A"
-  },
-  {
-    "id": "5",
-    "name": "Multivitamin Chews for Pets",
-    "description": "Delicious multivitamin chews for cats and dogs. Supports coat, immunity, and joints.",
-    "price": 18.99,
-    "discount": 5,
-    "rating": 4.8,
-    "totalSold": 320,
-    "availableStock": 60,
-    "category": "Health",
-    "petType": ["dog", "cat"],
-    "brand": "VetCare Plus",
-    "tags": ["vitamin", "chews", "health", "cat", "dog"],
-    "image": "https://i.ibb.co.com/wK7gJZg/g18.webp",
-    "shippingInfo": {
-      "freeShipping": true,
-      "shippingCost": 0,
-      "estimatedDelivery": "2-4 business days"
-    },
-    "expirationDate": "2026-09-30",
-    "weight": "250g",
-    "returnPolicy": "Refundable within 15 days if unopened",
-    "warrantyInfo": "N/A"
-  },
-  {
-    "id": "6",
-    "name": "Multivitamin Chews for Pets",
-    "description": "Delicious multivitamin chews for cats and dogs. Supports coat, immunity, and joints.",
-    "price": 18.99,
-    "discount": 5,
-    "rating": 4.8,
-    "totalSold": 320,
-    "availableStock": 60,
-    "category": "Health",
-    "petType": ["dog", "cat"],
-    "brand": "VetCare Plus",
-    "tags": ["vitamin", "chews", "health", "cat", "dog"],
-    "image": "https://i.ibb.co.com/wK7gJZg/g18.webp",
-    "shippingInfo": {
-      "freeShipping": true,
-      "shippingCost": 0,
-      "estimatedDelivery": "2-4 business days"
-    },
-    "expirationDate": "2026-09-30",
-    "weight": "250g",
-    "returnPolicy": "Refundable within 15 days if unopened",
+    "expirationDate": "2027-04-04",
+    "weight": "500ml",
+    "returnPolicy": "15-day return policy for unused items",
     "warrantyInfo": "N/A"
   }
 ]
