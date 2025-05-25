@@ -90,7 +90,7 @@
   {
     "id": "5",
     "name": "Pet Cologne Spray",
-    "description": "Long-lasting fragrance spray for pets.",
+    "description": "Keep your furry friend smelling fresh between baths with this long-lasting fragrance spray. Specially formulated for pets, it provides a gentle, pleasant scent that lingers for days without overwhelming their sensitive noses. Enriched with natural botanicals and conditioning agents, it not only refreshes your pet’s coat but also helps reduce static and add shine. Free from alcohol and harsh chemicals, this spray is safe for daily use on both dogs and cats—making cuddle time even more enjoyable.",
     "price": 28.98,
     "discount": 15,
     "rating": 5.0,
@@ -119,7 +119,7 @@
   {
     "id": "6",
     "name": "Hypoallergenic Dog Shampoo",
-    "description": "Hypoallergenic formula perfect for dogs with allergies.",
+    "description": "Specially crafted for dogs with sensitive skin and allergy concerns, this hypoallergenic formula offers gentle care without compromising effectiveness. Free from common irritants like fragrances, dyes, parabens, and harsh chemicals, it’s ideal for pups prone to itching, redness, or dry skin. Enriched with soothing ingredients such as aloe vera, oatmeal, and coconut oil, it helps calm irritation while nourishing the skin and coat. Vet-recommended and safe for frequent use, this formula provides peace of mind for pet parents and comfort for dogs with even the most delicate skin.",
     "price": 25.34,
     "discount": 0,
     "rating": 4.2,
@@ -149,7 +149,7 @@
   {
     "id": "7",
     "name": "Cat Grooming Brush",
-    "description": "Soft-bristle grooming brush for cats.",
+    "description": "Designed with your cat’s comfort in mind, this soft-bristle grooming brush gently removes loose fur, dirt, and dander while promoting a healthy, shiny coat. The ultra-soft bristles are ideal for sensitive skin, making grooming a relaxing and enjoyable experience for even the most finicky felines. Regular use helps reduce shedding and hairballs while stimulating natural oil production for a smoother, healthier coat. Lightweight and easy to handle, this brush is perfect for daily grooming and bonding time with your furry friend.",
     "price": 22.38,
     "discount": 5,
     "rating": 4.2,
@@ -178,7 +178,7 @@
   {
     "id": "8",
     "name": "Pet Ear Cleaner",
-    "description": "Cleans and deodorizes pet ears safely.",
+    "description": "Keep your pet’s ears clean, fresh, and healthy with this gentle ear cleaning solution. Formulated with natural, non-irritating ingredients, it effectively removes wax, dirt, and debris while neutralizing unpleasant odors. Ideal for both dogs and cats, the solution helps prevent ear infections and irritation without the use of alcohol, harsh chemicals, or artificial fragrances. Enriched with soothing agents like aloe vera and chamomile, it calms sensitive skin and promotes ear hygiene with every use. Safe for regular maintenance and vet-recommended for pets prone to ear issues.",
     "price": 27.88,
     "discount": 20,
     "rating": 4.7,
@@ -207,7 +207,7 @@
   {
     "id": "9",
     "name": "Puppy Tearless Shampoo",
-    "description": "Tearless formula for puppies, gentle on eyes.",
+    "description": "Specially formulated for your puppy’s delicate skin and eyes, this tearless shampoo provides a gentle yet effective cleanse without causing irritation or discomfort. Free from harsh chemicals, sulfates, and artificial fragrances, it’s made with mild, natural ingredients like aloe vera, coconut oil, and chamomile to soothe and nourish your puppy’s coat and skin. The pH-balanced formula ensures it’s safe for frequent use and won’t sting your puppy’s eyes, making bath time a stress-free, bonding experience. Perfect for keeping your young pup clean, soft, and happy.",
     "price": 27.13,
     "discount": 0,
     "rating": 4.2,
@@ -236,7 +236,7 @@
   {
     "id": "10",
     "name": "Dog Deodorizing Spray",
-    "description": "Neutralizes pet odors and leaves coat fresh.",
+    "description": "Effectively eliminate stubborn pet odors with this powerful yet gentle deodorizing spray. Formulated with natural odor-neutralizing agents like baking soda and plant-based enzymes, it targets and breaks down unwanted smells at the source—rather than just masking them. Enriched with soothing ingredients such as aloe vera and chamomile, it also conditions the coat, leaving it soft, shiny, and pleasantly fresh. Perfect for use between baths, this spray is safe for dogs and cats and ideal for keeping your pet—and your home—smelling clean and inviting",
     "price": 12.77,
     "discount": 15,
     "rating": 4.2,
@@ -251,7 +251,7 @@
       "deodorizing",
       "dog"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/9.png",
+    "image": "https://i.ibb.co/vxwWBwGc/Dog-Deodorizing-Spray.jpg",
     "shippingInfo": {
       "freeShipping": true,
       "shippingCost": 0,
@@ -265,7 +265,7 @@
   {
     "id": "11",
     "name": "Organic Paw Balm",
-    "description": "Soothes and moisturizes cracked paws naturally.",
+    "description": "Give your pet relief from dry, rough, or cracked paws with this nourishing, all-natural paw balm. Infused with healing ingredients like shea butter, coconut oil, beeswax, and calendula, it deeply moisturizes and soothes irritated skin while forming a protective barrier against harsh surfaces, hot pavement, or cold weather. Free from synthetic fragrances, parabens, and harmful chemicals, this gentle formula is safe if licked and ideal for daily use. Perfect for keeping your dog or cat’s paws soft, healthy, and comfortable year-round.",
     "price": 7.94,
     "discount": 20,
     "rating": 4.9,
@@ -293,8 +293,8 @@
   },
   {
     "id": "12",
-    "name": "Flea & Tick Spray",
-    "description": "Helps remove fleas and ticks naturally with essential oils.",
+    "name": "PawRidge Gear",
+    "description": "PawRidge Gear is a premium dog training and outdoor gear brand based in Glasgow, Scotland. Founded by an experienced gundog trainer, PawRidge specializes in handcrafted, high-performance equipment designed for both working dogs and pet owners who demand durability and functionality.",
     "price": 10.44,
     "discount": 10,
     "rating": 5.0,
@@ -309,7 +309,7 @@
       "natural",
       "spray"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/1.png",
+    "image": "https://i.ibb.co/278m3drw/Paw-Ridge-Gear.jpg",
     "shippingInfo": {
       "freeShipping": false,
       "shippingCost": 0,
@@ -322,8 +322,8 @@
   },
   {
     "id": "13",
-    "name": "Natural Cat Shampoo",
-    "description": "Gentle shampoo for cats with sensitive skin.",
+    "name": "WagWell Drops",
+    "description": "WagWell Drops – General wellness tincture",
     "price": 14.69,
     "discount": 5,
     "rating": 4.4,
@@ -338,7 +338,7 @@
       "shampoo",
       "cat"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/2.png",
+    "image": "https://i.ibb.co/zHVqMY1R/Wag-Well-Drops.jpg",
     "shippingInfo": {
       "freeShipping": false,
       "shippingCost": 2.23,
@@ -351,12 +351,12 @@
   },
   {
     "id": "14",
-    "name": "Dog Dental Chews",
-    "description": "Cleans teeth and freshens breath for dogs.",
+    "name": "Cat food protien",
+    "description": "Complete & balanced meals for cats formulated with whole foods. Single protein recipes with chicken, turkey, beef, duck, and rabbit. Made in USDA kitchens & delivered to your door",
     "price": 14.73,
     "discount": 10,
     "rating": 3.6,
-    "totalSold": 312,
+    "totalSold": 1312,
     "availableStock": 85,
     "category": "Health",
     "petType": [
@@ -368,7 +368,7 @@
       "dog",
       "dental"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/3.png",
+    "image": "https://i.ibb.co/N6Qw6VJZ/Cat-food-protein.jpg",
     "shippingInfo": {
       "freeShipping": false,
       "shippingCost": 2.73,
@@ -381,8 +381,8 @@
   },
   {
     "id": "15",
-    "name": "Pet Cologne Spray",
-    "description": "Long-lasting fragrance spray for pets.",
+    "name": "Pet transaction Rope",
+    "description": "The item is made of nylon chromeplate and ABS materials, it is durable. it protect your dog from losing. for walking, running and so on. Flexible design is practical and creative, your pet will feel comfortable. suitable for dog. Features - Color: Yellow - Material: Nylon chromeplate and ABS - Size: About 13x8x4cm/5m - Flexible hauling cable allow you to provide comfortable feeling for your pet. - Made of good material. It is healthy to your pet. - Suitable for the most dogs.",
     "price": 19.35,
     "discount": 10,
     "rating": 4.7,
@@ -397,7 +397,7 @@
       "cologne",
       "pet"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/4.png",
+    "image": "https://i.ibb.co/ksJPKn8v/Pet-Transaction-Rope.jpg",
     "shippingInfo": {
       "freeShipping": false,
       "shippingCost": 2.63,
@@ -410,8 +410,8 @@
   },
   {
     "id": "16",
-    "name": "Hypoallergenic Dog Shampoo",
-    "description": "Hypoallergenic formula perfect for dogs with allergies.",
+    "name": "Pet food Machine",
+    "description": "Make mealtime easier and more consistent with this automatic pet food dispenser. Designed for both cats and dogs, this smart feeding machine allows you to schedule precise meal times and portion sizes throughout the day. Equipped with a programmable digital timer, it ensures your pet gets the right amount of food—even when you’re away. The transparent food storage container makes it easy to monitor food levels, while the anti-jam design and secure lid help maintain freshness and prevent spills.",
     "price": 19.69,
     "discount": 10,
     "rating": 4.1,
@@ -426,7 +426,7 @@
       "hypoallergenic",
       "dog"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/5.png",
+    "image": "https://i.ibb.co/bg31VwcC/Pet-food-Machine.jpg",
     "shippingInfo": {
       "freeShipping": true,
       "shippingCost": 4.13,
@@ -439,12 +439,12 @@
   },
   {
     "id": "17",
-    "name": "Cat Grooming Brush",
-    "description": "Soft-bristle grooming brush for cats.",
+    "name": "Pet Stroller",
+    "description": "Take your pet on the go in style and comfort with this foldable pet stroller. Designed for small to medium-sized dogs and cats, this lightweight yet sturdy stroller features a durable steel frame, breathable mesh windows for ventilation, and a spacious interior that ensures your pet rides comfortably and safely.",
     "price": 11.45,
     "discount": 20,
     "rating": 3.8,
-    "totalSold": 464,
+    "totalSold": 1464,
     "availableStock": 33,
     "category": "Accessories",
     "petType": [
@@ -455,7 +455,7 @@
       "brush",
       "cat"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/6.png",
+    "image": "https://i.ibb.co/BVVmXPQQ/Pet-Stroller.jpg",
     "shippingInfo": {
       "freeShipping": true,
       "shippingCost": 0,
@@ -468,8 +468,8 @@
   },
   {
     "id": "18",
-    "name": "Pet Ear Cleaner",
-    "description": "Cleans and deodorizes pet ears safely.",
+    "name": "Pet Carry Bag",
+    "description": "Keep your pet secure and cozy wherever you go with this sleek and functional pet carry bag. Crafted from durable, breathable fabric, it features mesh panels for ample airflow, allowing your dog or cat to stay cool and comfortable during travel. The soft, padded interior creates a snug space for your pet to relax, while the secure zipper closure ensures they stay safely inside..",
     "price": 18.0,
     "discount": 15,
     "rating": 4.8,
@@ -484,7 +484,7 @@
       "cleaner",
       "ear"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/7.png",
+    "image": "https://i.ibb.co/yc6P9Q2c/Pet-carry-Bag.jpg",
     "shippingInfo": {
       "freeShipping": true,
       "shippingCost": 2.16,
@@ -497,8 +497,8 @@
   },
   {
     "id": "19",
-    "name": "Puppy Tearless Shampoo",
-    "description": "Tearless formula for puppies, gentle on eyes.",
+    "name": "Pet Body Belt",
+    "description": "Ensure safe and comfortable walks with this premium adjustable pet body belt. Designed for both dogs and cats, it features a soft, padded harness that evenly distributes pressure across the chest and shoulders—reducing strain on your pet's neck. Made from high-quality, breathable mesh fabric, it keeps your pet cool and comfortable during outdoor activities..",
     "price": 22.54,
     "discount": 20,
     "rating": 4.7,
@@ -513,7 +513,7 @@
       "tearless",
       "puppy"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/8.png",
+    "image": "https://i.ibb.co/Xxd249b3/Pet-body-belt.jpg",
     "shippingInfo": {
       "freeShipping": true,
       "shippingCost": 0,
@@ -526,12 +526,12 @@
   },
   {
     "id": "20",
-    "name": "Dog Deodorizing Spray",
-    "description": "Neutralizes pet odors and leaves coat fresh.",
+    "name": "Feeder Bowl",
+    "description": "Simplify feeding time with this convenient and stylish dual pet feeder bowl. Designed for both dogs and cats, it features two stainless steel bowls set in a durable, BPA-free base, perfect for serving food and water side by side. The bowls are removable for easy cleaning and resistant to rust and corrosion, ensuring long-lasting use..",
     "price": 15.32,
     "discount": 20,
     "rating": 4.3,
-    "totalSold": 297,
+    "totalSold": 1297,
     "availableStock": 33,
     "category": "Health",
     "petType": [
@@ -542,7 +542,7 @@
       "deodorizing",
       "dog"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/9.png",
+    "image": "https://i.ibb.co/vCmhg5g0/Feeder-bowl.jpg",
     "shippingInfo": {
       "freeShipping": false,
       "shippingCost": 0,
@@ -555,8 +555,8 @@
   },
   {
     "id": "21",
-    "name": "Organic Paw Balm",
-    "description": "Soothes and moisturizes cracked paws naturally.",
+    "name": "Comb Dresser",
+    "description": "Keep your pet’s coat smooth, shiny, and tangle-free with this high-quality grooming comb. Designed for both cats and dogs, this tool features rounded stainless steel teeth that gently remove loose hair, dirt, and tangles without scratching your pet’s skin. The dual-length teeth are perfect for reaching both the topcoat and undercoat, making it an excellent choice for managing shedding and preventing matting..",
     "price": 28.74,
     "discount": 5,
     "rating": 4.0,
@@ -571,7 +571,7 @@
       "balm",
       "paw"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/10.png",
+    "image": "https://i.ibb.co/PGdJcR6w/Comb-dresser.jpg",
     "shippingInfo": {
       "freeShipping": false,
       "shippingCost": 0,
@@ -584,8 +584,8 @@
   },
   {
     "id": "22",
-    "name": "Flea & Tick Spray",
-    "description": "Helps remove fleas and ticks naturally with essential oils.",
+    "name": "Paw Cleaner",
+    "description": "Keep muddy paw prints out of your home with this easy-to-use portable paw cleaner. Designed for dogs and cats of all sizes, it features soft silicone bristles inside a durable cup that gently scrub dirt, mud, and debris from your pet’s paws—without causing discomfort or irritation..",
     "price": 21.44,
     "discount": 20,
     "rating": 3.9,
@@ -600,7 +600,7 @@
       "natural",
       "spray"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/1.png",
+    "image": "https://i.ibb.co/hRTjY8GP/Paw-cleaner.jpg",
     "shippingInfo": {
       "freeShipping": true,
       "shippingCost": 4.31,
@@ -613,8 +613,8 @@
   },
   {
     "id": "23",
-    "name": "Natural Cat Shampoo",
-    "description": "Gentle shampoo for cats with sensitive skin.",
+    "name": "Dog Treat",
+    "description": "Perfectly sized for dogs of all breeds and ages, the treats have a crunchy texture that helps support dental health by reducing plaque and tartar buildup. Rich in protein and natural vitamins, they’re ideal for maintaining energy levels, promoting a shiny coat, and supporting immune health. Whether for training or just showing love, these treats will have your dog wagging for more!.",
     "price": 20.82,
     "discount": 0,
     "rating": 3.6,
@@ -629,7 +629,7 @@
       "shampoo",
       "cat"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/2.png",
+    "image": "https://i.ibb.co/b58W3tbd/Dog-Treat.jpg",
     "shippingInfo": {
       "freeShipping": false,
       "shippingCost": 0,
@@ -642,8 +642,8 @@
   },
   {
     "id": "24",
-    "name": "Dog Dental Chews",
-    "description": "Cleans teeth and freshens breath for dogs.",
+    "name": "Dog Fruit Toy",
+    "description": "Ideal for teething puppies and active adult dogs alike, this chew toy helps reduce boredom, relieve stress, and promote healthy chewing habits. The textured surface massages gums and aids in dental hygiene by cleaning teeth as they chew. Lightweight and easy to carry, it’s perfect for indoor play, fetch games, or solo chewing sessions..",
     "price": 28.42,
     "discount": 5,
     "rating": 3.5,
@@ -659,7 +659,7 @@
       "dog",
       "dental"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/3.png",
+    "image": "https://i.ibb.co/fVw1XnXc/Dog-fruit-toy.jpg",
     "shippingInfo": {
       "freeShipping": true,
       "shippingCost": 0,
@@ -672,12 +672,12 @@
   },
   {
     "id": "25",
-    "name": "Pet Cologne Spray",
-    "description": "Long-lasting fragrance spray for pets.",
+    "name": "Dog Collar Belt",
+    "description": "Available in multiple sizes and vibrant colors, these collars are ideal for dogs of all breeds and life stages. The adjustable strap ensures a perfect fit as your dog grows, while the reinforced stitching adds extra strength for active pets. Whether for everyday walks or special outings, these collars combine functionality, safety, and style..",
     "price": 19.47,
     "discount": 20,
     "rating": 4.2,
-    "totalSold": 417,
+    "totalSold": 1417,
     "availableStock": 32,
     "category": "Accessories",
     "petType": [
@@ -688,7 +688,7 @@
       "cologne",
       "pet"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/4.png",
+    "image": "https://i.ibb.co/qFn1drSy/Dogs-Collars.jpg",
     "shippingInfo": {
       "freeShipping": true,
       "shippingCost": 0,
@@ -701,8 +701,8 @@
   },
   {
     "id": "26",
-    "name": "Hypoallergenic Dog Shampoo",
-    "description": "Hypoallergenic formula perfect for dogs with allergies.",
+    "name": "FERA PET ORGANICS Vitamin Omega 3",
+    "description": "FERA Pet Organics Omega-3 Fish Oil is a premium supplement designed to support your pet's overall health with high concentrations of essential fatty acids..",
     "price": 21.29,
     "discount": 15,
     "rating": 3.7,
@@ -717,7 +717,7 @@
       "hypoallergenic",
       "dog"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/5.png",
+    "image": "https://i.ibb.co/Mxftmnwn/FERA-PET-ORGANICS-Vitamin-Omega-3.jpg",
     "shippingInfo": {
       "freeShipping": true,
       "shippingCost": 0,
@@ -730,8 +730,8 @@
   },
   {
     "id": "27",
-    "name": "Cat Grooming Brush",
-    "description": "Soft-bristle grooming brush for cats.",
+    "name": "Pet Skin Oil",
+    "description": "Give your furry friend the comfort they deserve with this all-natural pet skin oil. Formulated with a gentle blend of plant-based oils like coconut, jojoba, neem, and tea tree, this oil helps soothe irritated skin, reduce itchiness, and promote healing from dryness, hot spots, and minor rashes.",
     "price": 15.34,
     "discount": 10,
     "rating": 5.0,
@@ -746,7 +746,7 @@
       "brush",
       "cat"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/6.png",
+    "image": "https://i.ibb.co/qFLyLbxV/Pet-Skin-Oil.jpg",
     "shippingInfo": {
       "freeShipping": false,
       "shippingCost": 3.53,
@@ -759,12 +759,12 @@
   },
   {
     "id": "28",
-    "name": "Pet Ear Cleaner",
-    "description": "Cleans and deodorizes pet ears safely.",
+    "name": "Pet Suppliment",
+    "description": "Made with vet-approved, high-quality ingredients, it includes Omega-3 & 6 fatty acids, probiotics, antioxidants, and key vitamins like A, D, and E—all tailored to meet the unique dietary needs of both dogs and cats. Whether used daily or as needed, this supplement helps maintain joint flexibility, enhance energy levels, and support heart and brain function..",
     "price": 14.41,
     "discount": 0,
     "rating": 5.0,
-    "totalSold": 698,
+    "totalSold": 1698,
     "availableStock": 90,
     "category": "Accessories",
     "petType": [
@@ -775,7 +775,7 @@
       "cleaner",
       "ear"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/7.png",
+    "image": "https://i.ibb.co/jkpDzKPT/Pet-Suppliment.jpg",
     "shippingInfo": {
       "freeShipping": true,
       "shippingCost": 0,
@@ -788,8 +788,8 @@
   },
   {
     "id": "29",
-    "name": "Puppy Tearless Shampoo",
-    "description": "Tearless formula for puppies, gentle on eyes.",
+    "name": "Cat Vitamin",
+    "description": "Boost your cat’s well-being with this specially crafted vitamin supplement, designed to support a healthy and active lifestyle. Formulated with a blend of vital nutrients including Vitamins A, D, E, B-complex, and Taurine, this supplement promotes strong immunity, healthy vision, heart health, and a glossy coat..",
     "price": 14.21,
     "discount": 5,
     "rating": 3.7,
@@ -804,7 +804,7 @@
       "tearless",
       "puppy"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/8.png",
+    "image": "https://i.ibb.co/MkjLxyts/Cat-Vitamin.jpg",
     "shippingInfo": {
       "freeShipping": false,
       "shippingCost": 2.35,
@@ -817,12 +817,12 @@
   },
   {
     "id": "30",
-    "name": "Dog Deodorizing Spray",
-    "description": "Neutralizes pet odors and leaves coat fresh.",
+    "name": "Pet Carrier",
+    "description": "Travel with ease and keep your pet secure in this stylish, lightweight pet carrier. Designed with durable, breathable materials, it features mesh panels on multiple sides for maximum airflow and visibility, keeping your furry friend calm and comfortable on the go..",
     "price": 20.47,
     "discount": 10,
     "rating": 4.2,
-    "totalSold": 313,
+    "totalSold": 1313,
     "availableStock": 25,
     "category": "Health",
     "petType": [
@@ -833,7 +833,7 @@
       "deodorizing",
       "dog"
     ],
-    "image": "https://i.ibb.co.com/9vQYQmF/9.png",
+    "image": "https://i.ibb.co/0j26KR5B/Pet-Carrier.jpg",
     "shippingInfo": {
       "freeShipping": true,
       "shippingCost": 2.87,
@@ -970,7 +970,7 @@
     "price": 11.19,
     "discount": 15,
     "rating": 4.3,
-    "totalSold": 753,
+    "totalSold": 53,
     "availableStock": 86,
     "category": "Grooming",
     "petType": [
