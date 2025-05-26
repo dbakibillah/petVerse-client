@@ -217,11 +217,11 @@ const ProductDetails = () => {
                     data-aos="fade-up"
                     data-aos-delay="500"
                 >
-                    <div className="space-y-2 px-8 mx-auto">
+                    <div className="space-y-2 mx-auto">
                         <h2 className="text-xl font-semibold mb-2">
                             Product Description
                         </h2>
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        <p className="text-gray-600 dark:text-gray-300 lg:px-8 leading-relaxed">
                             {product.description}
                         </p>
                     </div>
@@ -234,7 +234,7 @@ const ProductDetails = () => {
                     data-aos-delay="600"
                 >
                     <h2 className="text-xl font-semibold mb-4">
-                        Similar Products
+                        You May Also Like
                     </h2>
                     <Swiper
                         modules={[Navigation]}

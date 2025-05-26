@@ -39,7 +39,8 @@ const Bestsellers = ({ products }) => {
                 }}
                 className="px-2"
                 data-aos="zoom-in"
-                data-aos-delay={150}
+                data-aos-easing="ease-in-out"
+                data-aos-delay={300}
                 data-aos-once="false"
             >
                 {topSelling.map((product, idx) => (
