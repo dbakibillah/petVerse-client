@@ -1,4 +1,14 @@
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 const ShopBanner = () => {
+    useEffect(() => {
+        AOS.init({
+            duration: 1500,
+        });
+    }, []);
+
     const bannerImages = [
         {
             img: "https://i.ibb.co/ymd7f4dy/Dog-treats-packaging-Agu-Wu.jpg",
@@ -22,7 +32,11 @@ const ShopBanner = () => {
     return (
         <section className="py-5 flex flex-col md:flex-row items-center justify-between gap-2 md:gap-4">
             {/* Left Main Banner */}
-            <div className="flex-1 relative group rounded-xl overflow-hidden shadow-lg">
+            <div
+                className="flex-1 relative group rounded-xl overflow-hidden shadow-lg"
+                data-aos="fade-right"
+                data-aos-once="false"
+            >
                 <figure>
                     <img
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
@@ -35,17 +49,24 @@ const ShopBanner = () => {
                         {bannerImages[0].label}
                     </h2>
                     <p className="text-sm text-gray-600 dark:text-gray-300">
-                        Tasty & nutritious meals for your feline.
+                        Tasty & nutritious meals for your canine.
                     </p>
                 </div>
             </div>
 
             {/* Right Small Banners */}
-            <div className="flex-1 grid grid-cols-2 gap-2 md:gap-4">
+            <div
+                className="flex-1 grid grid-cols-2 gap-2 md:gap-4"
+                data-aos="fade-left"
+                data-aos-once="false"
+            >
                 {bannerImages.slice(1).map((item, idx) => (
                     <div
                         key={idx}
                         className="relative group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition"
+                        data-aos="zoom-in"
+                        data-aos-delay={idx * 150}
+                        data-aos-once="false"
                     >
                         <figure>
                             <img

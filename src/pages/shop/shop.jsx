@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import ShopBanner from "../../components/shop/ShopBanner";
 import Categories from "../../components/shop/Categories";
 import Bestsellers from "../../components/shop/Bestsellers";
+import { Helmet } from "react-helmet";
 
 const Shop = () => {
     // Fetch products
@@ -39,9 +40,7 @@ const Shop = () => {
     }
     return (
         <section className="container mx-auto p-2 lg:px-24 min-h-screen">
-            {/* <h2 className="text-3xl text-gray-700 dark:text-gray-200">
-                Get The Best Products for Your Furbabies!
-            </h2> */}
+            <Helmet title="petVerse | Shop" />
             <ShopBanner />
             <Bestsellers products={products} />
             <Categories products={products} />

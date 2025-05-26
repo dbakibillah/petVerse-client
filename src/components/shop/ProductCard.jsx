@@ -1,4 +1,3 @@
-// src/components/ProductCard.jsx
 import { Link } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
 
@@ -9,7 +8,7 @@ const ProductCard = ({ product }) => {
         : null;
 
     return (
-        <section className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition transform h-full flex flex-col justify-between my-5 mb-10">
+        <section className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition transform flex flex-col justify-between my-5 mb-10">
             <div className="relative">
                 <figure>
                     <img
@@ -27,7 +26,7 @@ const ProductCard = ({ product }) => {
             <div className="p-4 space-y-2 flex-1 flex flex-col justify-between">
                 <div>
                     <h3 className="text-lg font-bold text-gray-800 dark:text-white">
-                        {product.name}
+                        {product.name.slice(0, 20)}
                     </h3>
 
                     <div className="flex items-center space-x-2">
@@ -45,7 +44,7 @@ const ProductCard = ({ product }) => {
                     </div>
 
                     <p className="text-sm text-gray-600 dark:text-gray-300">
-                        {product.description.slice(0, 70)}...
+                        {product.description.slice(0, 60)}...
                     </p>
                 </div>
 

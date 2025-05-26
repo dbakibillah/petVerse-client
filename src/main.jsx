@@ -12,6 +12,7 @@ import Registration from "./pages/common/Registration";
 import Shop from "./pages/shop/shop";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ProductDetails from "./components/shop/ProductDetails";
+import Home from "./pages/common/Home";
 
 // tanstackQuery
 const queryClient = new QueryClient();
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <h1 className="text-3xl dark:text-white">Home</h1>,
+                element: <Home />,
             },
             {
                 path: "/login",
