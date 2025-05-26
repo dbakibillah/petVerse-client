@@ -3,6 +3,7 @@ import AboutUsSec from "../../components/home/AboutUsSec";
 import PetCareHub from "../../components/home/PetCareHub";
 import OfferNav from "../../components/home/OfferNav";
 import Newsletter from "../../components/home/Newsletter";
+import AdoptionJourney from "../../components/home/AdoptionJourney";
 const Home = () => {
   return (
     <section className="">
@@ -10,6 +11,7 @@ const Home = () => {
       <OfferNav />
       <AboutUsSec />
       <PetCareHub />
+      <AdoptionJourney />
       <Newsletter />
     </section>
   );
