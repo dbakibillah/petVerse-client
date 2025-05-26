@@ -38,7 +38,7 @@ const PetCareHub = () => {
             animation: "fade-up",
         },
         {
-            icon: "https://i.ibb.co/0jq7J0S/pic4.png",
+            icon: "https://i.ibb.co/84QHLF5Y/Pet-grooming-removebg-preview.png",
             title: "Grooming Tips",
             description:
                 "Professional grooming advice to keep your pet looking their best.",
@@ -46,7 +46,7 @@ const PetCareHub = () => {
             animation: "fade-up",
         },
         {
-            icon: "https://i.ibb.co/7QZ3q0J/pic5.png",
+            icon: "https://i.ibb.co/WpHJPB0F/pet-first-aid.png",
             title: "Pet First Aid",
             description:
                 "Essential first aid knowledge every pet owner should have.",
@@ -54,7 +54,7 @@ const PetCareHub = () => {
             animation: "fade-up",
         },
         {
-            icon: "https://i.ibb.co/4W2yX3F/pic6.png",
+            icon: "https://i.ibb.co/5fmxDZz/Behavrioul.png",
             title: "Behavioral Insights",
             description:
                 "Understand and address your pet's behavioral patterns.",
