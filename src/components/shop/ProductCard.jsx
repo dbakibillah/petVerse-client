@@ -71,7 +71,7 @@ const ProductCard = ({ product }) => {
                         </span>
                     </div>
                     <Link to={`/product/${product.id}`}>
-                        <button className="mt-3 w-full bg-primary hover:bg-primary/90 text-white text-sm font-medium py-2 rounded-lg transition">
+                        <button className="mt-3 w-full bg-primary hover:bg-primary/90 text-white text-sm font-medium py-2 rounded-lg transition duration-300 cursor-pointer">
                             View Details
                         </button>
                     </Link>

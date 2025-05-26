@@ -33,7 +33,7 @@ const ShopBanner = () => {
         <section className="py-5 flex flex-col md:flex-row items-center justify-between gap-2 md:gap-4">
             {/* Left Main Banner */}
             <div
-                className="flex-1 relative group rounded-xl overflow-hidden shadow-lg"
+                className="flex-1 relative group rounded-xl overflow-hidden shadow-lg cursor-pointer"
                 data-aos="fade-right"
                 data-aos-once="false"
             >
@@ -63,7 +63,7 @@ const ShopBanner = () => {
                 {bannerImages.slice(1).map((item, idx) => (
                     <div
                         key={idx}
-                        className="relative group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition"
+                        className="relative group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition cursor-pointer"
                         data-aos="zoom-in"
                         data-aos-delay={idx * 150}
                         data-aos-once="false"
