@@ -41,6 +41,7 @@ const Login = () => {
                             text: "You are already registered.",
                             icon: "info",
                         });
+                        navigate("/", { replace: true });
                     } else {
                         await axios.post(
                             "https://medi-camp-server-one.vercel.app/users",

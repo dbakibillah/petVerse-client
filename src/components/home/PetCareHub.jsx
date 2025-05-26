@@ -68,7 +68,7 @@ const PetCareHub = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="text-center pb-12" data-aos="fade-down">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-500 dark:to-indigo-400 mb-4">
+                    <h1 className="text-4xl md:text-5xl lg:text-5xl font-bold text-gray-800 dark:text-white mb-4">
                         Your Complete Pet Care Hub
                     </h1>
                     <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
