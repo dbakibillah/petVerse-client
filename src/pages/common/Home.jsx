@@ -9,8 +9,8 @@ const Home = () => {
             <Helmet title="Petverse | Home" />
             <OfferNav />
             <AboutUsSec />
-                     <PetCareHub />
-                       <Newsletter />
+            <PetCareHub />
+            <Newsletter />
         </section>
     );
 };
