@@ -3,8 +3,10 @@ import ShopBanner from "../../components/shop/ShopBanner";
 import Categories from "../../components/shop/Categories";
 import Bestsellers from "../../components/shop/Bestsellers";
 import { Helmet } from "react-helmet";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Shop = () => {
+    const axiosPublic = useAxiosPublic();
     // Fetch products
     const {
         data: products = [],
@@ -13,10 +15,10 @@ const Shop = () => {
         error,
         refetch,
     } = useQuery({
-        querykey: ["products"],
+        querykey: ["/products"],
         queryFn: async () => {
-            const res = await fetch("./public/products.json");
-            return res.json();
+            const res = await axiosPublic.get("products");
+            return res.data;
         },
     });
 

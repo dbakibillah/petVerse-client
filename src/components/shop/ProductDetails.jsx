@@ -14,9 +14,11 @@ import { Helmet } from "react-helmet";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const ProductDetails = () => {
-    const { productId } = useParams();
+    const { id } = useParams();
+    const axiosPublic = useAxiosPublic();
 
     useEffect(() => {
         AOS.init({ duration: 1500, once: false });
@@ -25,16 +27,24 @@ const ProductDetails = () => {
     }, []);
 
     const {
-        data: productList = [],
+        data: product,
         isLoading,
         isError,
         error,
     } = useQuery({
+        queryKey: ["product", id],
+        queryFn: async () => {
+            const response = await axiosPublic.get(`/product/${id}`);
+            return response.data;
+        },
+    });
+
+    // Optional: fetch all products for related slider
+    const { data: allProducts = [] } = useQuery({
         queryKey: ["products"],
         queryFn: async () => {
-            const res = await fetch("/products.json");
-            if (!res.ok) throw new Error("Failed to fetch product list");
-            return res.json();
+            const response = await axiosPublic.get("/products");
+            return response.data;
         },
     });
 
@@ -46,7 +56,6 @@ const ProductDetails = () => {
             </div>
         );
 
-    const product = productList.find((item) => item.id === productId);
     if (!product)
         return (
             <div className="p-10 text-center text-red-500">
@@ -250,11 +259,11 @@ const ProductDetails = () => {
                         data-aos-delay={150}
                         data-aos-once="false"
                     >
-                        {productList
+                        {allProducts
                             .filter(
                                 (p) =>
                                     p.category === product.category &&
-                                    p.id !== product.id
+                                    p._id !== product._id
                             )
                             .map((p, idx) => (
                                 <SwiperSlide key={idx}>
