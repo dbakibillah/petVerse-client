@@ -1,0 +1,323 @@
+import { useCart } from "../../providers/CartProvider";
+import {
+    FaTrash,
+    FaPlus,
+    FaMinus,
+    FaArrowLeft,
+    FaShoppingCart,
+} from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+const Cart = () => {
+    const {
+        cart,
+        isLoading,
+        removeFromCart,
+        clearCart,
+        updateQuantity,
+        totalItems,
+        totalPrice,
+        refetchCart,
+    } = useCart();
+
+    useEffect(() => {
+        AOS.init({
+            duration: 800,
+            easing: "ease-in-out",
+            once: false,
+            mirror: true,
+        });
+        refetchCart();
+    }, [refetchCart]);
+
+    const handleQuantityChange = (productId, newQuantity) => {
+        if (newQuantity < 1) return;
+        updateQuantity(productId, newQuantity);
+    };
+
+    const handleRemoveItem = (product) => {
+        removeFromCart(product);
+        toast.success("Item removed from cart", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: document.documentElement.classList.contains("dark")
+                ? "dark"
+                : "light",
+        });
+    };
+
+    const handleClearCart = () => {
+        clearCart();
+        toast.success("Cart cleared", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: document.documentElement.classList.contains("dark")
+                ? "dark"
+                : "light",
+        });
+    };
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+                <div
+                    className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary dark:border-primary-400"
+                    data-aos="zoom-in"
+                ></div>
+            </div>
+        );
+    }
+
+    if (!cart || cart.cartItems.length === 0) {
+        return (
+            <section className="min-h-screen py-12 px-4 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+                <div className="max-w-6xl mx-auto">
+                    <div className="text-center py-12" data-aos="fade-up">
+                        <div
+                            className="inline-block p-6 bg-primary/10 dark:bg-primary-400/10 rounded-full mb-6 transition-all duration-300 hover:scale-110 hover:shadow-lg dark:hover:shadow-gray-700/20"
+                            data-aos="zoom-in"
+                            data-aos-delay="100"
+                        >
+                            <FaShoppingCart className="text-4xl text-primary dark:text-primary-400" />
+                        </div>
+                        <h2
+                            className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4"
+                            data-aos="fade-up"
+                            data-aos-delay="200"
+                        >
+                            Your Cart is Empty
+                        </h2>
+                        <p
+                            className="text-gray-600 dark:text-gray-300 mb-8 max-w-md mx-auto"
+                            data-aos="fade-up"
+                            data-aos-delay="300"
+                        >
+                            Looks like you haven't added anything to your cart
+                            yet. Start shopping to discover amazing products!
+                        </p>
+                        <Link
+                            to="/shop"
+                            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-secondary to-primary dark:from-primary-500 dark:to-primary-600 text-white font-medium rounded-lg shadow-md hover:bg-gradient-to-l dark:hover:shadow-primary-500/30 transition-all duration-300 transform hover:-translate-y-1"
+                            data-aos="fade-up"
+                            data-aos-delay="400"
+                        >
+                            <FaArrowLeft className="mr-2" />
+                            Continue Shopping
+                        </Link>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    return (
+        <section className="min-h-screen py-12 px-4 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+            <div className="max-w-6xl mx-auto">
+                <h1
+                    className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-8"
+                    data-aos="fade-right"
+                >
+                    Shopping Cart ({totalItems}{" "}
+                    {totalItems === 1 ? "item" : "items"})
+                </h1>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Cart Items */}
+                    <div className="lg:col-span-2">
+                        <div
+                            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl dark:hover:shadow-gray-700/20"
+                            data-aos="fade-right"
+                            data-aos-delay="100"
+                        >
+                            {/* Cart Header */}
+                            <div className="hidden md:grid grid-cols-12 bg-gray-100 dark:bg-gray-700 p-4 font-medium text-gray-700 dark:text-gray-300">
+                                <div className="col-span-5">Product</div>
+                                <div className="col-span-2 text-center">
+                                    Price
+                                </div>
+                                <div className="col-span-3 text-center">
+                                    Quantity
+                                </div>
+                                <div className="col-span-2 text-right">
+                                    Total
+                                </div>
+                            </div>
+
+                            {/* Cart Items List */}
+                            <div className="divide-y divide-gray-200 dark:divide-gray-700">
+                                {cart.cartItems.map((item, index) => (
+                                    <div
+                                        key={item.productId}
+                                        className="grid grid-cols-12 p-4 items-center hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors duration-200"
+                                        data-aos="fade-up"
+                                        data-aos-delay={100 * index}
+                                    >
+                                        {/* Product Info */}
+                                        <div className="col-span-5 flex items-center space-x-4">
+                                            <div className="w-20 h-20 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 transition-transform duration-300 hover:scale-105">
+                                                <img
+                                                    src={item.productImage}
+                                                    alt={item.productName}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                            <div>
+                                                <h3 className="font-medium text-gray-800 dark:text-gray-100">
+                                                    {item.productName}
+                                                </h3>
+                                                <button
+                                                    onClick={() =>
+                                                        handleRemoveItem(item)
+                                                    }
+                                                    className="text-sm text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 flex items-center mt-1 transition-all duration-200 hover:scale-105"
+                                                >
+                                                    <FaTrash className="mr-1 text-xs" />
+                                                    Remove
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        {/* Price */}
+                                        <div className="col-span-2 text-center text-gray-700 dark:text-gray-300">
+                                            ${item.price}
+                                        </div>
+
+                                        {/* Quantity */}
+                                        <div className="col-span-3 flex items-center justify-center">
+                                            <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden">
+                                                <button
+                                                    onClick={() =>
+                                                        handleQuantityChange(
+                                                            item.productId,
+                                                            item.quantity - 1
+                                                        )
+                                                    }
+                                                    className="px-3 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200 active:scale-95"
+                                                >
+                                                    <FaMinus className="text-xs" />
+                                                </button>
+                                                <span className="px-4 py-1 text-center w-12 dark:text-gray-100">
+                                                    {item.quantity}
+                                                </span>
+                                                <button
+                                                    onClick={() =>
+                                                        handleQuantityChange(
+                                                            item.productId,
+                                                            item.quantity + 1
+                                                        )
+                                                    }
+                                                    className="px-3 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200 active:scale-95"
+                                                >
+                                                    <FaPlus className="text-xs" />
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        {/* Total */}
+                                        <div className="col-span-2 text-right font-medium text-gray-800 dark:text-gray-100">
+                                            ${item.price * item.quantity}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Clear Cart Button */}
+                            <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end">
+                                <button
+                                    onClick={handleClearCart}
+                                    className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 flex items-center transition-all duration-200 hover:scale-105"
+                                    data-aos="fade-left"
+                                >
+                                    <FaTrash className="mr-2" />
+                                    Clear Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Order Summary */}
+                    <div>
+                        <div
+                            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 sticky top-4 transition-all duration-300 hover:shadow-xl dark:hover:shadow-gray-700/20"
+                            data-aos="fade-left"
+                            data-aos-delay="200"
+                        >
+                            <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+                                Order Summary
+                            </h2>
+
+                            <div className="space-y-4 mb-6">
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600 dark:text-gray-300">
+                                        Subtotal
+                                    </span>
+                                    <span className="font-medium dark:text-gray-100">
+                                        ${totalPrice}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600 dark:text-gray-300">
+                                        Shipping
+                                    </span>
+                                    <span className="font-medium dark:text-gray-100">
+                                        Free
+                                    </span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600 dark:text-gray-300">
+                                        Tax
+                                    </span>
+                                    <span className="font-medium dark:text-gray-100">
+                                        Calculated at checkout
+                                    </span>
+                                </div>
+                                <div className="border-t border-gray-200 dark:border-gray-700 pt-4 flex justify-between">
+                                    <span className="font-bold text-lg text-gray-800 dark:text-gray-100">
+                                        Total
+                                    </span>
+                                    <span className="font-bold text-lg text-primary dark:text-primary-400">
+                                        ${totalPrice}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <button
+                                className="w-full bg-gradient-to-r from-secondary to-primary dark:from-primary-500 dark:to-primary-600 text-white py-3 rounded-lg font-medium shadow-md hover:bg-gradient-to-l dark:hover:shadow-primary-500/30 transition-all duration-300 hover:scale-102 active:scale-95 mb-4"
+                                data-aos="zoom-in"
+                                data-aos-delay="300"
+                            >
+                                Proceed to Checkout
+                            </button>
+
+                            <Link
+                                to="/shop"
+                                className="flex items-center justify-center text-primary hover:text-primary-dark dark:text-primary-400 dark:hover:text-primary-300 font-medium transition-colors duration-200"
+                                data-aos="fade-up"
+                                data-aos-delay="400"
+                            >
+                                <FaArrowLeft className="mr-2" />
+                                Continue Shopping
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+export default Cart;

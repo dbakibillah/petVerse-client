@@ -13,6 +13,9 @@ import Shop from "./pages/shop/shop";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ProductDetails from "./components/shop/ProductDetails";
 import Home from "./pages/common/Home";
+import Cart from "./pages/cart/Cart";
+import { CartProvider } from "./providers/CartProvider";
+import { ToastContainer } from "react-toastify";
 
 // tanstackQuery
 const queryClient = new QueryClient();
@@ -42,6 +45,10 @@ const router = createBrowserRouter([
                 path: "/product/:id",
                 element: <ProductDetails />,
             },
+            {
+                path: "/cart",
+                element: <Cart />,
+            },
         ],
     },
 ]);
@@ -51,9 +58,12 @@ createRoot(document.getElementById("root")).render(
         <ThemeProvider>
             <QueryClientProvider client={queryClient}>
                 <AuthProvider>
-                    <RouterProvider router={router} />
+                    <CartProvider>
+                        <RouterProvider router={router} />
+                    </CartProvider>
                 </AuthProvider>
             </QueryClientProvider>
         </ThemeProvider>
+        <ToastContainer />
     </StrictMode>
 );

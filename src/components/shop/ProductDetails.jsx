@@ -15,10 +15,21 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useCart } from "../../providers/CartProvider";
 
 const ProductDetails = () => {
     const { id } = useParams();
     const axiosPublic = useAxiosPublic();
+
+    const {
+        cart,
+        addToCart,
+        updateCart,
+        updateQuantity,
+        removeFromCart,
+        clearCart,
+        refetchCart,
+    } = useCart();
 
     useEffect(() => {
         AOS.init({ duration: 1500, once: false });
@@ -30,6 +41,7 @@ const ProductDetails = () => {
         data: product,
         isLoading,
         isError,
+        refetch,
         error,
     } = useQuery({
         queryKey: ["product", id],
@@ -67,7 +79,34 @@ const ProductDetails = () => {
     const discountedPrice = hasDiscount
         ? (product.price - (product.price * product.discount) / 100).toFixed(2)
         : null;
+    const handleAddToCart = async () => {
+        if (!cart?.email) {
+            const success = await addToCart(product);
+            if (success) {
+                await refetchCart();
+            }
+        } else if (
+            cart.cartItems.find((item) => item.productId === product._id)
+        ) {
+            const success = await updateQuantity(product);
+            if (success) {
+                await refetchCart();
+            }
+        } else {
+            const success = await updateCart(product);
+            if (success) {
+                await refetchCart();
+            }
+        }
+    };
 
+    const handleRemoveFromCart = async () => {
+        // const success = await removeFromCart(product);
+        const success = await clearCart(product);
+        if (success) {
+            await refetchCart();
+        }
+    };
     return (
         <section className="min-h-screen dark:bg-gray-900 text-gray-800 dark:text-white">
             <Helmet>
@@ -210,10 +249,16 @@ const ProductDetails = () => {
                             data-aos="zoom-in"
                             data-aos-delay="400"
                         >
-                            <button className="flex-1 py-3 bg-gradient-to-r from-secondary to-primary hover:from-primary hover:to-secondary text-white rounded-lg font-semibold transition">
+                            <button
+                                onClick={handleRemoveFromCart}
+                                className="flex-1 py-3 bg-gradient-to-r from-secondary to-primary hover:from-primary hover:to-secondary text-white rounded-lg font-semibold transition"
+                            >
                                 Buy Now
                             </button>
-                            <button className="w-12 h-12 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center justify-center text-xl">
+                            <button
+                                onClick={handleAddToCart}
+                                className="w-12 h-12 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center justify-center text-xl"
+                            >
                                 <BsCart3 />
                             </button>
                         </div>
