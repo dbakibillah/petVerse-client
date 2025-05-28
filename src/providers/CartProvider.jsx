@@ -39,7 +39,15 @@ export const CartProvider = ({ children }) => {
                     }
                 );
             } catch (error) {
-                toast.error(`Failed to fetch cart: ${error.message}`);
+                toast(error.response?.data?.message || "Failed to fetch cart", {
+                    type: "error",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
                 resetCart();
             } finally {
                 setIsLoading(false);
@@ -66,7 +74,15 @@ export const CartProvider = ({ children }) => {
 
     const addToCart = async (product) => {
         if (!user?.email) {
-            toast.info("Please login to add items to cart");
+            toast("Please login to add to cart", {
+                type: "info",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
             return false;
         }
 
@@ -100,13 +116,29 @@ export const CartProvider = ({ children }) => {
             });
 
             setCart(response.data);
-            toast.success("Item added to cart");
+            toast("Item added to cart", {
+                type: "success",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
             return true;
         } catch (error) {
             console.error(error);
-            toast.error(
-                error.response?.data?.message || "Failed to add to cart"
-            );
+            toast("Failed to add item to cart", {
+                type: "error",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
             return false;
         } finally {
             setIsLoading(false);
@@ -135,11 +167,29 @@ export const CartProvider = ({ children }) => {
             });
 
             setCart(response.data);
-            toast.success("Item added to cart");
+            toast("Item updated in cart", {
+                type: "success",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
             return true;
         } catch (error) {
             console.error("Error updating cart:", error);
-            toast.error("Failed to add item to cart");
+            toast("Failed to update item in cart", {
+                type: "error",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
             return false;
         }
     };
