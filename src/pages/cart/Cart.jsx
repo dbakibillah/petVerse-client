@@ -19,6 +19,7 @@ const Cart = () => {
         removeFromCart,
         clearCart,
         updateQuantity,
+        decreaseQuantity,
         totalItems,
         totalPrice,
         refetchCart,
@@ -34,9 +35,42 @@ const Cart = () => {
         refetchCart();
     }, [refetchCart]);
 
-    const handleQuantityChange = (productId, newQuantity) => {
-        if (newQuantity < 1) return;
-        updateQuantity(productId, newQuantity);
+    // Calculate total discount
+    const totalDiscount =
+        cart?.cartItems?.reduce((sum, item) => {
+            if (item.discount > 0) {
+                const originalPrice = item.unitPrice * item.quantity;
+                const discountedPrice = item.price;
+                return sum + (originalPrice - discountedPrice);
+            }
+            return sum;
+        }, 0) || 0;
+
+    // Calculate subtotal before any discounts
+    const subtotalBeforeDiscount =
+        cart?.cartItems?.reduce((sum, item) => {
+            return sum + item.unitPrice * item.quantity;
+        }, 0) || 0;
+
+    // Destructure shipping info from cart or provide defaults
+    const shippingInfo = cart?.shippingInfo || {
+        freeShipping: false,
+        shippingCost: 5.99,
+        estimatedDelivery: "2-4 business days",
+    };
+
+    // Calculate final total
+    const finalTotal =
+        subtotalBeforeDiscount -
+        totalDiscount +
+        (shippingInfo.freeShipping ? 0 : shippingInfo.shippingCost);
+
+    const handleupdateQuantity = (product) => {
+        updateQuantity(product);
+    };
+
+    const handleDecreaseQuantity = (product) => {
+        decreaseQuantity(product);
     };
 
     const handleRemoveItem = (product) => {
@@ -193,7 +227,29 @@ const Cart = () => {
 
                                         {/* Price */}
                                         <div className="col-span-2 text-center text-gray-700 dark:text-gray-300">
-                                            ${item.price}
+                                            {item.discount > 0 ? (
+                                                <>
+                                                    <span className="line-through text-gray-400 dark:text-gray-500 mr-2">
+                                                        $
+                                                        {item.unitPrice.toFixed(
+                                                            2
+                                                        )}
+                                                    </span>
+                                                    <span>
+                                                        $
+                                                        {(
+                                                            item.unitPrice *
+                                                            (1 -
+                                                                item.discount /
+                                                                    100)
+                                                        ).toFixed(2)}
+                                                    </span>
+                                                </>
+                                            ) : (
+                                                <span>
+                                                    ${item.unitPrice.toFixed(2)}
+                                                </span>
+                                            )}
                                         </div>
 
                                         {/* Quantity */}
@@ -201,9 +257,8 @@ const Cart = () => {
                                             <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden">
                                                 <button
                                                     onClick={() =>
-                                                        handleQuantityChange(
-                                                            item.productId,
-                                                            item.quantity - 1
+                                                        handleDecreaseQuantity(
+                                                            item
                                                         )
                                                     }
                                                     className="px-3 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200 active:scale-95"
@@ -215,9 +270,8 @@ const Cart = () => {
                                                 </span>
                                                 <button
                                                     onClick={() =>
-                                                        handleQuantityChange(
-                                                            item.productId,
-                                                            item.quantity + 1
+                                                        handleupdateQuantity(
+                                                            item
                                                         )
                                                     }
                                                     className="px-3 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200 active:scale-95"
@@ -229,7 +283,7 @@ const Cart = () => {
 
                                         {/* Total */}
                                         <div className="col-span-2 text-right font-medium text-gray-800 dark:text-gray-100">
-                                            ${item.price * item.quantity}
+                                            ${item.price.toFixed(2)}
                                         </div>
                                     </div>
                                 ))}
@@ -263,34 +317,52 @@ const Cart = () => {
                             <div className="space-y-4 mb-6">
                                 <div className="flex justify-between">
                                     <span className="text-gray-600 dark:text-gray-300">
-                                        Subtotal
+                                        Subtotal ({totalItems} items)
                                     </span>
                                     <span className="font-medium dark:text-gray-100">
-                                        ${totalPrice}
+                                        ${subtotalBeforeDiscount.toFixed(2)}
                                     </span>
                                 </div>
+
+                                {totalDiscount > 0 && (
+                                    <div className="flex justify-between">
+                                        <span className="text-gray-600 dark:text-gray-300">
+                                            Discounts Applied
+                                        </span>
+                                        <span className="font-medium text-green-600 dark:text-green-400">
+                                            -${totalDiscount.toFixed(2)}
+                                        </span>
+                                    </div>
+                                )}
+
                                 <div className="flex justify-between">
                                     <span className="text-gray-600 dark:text-gray-300">
                                         Shipping
                                     </span>
                                     <span className="font-medium dark:text-gray-100">
-                                        Free
+                                        {shippingInfo.freeShipping
+                                            ? "Free Shipping"
+                                            : `$${shippingInfo.shippingCost.toFixed(
+                                                  2
+                                              )}`}
                                     </span>
                                 </div>
+
                                 <div className="flex justify-between">
                                     <span className="text-gray-600 dark:text-gray-300">
-                                        Tax
+                                        Estimated Delivery
                                     </span>
                                     <span className="font-medium dark:text-gray-100">
-                                        Calculated at checkout
+                                        {shippingInfo.estimatedDelivery}
                                     </span>
                                 </div>
+
                                 <div className="border-t border-gray-200 dark:border-gray-700 pt-4 flex justify-between">
                                     <span className="font-bold text-lg text-gray-800 dark:text-gray-100">
                                         Total
                                     </span>
                                     <span className="font-bold text-lg text-primary dark:text-primary-400">
-                                        ${totalPrice}
+                                        ${finalTotal.toFixed(2)}
                                     </span>
                                 </div>
                             </div>

@@ -41,6 +41,7 @@ export const CartProvider = ({ children }) => {
             } catch (error) {
                 toast(error.response?.data?.message || "Failed to fetch cart", {
                     type: "error",
+                    position: "top-center",
                     autoClose: 3000,
                     hideProgressBar: false,
                     closeOnClick: true,
@@ -76,6 +77,7 @@ export const CartProvider = ({ children }) => {
         if (!user?.email) {
             toast("Please login to add to cart", {
                 type: "info",
+                position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -93,6 +95,8 @@ export const CartProvider = ({ children }) => {
                 productId: product._id,
                 productName: product.name,
                 productImage: product.image,
+                unitPrice: product.price,
+                discount: product.discount,
                 quantity: 1,
                 price: parseFloat(
                     (
@@ -100,6 +104,7 @@ export const CartProvider = ({ children }) => {
                         (product.price * product.discount) / 100
                     ).toFixed(2)
                 ),
+                shippingInfo: product.shippingInfo,
                 addedAt: new Date().toLocaleString(),
             };
 
@@ -118,6 +123,7 @@ export const CartProvider = ({ children }) => {
             setCart(response.data);
             toast("Item added to cart", {
                 type: "success",
+                position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -131,6 +137,7 @@ export const CartProvider = ({ children }) => {
             console.error(error);
             toast("Failed to add item to cart", {
                 type: "error",
+                position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -150,6 +157,8 @@ export const CartProvider = ({ children }) => {
             productId: product._id,
             productName: product.name,
             productImage: product.image,
+            unitPrice: product.price,
+            discount: product.discount,
             quantity: 1,
             price: parseFloat(
                 (
@@ -157,6 +166,7 @@ export const CartProvider = ({ children }) => {
                     (product.price * product.discount) / 100
                 ).toFixed(2)
             ),
+            shippingInfo: product.shippingInfo,
             addedAt: new Date().toISOString(), // Prefer ISO format for backend
         };
 
@@ -169,6 +179,7 @@ export const CartProvider = ({ children }) => {
             setCart(response.data);
             toast("Item updated in cart", {
                 type: "success",
+                position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -182,6 +193,7 @@ export const CartProvider = ({ children }) => {
             console.error("Error updating cart:", error);
             toast("Failed to update item in cart", {
                 type: "error",
+                position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -197,7 +209,37 @@ export const CartProvider = ({ children }) => {
     const updateQuantity = async (product) => {
         await axiosPublic.patch("/carts/increase", {
             email: user.email,
-            productId: product._id,
+            productId: product.productId || product._id,
+        });
+        toast("Item Added", {
+            type: "success",
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+        fetchCart();
+    };
+
+    const decreaseQuantity = async (product) => {
+        await axiosPublic.patch("/carts/decrease", {
+            email: user.email,
+            productId: product.productId || product._id,
+        });
+        toast("Item Decreased", {
+            type: "success",
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
         });
         fetchCart();
     };
@@ -209,12 +251,34 @@ export const CartProvider = ({ children }) => {
                 productId: product._id || product.productId,
             },
         });
+        toast("Item removed from cart", {
+            type: "success",
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
         fetchCart();
     };
 
     const clearCart = async () => {
         await axiosPublic.delete("/carts/clear", {
             data: { email: user.email },
+        });
+        toast("Cart cleared", {
+            type: "success",
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
         });
         fetchCart();
     };
@@ -232,6 +296,7 @@ export const CartProvider = ({ children }) => {
         updateCart,
         removeFromCart,
         updateQuantity,
+        decreaseQuantity,
         clearCart,
         getItem,
         totalItems: cart.totalItems,

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
 import { BsCart3 } from "react-icons/bs";
 import { FaShippingFast } from "react-icons/fa";
@@ -20,14 +20,13 @@ import { useCart } from "../../providers/CartProvider";
 const ProductDetails = () => {
     const { id } = useParams();
     const axiosPublic = useAxiosPublic();
+    const navigate = useNavigate();
 
     const {
         cart,
         addToCart,
         updateCart,
         updateQuantity,
-        removeFromCart,
-        clearCart,
         refetchCart,
     } = useCart();
 
@@ -100,12 +99,9 @@ const ProductDetails = () => {
         }
     };
 
-    const handleRemoveFromCart = async () => {
-        // const success = await removeFromCart(product);
-        const success = await clearCart(product);
-        if (success) {
-            await refetchCart();
-        }
+    const handleBuyNow = async () => {
+        handleAddToCart();
+        navigate("/cart");
     };
     return (
         <section className="min-h-screen dark:bg-gray-900 text-gray-800 dark:text-white">
@@ -250,7 +246,7 @@ const ProductDetails = () => {
                             data-aos-delay="400"
                         >
                             <button
-                                onClick={handleRemoveFromCart}
+                                onClick={handleBuyNow}
                                 className="flex-1 py-3 bg-gradient-to-r from-secondary to-primary hover:from-primary hover:to-secondary text-white rounded-lg font-semibold transition"
                             >
                                 Buy Now
