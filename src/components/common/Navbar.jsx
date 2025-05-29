@@ -71,7 +71,7 @@ const Navbar = () => {
             {user && (
                 <li>
                     <NavLink
-                        to="/feedbacks"
+                        to="/forum"
                         className={({ isActive }) =>
                             isActive
                                 ? "text-primary font-bold hover:scale-105 transition-transform"
