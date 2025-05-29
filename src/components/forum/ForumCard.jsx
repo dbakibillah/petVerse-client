@@ -3,20 +3,25 @@ import {
     HiOutlineChatAlt2,
     HiOutlineUserCircle,
     HiOutlineHeart,
-    HiOutlineBookmark,
 } from "react-icons/hi";
 import { formatDistanceToNow } from "date-fns";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { toast } from "react-toastify";
+import CommentsContainer from "./CommentsContainer";
 
-const ForumCard = ({ post }) => {
+const ForumCard = ({ post, refetch }) => {
     const axiosPublic = useAxiosPublic();
     const { user } = useContext(AuthContext);
     const [liked, setLiked] = useState(
         post.likedBy?.includes(user?.email) || false
     );
     const [likesCount, setLikesCount] = useState(post.likesCount || 0);
+
+    const [showCommentForm, setShowCommentForm] = useState(false);
+    const [commentText, setCommentText] = useState("");
+    const [comments, setComments] = useState(post.comments || []);
 
     const formattedDate = formatDistanceToNow(new Date(post.createdAt), {
         addSuffix: true,
@@ -43,6 +48,46 @@ const ForumCard = ({ post }) => {
         } catch (error) {
             console.error("Error toggling like:", error);
         }
+    };
+
+    const handleCommentSubmit = async (e) => {
+        e.preventDefault();
+        if (!commentText.trim() || !user) return;
+
+        const newComment = {
+            userName: user.displayName,
+            userImg: user.photoURL,
+            comment: commentText,
+            time: new Date().toLocaleString(),
+        };
+        try {
+            const response = await axiosPublic.patch(
+                `/threads/comment/${post._id}`,
+                { newComment }
+            );
+
+            if (response.data.success) {
+                setComments((prev) => [...prev, newComment]);
+                setCommentText("");
+                setShowCommentForm(false);
+
+                toast.success("Comment added successfully", {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: document.documentElement.classList.contains("dark")
+                        ? "dark"
+                        : "light",
+                });
+            }
+        } catch (error) {
+            console.error("Failed to submit comment:", error);
+        }
+        refetch();
     };
 
     return (
@@ -145,12 +190,40 @@ const ForumCard = ({ post }) => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <button className="flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary font-medium text-sm rounded-lg transition-all duration-200 hover:shadow-sm active:scale-95">
+                    <button
+                        onClick={() => setShowCommentForm(!showCommentForm)}
+                        className="flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary font-medium text-sm rounded-lg transition-all duration-200 hover:shadow-sm active:scale-95"
+                    >
                         <HiOutlineCheckCircle className="w-5 h-5" />
                         <span>Add Response</span>
                     </button>
                 </div>
             </div>
+
+            <div>
+                {showCommentForm && (
+                    <form
+                        onSubmit={handleCommentSubmit}
+                        className="mt-4 flex flex-col gap-2"
+                    >
+                        <textarea
+                            rows="3"
+                            value={commentText}
+                            onChange={(e) => setCommentText(e.target.value)}
+                            placeholder="Write your comment..."
+                            className="w-full p-2 border rounded-lg focus:outline-primary"
+                        />
+                        <button
+                            onClick={handleCommentSubmit}
+                            type="submit"
+                            className="self-end bg-primary text-white px-4 py-1.5 rounded-md hover:bg-primary/90 transition-all"
+                        >
+                            Submit Comment
+                        </button>
+                    </form>
+                )}
+            </div>
+            <CommentsContainer comments={comments} />
         </article>
     );
 };
