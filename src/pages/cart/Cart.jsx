@@ -21,7 +21,6 @@ const Cart = () => {
         updateQuantity,
         decreaseQuantity,
         totalItems,
-        totalPrice,
         refetchCart,
     } = useCart();
 
@@ -116,7 +115,8 @@ const Cart = () => {
         );
     }
 
-    if (!cart ) {
+
+    if (!cart) {
         return (
             <section className="min-h-screen py-12 px-4 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
                 <div className="max-w-6xl mx-auto">
