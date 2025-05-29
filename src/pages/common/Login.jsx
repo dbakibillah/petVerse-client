@@ -7,8 +7,11 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../providers/AuthProviders";
 import axios from "axios";
 import { Helmet } from "react-helmet";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Login = () => {
+    const axiosPublic = useAxiosPublic();
+
     const {
         register,
         handleSubmit,
@@ -32,8 +35,8 @@ const Login = () => {
                 };
 
                 try {
-                    const response = await axios.get(
-                        `https://medi-camp-server-one.vercel.app/user?email=${user.email}`
+                    const response = await axiosPublic.get(
+                        `user?email=${user.email}`
                     );
                     if (response.data.exists) {
                         Swal.fire({
@@ -41,16 +44,18 @@ const Login = () => {
                             text: "You are already registered.",
                             icon: "info",
                         });
-                        navigate("/", { replace: true });
+                        navigate(location.state?.from?.pathname || "/", {
+                            replace: true,
+                        });
                     } else {
-                        await axios.post(
-                            "https://medi-camp-server-one.vercel.app/users",
-                            newUser
-                        );
+                        await axiosPublic.post("users", newUser);
                         Swal.fire({
                             title: "Good job!",
                             text: "Registration successfully with Google!",
                             icon: "success",
+                        });
+                        navigate(location.state?.from?.pathname || "/", {
+                            replace: true,
                         });
                     }
                     navigate(location.state?.from?.pathname || "/", {

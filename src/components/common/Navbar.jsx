@@ -1,12 +1,14 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
     BsCart3,
-    BsGrid3X3Gap, // Dashboard icon
-    BsBoxArrowRight, // Logout icon
-    BsList, // Mobile menu icon
+    BsGrid3X3Gap,
+    BsBoxArrowRight,
+    BsList,
+    BsChevronDown,
 } from "react-icons/bs";
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
+import { IoMdArrowDropdown } from "react-icons/io";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../providers/AuthProviders";
 import { ThemeContext } from "../../providers/ThemeProvider";
@@ -16,6 +18,8 @@ const Navbar = () => {
     const { user, signOutUser } = useContext(AuthContext);
     const { darkMode, setDarkMode } = useContext(ThemeContext);
     const { cart, totalItems } = useCart();
+    const [servicesOpen, setServicesOpen] = useState(false);
+
     const handleToggleDarkMode = () => {
         setDarkMode(!darkMode);
     };
@@ -42,15 +46,25 @@ const Navbar = () => {
             });
     };
 
+    const services = [
+        { name: "Web Development", path: "/services/web", icon: "💻" },
+        { name: "UI/UX Design", path: "/services/design", icon: "🎨" },
+        { name: "SEO Optimization", path: "/services/seo", icon: "🔍" },
+        { name: "Mobile Apps", path: "/services/mobile", icon: "📱" },
+        { name: "Consulting", path: "/services/consulting", icon: "💡" },
+    ];
+
     const links = (
         <>
             <li>
                 <NavLink
                     to="/"
                     className={({ isActive }) =>
-                        isActive
-                            ? "text-primary font-bold hover:scale-105 transition-transform"
-                            : "text-black dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors"
+                        `px-3 py-2 rounded-lg transition-all text-sm ${
+                            isActive
+                                ? "text-primary font-semibold bg-primary/10"
+                                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        }`
                     }
                 >
                     Home
@@ -60,9 +74,11 @@ const Navbar = () => {
                 <NavLink
                     to="/shop"
                     className={({ isActive }) =>
-                        isActive
-                            ? "text-primary font-bold hover:scale-105 transition-transform"
-                            : "text-black dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors"
+                        `px-3 py-2 rounded-lg transition-all text-sm ${
+                            isActive
+                                ? "text-primary font-semibold bg-primary/10"
+                                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        }`
                     }
                 >
                     Shop
@@ -73,34 +89,68 @@ const Navbar = () => {
                     <NavLink
                         to="/forum"
                         className={({ isActive }) =>
-                            isActive
-                                ? "text-primary font-bold hover:scale-105 transition-transform"
-                                : "text-black dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors"
+                            `px-3 py-2 rounded-lg transition-all text-sm ${
+                                isActive
+                                    ? "text-primary font-semibold bg-primary/10"
+                                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                            }`
                         }
                     >
                         Forum
                     </NavLink>
                 </li>
             )}
-            <li>
-                <NavLink
-                    to="/about"
-                    className={({ isActive }) =>
-                        isActive
-                            ? "text-primary font-bold hover:scale-105 transition-transform"
-                            : "text-black dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors"
-                    }
+            <li className="relative group">
+                <button
+                    onClick={() => setServicesOpen(!servicesOpen)}
+                    className={`flex items-center gap-1 px-3 py-2 rounded-lg transition-all text-sm ${
+                        servicesOpen
+                            ? "text-primary font-semibold bg-primary/10"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    }`}
                 >
                     Services
-                </NavLink>
+                    <IoMdArrowDropdown
+                        className={`transition-transform duration-200 ${
+                            servicesOpen ? "rotate-180" : ""
+                        }`}
+                    />
+                </button>
+                <div
+                    className={`absolute left-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 dark:divide-gray-700 rounded-lg bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition-all duration-300 ${
+                        servicesOpen
+                            ? "opacity-100 scale-100"
+                            : "opacity-0 scale-95 pointer-events-none"
+                    }`}
+                >
+                    {services.map((service) => (
+                        <NavLink
+                            key={service.path}
+                            to={service.path}
+                            className={({ isActive }) =>
+                                `flex items-center px-4 py-3 text-sm ${
+                                    isActive
+                                        ? "bg-primary/10 text-primary"
+                                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                } transition-colors first:rounded-t-lg last:rounded-b-lg`
+                            }
+                            onClick={() => setServicesOpen(false)}
+                        >
+                            <span className="mr-2 text-lg">{service.icon}</span>
+                            {service.name}
+                        </NavLink>
+                    ))}
+                </div>
             </li>
             <li>
                 <NavLink
                     to="/pet-care"
                     className={({ isActive }) =>
-                        isActive
-                            ? "text-primary font-bold hover:scale-105 transition-transform"
-                            : "text-black dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors"
+                        `px-3 py-2 rounded-lg transition-all text-sm ${
+                            isActive
+                                ? "text-primary font-semibold bg-primary/10"
+                                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        }`
                     }
                 >
                     Pet Care
@@ -122,7 +172,7 @@ const Navbar = () => {
                         </label>
                         <ul
                             tabIndex={0}
-                            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-lg bg-white dark:bg-gray-800 rounded-box w-52 space-y-2"
+                            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-xl bg-white dark:bg-gray-800 rounded-box w-64 space-y-1 border border-gray-100 dark:border-gray-700"
                         >
                             {links}
                         </ul>
@@ -140,9 +190,7 @@ const Navbar = () => {
                 </div>
 
                 <div className="navbar-center hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1 space-x-2">
-                        {links}
-                    </ul>
+                    <ul className="flex items-center space-x-1">{links}</ul>
                 </div>
 
                 <div className="navbar-end space-x-4">

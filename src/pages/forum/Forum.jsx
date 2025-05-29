@@ -51,6 +51,8 @@ const Forum = () => {
                                 key={post.id}
                                 className="hover:bg-gray-50 transition-colors duration-200"
                                 data-aos="fade-up"
+                                data-aos-easing="ease-in-out"
+                                data-aos-mirror="true"
                                 data-aos-delay={150 * (index % 5)}
                             >
                                 <ForumCard post={post} refetch={refetch} />

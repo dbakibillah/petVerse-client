@@ -17,6 +17,7 @@ import Cart from "./pages/cart/Cart";
 import { CartProvider } from "./providers/CartProvider";
 import { ToastContainer } from "react-toastify";
 import Forum from "./pages/forum/Forum";
+import UserProfile from "./pages/user/UserProfile";
 
 // tanstackQuery
 const queryClient = new QueryClient();
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
             {
                 path: "/forum",
                 element: <Forum />,
+            },
+            {
+                path: "/profile",
+                element: <UserProfile />,
             },
         ],
     },
