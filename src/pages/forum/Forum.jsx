@@ -31,11 +31,11 @@ const Forum = () => {
         <section className="container mx-auto py-8 flex flex-col md:flex-row gap-6 max-w-7xl">
             {/* Left Sidebar */}
             <div
-                className="hidden md:block sticky top-20 h-[calc(100vh-4rem)]"
+                className="hidden lg:block sticky top-20 h-[calc(100vh-4rem)]"
                 data-aos="fade-right"
                 data-aos-delay="150"
             >
-                <LeftSideBar posts={posts} />
+                <LeftSideBar posts={posts} refetch={refetch} />
             </div>
             {/* Main Content */}
             <main className="flex-1">
@@ -68,7 +68,7 @@ const Forum = () => {
                 data-aos="fade-left"
                 data-aos-delay="150"
             >
-                <RightSideBar posts={posts} />
+                <RightSideBar posts={posts} refetch={refetch} />
             </div>
         </section>
     );

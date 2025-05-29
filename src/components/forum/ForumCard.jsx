@@ -48,6 +48,7 @@ const ForumCard = ({ post, refetch }) => {
         } catch (error) {
             console.error("Error toggling like:", error);
         }
+        refetch();
     };
 
     const handleCommentSubmit = async (e) => {

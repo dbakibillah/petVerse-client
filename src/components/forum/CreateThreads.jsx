@@ -91,24 +91,24 @@ const CreateThreads = ({ refetch }) => {
     };
 
     return (
-        <section className="max-w-5xl mx-auto">
+        <section className="max-w-7xl mx-auto max-sm:px-2 ">
             {/* Header with gradient background */}
-            <div className="flex justify-between items-center p-6 bg-gradient-to-r from-green-100 to-blue-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-sm mb-4">
-                <div>
-                    <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 sm:p-6 bg-gradient-to-r from-green-100 to-blue-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-sm mb-4 gap-4 sm:gap-0">
+                <div className="w-full sm:w-auto">
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white">
                         Welcome to the Forum
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-300 mt-1">
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mt-1">
                         Share your knowledge and connect with others
                     </p>
                 </div>
                 <button
                     onClick={() => setShowForm(true)}
-                    className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white px-6 py-3 rounded-xl font-medium shadow-lg transition-all duration-300 hover:shadow-xl flex items-center gap-2"
+                    className="w-full sm:w-auto bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-medium shadow-lg transition-all duration-300 hover:shadow-xl flex items-center justify-center gap-2 text-sm sm:text-base"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
+                        className="h-4 w-4 sm:h-5 sm:w-5"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                     >
@@ -124,42 +124,42 @@ const CreateThreads = ({ refetch }) => {
 
             {/* Modal Form */}
             {showForm && (
-                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4">
-                    <div className="bg-white dark:bg-gray-900 w-full max-w-xl rounded-xl shadow-lg p-6 relative animate-fadeIn">
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6">
+                    <div className="bg-white dark:bg-gray-900 w-full max-w-2xl rounded-xl shadow-lg p-4 sm:p-6 relative animate-fadeIn overflow-y-auto max-h-[90vh]">
                         <button
                             onClick={() => setShowForm(false)}
-                            className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl"
+                            className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-xl"
                             disabled={isSubmitting}
                         >
                             &times;
                         </button>
 
-                        <div className="flex items-center gap-4 mb-6">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
                             <img
                                 src={
                                     user?.photoURL ||
                                     "https://i.pravatar.cc/150?img=3"
                                 }
                                 alt="Author"
-                                className="w-12 h-12 rounded-full object-cover"
+                                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
                             />
                             <div>
-                                <p className="font-semibold text-lg text-gray-800 dark:text-white">
+                                <p className="font-semibold text-base sm:text-lg text-gray-800 dark:text-white">
                                     {user?.displayName}
                                 </p>
-                                <p className="text-sm text-gray-500">
+                                <p className="text-xs sm:text-sm text-gray-500">
                                     {user?.email}
                                 </p>
                             </div>
                         </div>
 
-                        <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">
+                        <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-800 dark:text-white">
                             Start a New Thread
                         </h2>
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                                <label className="block text-xs sm:text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
                                     Post Title *
                                 </label>
                                 <input
@@ -170,12 +170,12 @@ const CreateThreads = ({ refetch }) => {
                                     required
                                     disabled={isSubmitting}
                                     placeholder="e.g. How to track my pet's health?"
-                                    className="w-full border border-gray-300 dark:border-gray-700 rounded-md p-3 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-70"
+                                    className="w-full border border-gray-300 dark:border-gray-700 rounded-md p-2 sm:p-3 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-70 text-sm sm:text-base"
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                                <label className="block text-xs sm:text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
                                     Description *
                                 </label>
                                 <textarea
@@ -186,12 +186,12 @@ const CreateThreads = ({ refetch }) => {
                                     disabled={isSubmitting}
                                     rows={5}
                                     placeholder="Share your thoughts, questions, or ideas here..."
-                                    className="w-full border border-gray-300 dark:border-gray-700 rounded-md p-3 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-70"
+                                    className="w-full border border-gray-300 dark:border-gray-700 rounded-md p-2 sm:p-3 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-70 text-sm sm:text-base"
                                 ></textarea>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                                <label className="block text-xs sm:text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
                                     Tags (comma separated)
                                 </label>
                                 <input
@@ -201,12 +201,12 @@ const CreateThreads = ({ refetch }) => {
                                     onChange={handleChange}
                                     disabled={isSubmitting}
                                     placeholder="e.g. health, technology"
-                                    className="w-full border border-gray-300 dark:border-gray-700 rounded-md p-3 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-70"
+                                    className="w-full border border-gray-300 dark:border-gray-700 rounded-md p-2 sm:p-3 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-70 text-sm sm:text-base"
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                                <label className="block text-xs sm:text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
                                     Category *
                                 </label>
                                 <select
@@ -215,7 +215,7 @@ const CreateThreads = ({ refetch }) => {
                                     onChange={handleChange}
                                     required
                                     disabled={isSubmitting}
-                                    className="w-full border border-gray-300 dark:border-gray-700 rounded-md p-3 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-70"
+                                    className="w-full border border-gray-300 dark:border-gray-700 rounded-md p-2 sm:p-3 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-70 text-sm sm:text-base"
                                 >
                                     <option value="">Select a category</option>
                                     <option value="Technology">
@@ -227,24 +227,24 @@ const CreateThreads = ({ refetch }) => {
                                 </select>
                             </div>
 
-                            <div className="flex justify-end gap-3 pt-4">
+                            <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4">
                                 <button
                                     type="button"
                                     onClick={() => setShowForm(false)}
                                     disabled={isSubmitting}
-                                    className="px-4 py-2 rounded-lg border border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition disabled:opacity-70"
+                                    className="px-3 sm:px-4 py-2 rounded-lg border border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition disabled:opacity-70 text-sm sm:text-base"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="px-6 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white font-semibold transition disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
+                                    className="px-4 sm:px-6 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white font-semibold transition disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm sm:text-base"
                                 >
                                     {isSubmitting ? (
                                         <>
                                             <svg
-                                                className="animate-spin h-5 w-5 text-white"
+                                                className="animate-spin h-4 w-4 sm:h-5 sm:w-5 text-white"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 fill="none"
                                                 viewBox="0 0 24 24"

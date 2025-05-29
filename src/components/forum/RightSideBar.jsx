@@ -1,6 +1,6 @@
 import { FaFire, FaThumbsUp, FaChartBar, FaTags } from "react-icons/fa";
 
-const RightSideBar = ({ posts }) => {
+const RightSideBar = ({ posts, refetch }) => {
     const popularThreads = [...posts]
         .sort((a, b) => b.likesCount - a.likesCount)
         .slice(0, 3);
