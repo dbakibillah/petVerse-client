@@ -16,6 +16,7 @@ import Home from "./pages/common/Home";
 import Cart from "./pages/cart/Cart";
 import { CartProvider } from "./providers/CartProvider";
 import { ToastContainer } from "react-toastify";
+import Grooming from "./pages/grooming/Grooming";
 
 // tanstackQuery
 const queryClient = new QueryClient();
@@ -49,6 +50,7 @@ const router = createBrowserRouter([
                 path: "/cart",
                 element: <Cart />,
             },
+            
         ],
     },
 ]);
