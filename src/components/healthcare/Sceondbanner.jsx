@@ -1,71 +1,168 @@
-import React from 'react';
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import {
+    FaStethoscope,
+    FaSyringe,
+    FaTeeth,
+    FaClinicMedical,
+    FaWeight,
+    FaHeartbeat,
+    FaArrowRight,
+} from "react-icons/fa";
 
-const Sceondbanner = () => {
+const SecondBanner = () => {
+    useEffect(() => {
+        AOS.init({
+            duration: 800,
+            once: false,
+            mirror: true,
+        });
+    }, []);
+
+    const services = [
+        {
+            icon: <FaStethoscope className="text-3xl" />,
+            title: "General Health Checkups",
+            description:
+                "Comprehensive physical exams to monitor overall wellness and detect early signs of health issues.",
+            color: "text-amber-500 dark:text-amber-400",
+            bg: "bg-amber-50 dark:bg-amber-900/20",
+            border: "border-amber-200 dark:border-amber-800/70",
+            delay: 100,
+        },
+        {
+            icon: <FaSyringe className="text-3xl" />,
+            title: "Vaccinations Care",
+            description:
+                "Complete protection against rabies, distemper, parvo and other common pet diseases.",
+            color: "text-pink-500 dark:text-pink-400",
+            bg: "bg-pink-50 dark:bg-pink-900/20",
+            border: "border-pink-200 dark:border-pink-800/70",
+            delay: 200,
+        },
+        {
+            icon: <FaTeeth className="text-3xl" />,
+            title: "Dental Care",
+            description:
+                "Professional cleaning, extractions, and oral health management for optimal pet dental hygiene.",
+            color: "text-blue-500 dark:text-blue-400",
+            bg: "bg-blue-50 dark:bg-blue-900/20",
+            border: "border-blue-200 dark:border-blue-800/70",
+            delay: 300,
+        },
+        {
+            icon: <FaClinicMedical className="text-3xl" />,
+            title: "Spaying & Neutering",
+            description:
+                "Safe surgical procedures performed by experienced veterinarians with compassionate care.",
+            color: "text-purple-500 dark:text-purple-400",
+            bg: "bg-purple-50 dark:bg-purple-900/20",
+            border: "border-purple-200 dark:border-purple-800/70",
+            delay: 100,
+        },
+        {
+            icon: <FaWeight className="text-3xl" />,
+            title: "Nutrition & Weight Management",
+            description:
+                "Personalized diet plans and lifestyle recommendations for healthy weight maintenance.",
+            color: "text-green-500 dark:text-green-400",
+            bg: "bg-green-50 dark:bg-green-900/20",
+            border: "border-green-200 dark:border-green-800/70",
+            delay: 200,
+        },
+        {
+            icon: <FaHeartbeat className="text-3xl" />,
+            title: "Chronic Disease Management",
+            description:
+                "Specialized long-term care plans for diabetes, arthritis, and other chronic conditions.",
+            color: "text-red-500 dark:text-red-400",
+            bg: "bg-red-50 dark:bg-red-900/20",
+            border: "border-red-200 dark:border-red-800/70",
+            delay: 300,
+        },
+    ];
+
     return (
-         <section class="bg-yellow-50 font-sans py-12">
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-800 text-center mb-12">
-        Our Provided Services
-      </h1>
+        <section className="bg-gradient-to-b from-amber-50 to-yellow-50 dark:from-gray-900 dark:to-gray-800 font-sans py-16 md:py-24 overflow-hidden transition-colors duration-500">
+            {/* Floating decorative elements */}
+            <div className="absolute inset-0 overflow-hidden opacity-10 dark:opacity-5 pointer-events-none">
+                {[...Array(12)].map((_, i) => (
+                    <div
+                        key={i}
+                        className="absolute text-amber-300 dark:text-gray-600"
+                        style={{
+                            fontSize: `${Math.random() * 30 + 20}px`,
+                            top: `${Math.random() * 100}%`,
+                            left: `${Math.random() * 100}%`,
+                            animation: `float ${
+                                Math.random() * 10 + 10
+                            }s ease-in-out infinite`,
+                            animationDelay: `${Math.random() * 5}s`,
+                            opacity: Math.random() * 0.5 + 0.1,
+                        }}
+                    >
+                        <FaHeartbeat />
+                    </div>
+                ))}
+            </div>
 
-      <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        
-        <div class="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center hover:shadow-lg transition-shadow border-2 border-blue-300">
-          <div class="text-4xl text-yellow-600 mb-4">📝</div>
-          <h2 class="text-xl font-semibold text-gray-800 mb-2 text-center">General Health Checkups</h2>
-          <p class="text-sm text-gray-600 text-center">
-            Routine physical exams to monitor overall wellness.
-          </p>
-        </div>
+            <div className="max-w-7xl mx-auto px-6 relative z-10">
+                <div
+                    className="text-center mb-16"
+                    data-aos="fade-up"
+                    data-aos-delay="50"
+                >
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+                        Our{" "}
+                        <span className="text-amber-600 dark:text-amber-400">
+                            Premium
+                        </span>{" "}
+                        Services
+                    </h2>
+                    <p
+                        className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
+                        data-aos="fade-up"
+                        data-aos-delay="150"
+                    >
+                        Comprehensive veterinary care designed to keep your pets
+                        healthy and happy at every life stage.
+                    </p>
+                </div>
 
-        
-        <div class="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center hover:shadow-lg transition-shadow border-2 border-blue-300">
-          <div class="text-4xl text-pink-500 mb-4">➕</div>
-          <h2 class="text-xl font-semibold text-gray-800 mb-2 text-center">Vaccinations Care</h2>
-          <p class="text-sm text-gray-600 text-center">
-            Protection against common diseases like rabies, distemper, and parvo.
-          </p>
-        </div>
-
-        
-        <div class="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center hover:shadow-lg transition-shadow border-2 border-blue-300">
-          <div class="text-4xl text-blue-500 mb-4">🦷</div>
-          <h2 class="text-xl font-semibold text-gray-800 mb-2 text-center">Dental Care</h2>
-          <p class="text-sm text-gray-600 text-center">
-            Cleaning, extractions, and oral health management for pets.
-          </p>
-        </div>
-
-        
-        <div class="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center hover:shadow-lg transition-shadow border-2 border-blue-300">
-          <div class="text-4xl text-purple-500 mb-4">📄</div>
-          <h2 class="text-xl font-semibold text-gray-800 mb-2 text-center">Spaying & Neutering</h2>
-          <p class="text-sm text-gray-600 text-center">
-            Safe and effective reproductive health procedures.
-          </p>
-        </div>
-
-        
-        <div class="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center hover:shadow-lg transition-shadow border-2 border-blue-300">
-          <div class="text-4xl text-green-600 mb-4">➕</div>
-          <h2 class="text-xl font-semibold text-gray-800 mb-2 text-center">Nutrition & Weight Management</h2>
-          <p class="text-sm text-gray-600 text-center">
-            Diet plans and support for healthy living.
-          </p>
-        </div>
-
-        
-        <div class="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center hover:shadow-lg transition-shadow border-2 border-blue-300">
-          <div class="text-4xl text-pink-400 mb-4">🩺</div>
-          <h2 class="text-xl font-semibold text-gray-800 mb-2 text-center">Chronic Disease Management</h2>
-          <p class="text-sm text-gray-600 text-center">
-            Long-term care for conditions like diabetes or arthritis.
-          </p>
-        </div>
-
-      </div>
-    </section>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {services.map((service, index) => (
+                        <div
+                            key={index}
+                            data-aos="fade-up"
+                            data-aos-delay={service.delay}
+                            className={`bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 flex flex-col items-center transition-all duration-300 border-2 ${service.border} hover:shadow-xl hover:-translate-y-2 group`}
+                        >
+                            <div
+                                className={`mb-6 p-5 rounded-full ${service.bg} ${service.color} shadow-sm group-hover:scale-110 transition-transform`}
+                            >
+                                {service.icon}
+                            </div>
+                            <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-3 text-center">
+                                {service.title}
+                            </h3>
+                            <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
+                                {service.description}
+                            </p>
+                            <button
+                                className={`px-6 py-2 bg-transparent border ${service.border} ${service.color} rounded-full text-sm font-medium hover:${service.bg} transition-colors flex items-center gap-2`}
+                                data-aos="fade-up"
+                                data-aos-delay={service.delay + 100}
+                            >
+                                Learn More{" "}
+                                <FaArrowRight className="text-xs transition-transform group-hover:translate-x-1" />
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
     );
 };
 
-export default Sceondbanner;
+export default SecondBanner;
