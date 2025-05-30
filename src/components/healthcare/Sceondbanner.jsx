@@ -17,6 +17,7 @@ const SecondBanner = () => {
             duration: 800,
             once: false,
             mirror: true,
+            easing: "ease-out-cubic",
         });
     }, []);
 
@@ -84,7 +85,7 @@ const SecondBanner = () => {
     ];
 
     return (
-        <section className="bg-gradient-to-b from-amber-50 to-yellow-50 dark:from-gray-900 dark:to-gray-800 font-sans py-16 md:py-24 overflow-hidden transition-colors duration-500">
+        <section className="font-sans py-16 md:py-24 overflow-hidden transition-colors duration-500">
             {/* Floating decorative elements */}
             <div className="absolute inset-0 overflow-hidden opacity-10 dark:opacity-5 pointer-events-none">
                 {[...Array(12)].map((_, i) => (
@@ -112,10 +113,13 @@ const SecondBanner = () => {
                     className="text-center mb-16"
                     data-aos="fade-up"
                     data-aos-delay="50"
+                    data-aos-once="false"
+                    data-aos-mirror="true"
+                    data-aos-easing="ease-out-cubic"
                 >
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-4">
                         Our{" "}
-                        <span className="text-amber-600 dark:text-amber-400">
+                        <span className="text-primary dark:text-amber-400">
                             Premium
                         </span>{" "}
                         Services
@@ -124,6 +128,9 @@ const SecondBanner = () => {
                         className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
                         data-aos="fade-up"
                         data-aos-delay="150"
+                        data-aos-once="false"
+                        data-aos-mirror="true"
+                        data-aos-easing="ease-out-cubic"
                     >
                         Comprehensive veterinary care designed to keep your pets
                         healthy and happy at every life stage.
@@ -135,6 +142,9 @@ const SecondBanner = () => {
                         <div
                             key={index}
                             data-aos="fade-up"
+                            data-aos-once="false"
+                            data-aos-mirror="true"
+                            data-aos-easing="ease-out-cubic"
                             data-aos-delay={service.delay}
                             className={`bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 flex flex-col items-center transition-all duration-300 border-2 ${service.border} hover:shadow-xl hover:-translate-y-2 group`}
                         >
@@ -153,6 +163,9 @@ const SecondBanner = () => {
                                 className={`px-6 py-2 bg-transparent border ${service.border} ${service.color} rounded-full text-sm font-medium hover:${service.bg} transition-colors flex items-center gap-2`}
                                 data-aos="fade-up"
                                 data-aos-delay={service.delay + 100}
+                                data-aos-once="false"
+                                data-aos-mirror="true"
+                                data-aos-easing="ease-out-cubic"
                             >
                                 Learn More{" "}
                                 <FaArrowRight className="text-xs transition-transform group-hover:translate-x-1" />
