@@ -19,6 +19,7 @@ import { ToastContainer } from "react-toastify";
 import Grooming from "./pages/grooming/Grooming";
 import Forum from "./pages/forum/Forum";
 import UserProfile from "./pages/user/UserProfile";
+import HealthCare from "./pages/healthcare/HealthCare";
 
 // tanstackQuery
 const queryClient = new QueryClient();
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
             {
                 path: "/grooming",
                 element: <Grooming/>,
+            },
+            {
+                path: "/healthcare",
+                element: <HealthCare/>
             },
         ],
     },
