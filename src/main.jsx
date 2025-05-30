@@ -63,11 +63,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/grooming",
-                element: <Grooming/>,
+                element: <Grooming />,
             },
             {
                 path: "/healthcare",
-                element: <HealthCare/>
+                element: <HealthCare />,
             },
         ],
     },

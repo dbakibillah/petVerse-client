@@ -1,11 +1,10 @@
 import FirstBanner from "../../components/healthcare/FirstBanner";
 
-
 const HealthCare = () => {
     return (
-       <section>
-         <FirstBanner/>
-       </section>
+        <section>
+            <FirstBanner />
+        </section>
     );
 };
 
