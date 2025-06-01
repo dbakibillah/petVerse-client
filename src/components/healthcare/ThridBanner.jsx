@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
-import {
-    FaPaw,
-    FaCheck,
-    FaHeart,
-    FaShieldAlt,
-    FaClock,
-    FaUserMd,
-    FaHandHoldingHeart,
-    FaDollarSign,
-    FaThumbsUp,
-} from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useEffect } from "react";
+import {
+  FaCheck,
+  FaClock,
+  FaDollarSign,
+  FaHandHoldingHeart,
+  FaHeart,
+  FaPaw,
+  FaShieldAlt,
+  FaThumbsUp,
+  FaUserMd,
+} from "react-icons/fa";
 
 const ThirdBanner = () => {
     useEffect(() => {

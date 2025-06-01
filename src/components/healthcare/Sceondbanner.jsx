@@ -1,14 +1,14 @@
-import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useEffect } from "react";
 import {
-    FaStethoscope,
-    FaSyringe,
-    FaTeeth,
-    FaClinicMedical,
-    FaWeight,
-    FaHeartbeat,
-    FaArrowRight,
+  FaArrowRight,
+  FaClinicMedical,
+  FaHeartbeat,
+  FaStethoscope,
+  FaSyringe,
+  FaTeeth,
+  FaWeight,
 } from "react-icons/fa";
 
 const SecondBanner = () => {

@@ -1,12 +1,12 @@
-import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useEffect } from "react";
 import {
-    FaPaw,
     FaArrowRight,
     FaBookMedical,
     FaClinicMedical,
     FaGlobeAmericas,
+    FaPaw,
 } from "react-icons/fa";
 import { GiDogBowl } from "react-icons/gi";
 import { RiCustomerService2Fill } from "react-icons/ri";
