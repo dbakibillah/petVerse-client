@@ -6,7 +6,7 @@ import {
     signInWithEmailAndPassword,
     signInWithPopup,
     signOut,
-    updateProfile
+    updateProfile,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.init";
@@ -48,7 +48,7 @@ const AuthProvider = ({ children }) => {
 
     const forgotPassword = (email) => {
         return sendPasswordResetEmail(auth, email);
-    }
+    };
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -60,9 +60,13 @@ const AuthProvider = ({ children }) => {
                     setLoading(false); // Skip axios call if the token is available
                 } else {
                     const userData = { email: currentUser.email };
-                    axiosPublic.post("/jwt", userData)
+                    axiosPublic
+                        .post("/jwt", userData)
                         .then((response) => {
-                            localStorage.setItem("access-token", response.data.token);
+                            localStorage.setItem(
+                                "access-token",
+                                response.data.token
+                            );
                             setLoading(false);
                         })
                         .catch((error) => {
@@ -73,7 +77,8 @@ const AuthProvider = ({ children }) => {
             } else {
                 setUser(null);
                 // Log out the user from the server if needed
-                axiosPublic.post("/logout")
+                axiosPublic
+                    .post("/logout")
                     .then(() => {
                         localStorage.removeItem("access-token");
                         setLoading(false);
@@ -86,7 +91,7 @@ const AuthProvider = ({ children }) => {
         });
 
         return () => unsubscribe();
-    }, []);
+    }, [axiosPublic]);
 
     const authInfo = {
         user,
@@ -97,7 +102,7 @@ const AuthProvider = ({ children }) => {
         signInUser,
         signOutUser,
         loading,
-        forgotPassword
+        forgotPassword,
     };
 
     return (
