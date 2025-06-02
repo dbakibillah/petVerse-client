@@ -10,6 +10,7 @@ import { AuthContext } from "../../providers/AuthProviders";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { toast } from "react-toastify";
 import CommentsContainer from "./CommentsContainer";
+import { motion } from "framer-motion";
 
 const ForumCard = ({ post, refetch }) => {
     const axiosPublic = useAxiosPublic();
@@ -18,6 +19,7 @@ const ForumCard = ({ post, refetch }) => {
         post.likedBy?.includes(user?.email) || false
     );
     const [likesCount, setLikesCount] = useState(post.likesCount || 0);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     const [showCommentForm, setShowCommentForm] = useState(false);
     const [commentText, setCommentText] = useState("");
@@ -40,6 +42,8 @@ const ForumCard = ({ post, refetch }) => {
 
     const handleLike = async () => {
         if (!user) return;
+
+        setIsAnimating(true);
 
         try {
             const response = await axiosPublic.patch(`/threads/${post._id}`, {
@@ -189,18 +193,40 @@ const ForumCard = ({ post, refetch }) => {
                                 ? "text-red-500"
                                 : "text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-500"
                         }`}
-                        disabled={!user}
+                        disabled={!user || isAnimating}
                         title={!user ? "Please login to like" : ""}
                     >
-                        <HiOutlineHeart
-                            className={`w-5 h-5 transition-transform duration-200 hover:scale-110 ${
-                                liked ? "fill-red-500 text-red-500" : ""
-                            }`}
-                        />
-                        <span>{likesCount}</span>
+                        <motion.div
+                            animate={{
+                                scale: isAnimating ? [1, 1.5, 1] : 1,
+                                rotate: isAnimating ? [0, -10, 10, 0] : 0,
+                            }}
+                            transition={{
+                                duration: 0.6,
+                                ease: "easeInOut",
+                            }}
+                            onAnimationComplete={() => setIsAnimating(false)}
+                        >
+                            <HiOutlineHeart
+                                className={`w-5 h-5 transition-transform duration-200 hover:scale-110 ${
+                                    liked ? "fill-red-500 text-red-500" : ""
+                                }`}
+                            />
+                        </motion.div>
+                        <motion.span
+                            key={likesCount}
+                            initial={{ y: -10, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            {likesCount}
+                        </motion.span>
                     </button>
 
-                    <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-blue-500 transition-colors duration-200 dark:text-gray-400 dark:hover:text-blue-400">
+                    <button
+                        className="flex items-center gap-1 text-sm text-gray-500 hover:text-blue-500 transition-colors duration-200 dark:text-gray-400 dark:hover:text-blue-400"
+                        onClick={() => setShowCommentForm(!showCommentForm)}
+                    >
                         <HiOutlineChatAlt2 className="w-5 h-5 transition-transform duration-200 hover:scale-110" />
                         <span>{post.comments?.length || 0} responses</span>
                     </button>

@@ -20,6 +20,7 @@ import Grooming from "./pages/grooming/Grooming";
 import Forum from "./pages/forum/Forum";
 import UserProfile from "./pages/user/UserProfile";
 import HealthCare from "./pages/healthcare/HealthCare";
+import PrivateRoute from "./routes/PrivateRoute";
 
 // tanstackQuery
 const queryClient = new QueryClient();
@@ -55,7 +56,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/forum",
-                element: <Forum />,
+                element: (
+                    <PrivateRoute>
+                        <Forum />
+                    </PrivateRoute>
+                ),
             },
             {
                 path: "/profile",

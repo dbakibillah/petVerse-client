@@ -6,54 +6,106 @@ import {
     HiOutlineFire,
     HiOutlineStar,
     HiOutlineCollection,
+    HiOutlineTag,
+    HiOutlineSparkles,
+    HiOutlineQuestionMarkCircle,
+    HiOutlineHeart,
+    HiOutlineCalendar,
+    HiOutlineChatAlt2,
+    HiOutlineLightBulb,
 } from "react-icons/hi";
+
+const categoryStyles = {
+    "Lost & Found": {
+        color: "text-purple-600 dark:text-purple-400",
+        gradient:
+            "from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-purple-900/10",
+        icon: <HiOutlineHeart className="text-xl" />,
+    },
+    Help: {
+        color: "text-blue-600 dark:text-blue-400",
+        gradient:
+            "from-blue-100 to-blue-50 dark:from-blue-900/30 dark:to-blue-900/10",
+        icon: <HiOutlineQuestionMarkCircle className="text-xl" />,
+    },
+    Health: {
+        color: "text-red-600 dark:text-red-400",
+        gradient:
+            "from-red-100 to-red-50 dark:from-red-900/30 dark:to-red-900/10",
+        icon: <HiOutlineFire className="text-xl" />,
+    },
+    "Pet Adoption": {
+        color: "text-green-600 dark:text-green-400",
+        gradient:
+            "from-green-100 to-green-50 dark:from-green-900/30 dark:to-green-900/10",
+        icon: <HiOutlineSparkles className="text-xl" />,
+    },
+    "Daily Life with Pets": {
+        color: "text-yellow-600 dark:text-yellow-400",
+        gradient:
+            "from-yellow-100 to-yellow-50 dark:from-yellow-900/30 dark:to-yellow-900/10",
+        icon: <HiOutlineChatAlt2 className="text-xl" />,
+    },
+    "Pet Events & Meetups": {
+        color: "text-indigo-600 dark:text-indigo-400",
+        gradient:
+            "from-indigo-100 to-indigo-50 dark:from-indigo-900/30 dark:to-indigo-900/10",
+        icon: <HiOutlineCalendar className="text-xl" />,
+    },
+    "Feedback & Suggestions": {
+        color: "text-pink-600 dark:text-pink-400",
+        gradient:
+            "from-pink-100 to-pink-50 dark:from-pink-900/30 dark:to-pink-900/10",
+        icon: <HiOutlineLightBulb className="text-xl" />,
+    },
+};
+
+const getCategoryStyle = (category) =>
+    categoryStyles[category] || {
+        color: "text-gray-600 dark:text-gray-400",
+        gradient:
+            "from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-700/80",
+        icon: <HiOutlineCollection className="text-xl" />,
+    };
 
 const LeftSideBar = ({ posts }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [activeCategory, setActiveCategory] = useState(null);
 
-    // Process categories with post counts
     const categories = [...new Set(posts.map((post) => post.category))]
-        .map((category, index) => ({
-            id: `category-${index}`,
-            name: category,
-            count: posts.filter((post) => post.category === category).length,
-            icon: getCategoryIcon(category),
-        }))
+        .map((category, index) => {
+            const { color, gradient, icon } = getCategoryStyle(category);
+            return {
+                id: `category-${index}`,
+                name: category,
+                count: posts.filter((p) => p.category === category).length,
+                color,
+                gradient,
+                icon,
+            };
+        })
         .sort((a, b) => b.count - a.count);
 
     const tags = [...new Set(posts.flatMap((post) => post.tags || []))];
 
-    function getCategoryIcon(category) {
-        const icons = {
-            Technology: <HiOutlineHashtag className="text-blue-500" />,
-            General: <HiOutlineCollection className="text-emerald-500" />,
-            Popular: <HiOutlineFire className="text-amber-500" />,
-            Featured: <HiOutlineStar className="text-purple-500" />,
-        };
-        return (
-            icons[category] || <HiOutlineHashtag className="text-gray-500" />
-        );
-    }
-
     return (
-        <section className="w-full md:w-64">
-            {/* Mobile Toggle Button - Sticky on mobile */}
-            <div className="md:hidden sticky top-4 z-20 mb-4">
+        <section className="w-full md:w-72 space-y-3 sticky top-20 h-[calc(100vh-6rem)] overflow-y-auto pb-4 scrollbar-hide">
+            {/* Mobile Toggle Button */}
+            <div className="md:hidden sticky top-4 z-20 mb-3">
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className="w-full flex justify-between items-center px-6 py-3 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary transition-all duration-200"
-                    aria-expanded={isOpen}
-                    aria-label="Toggle categories"
+                    className="w-full flex justify-between items-center px-4 py-3 bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-400 transition"
                 >
-                    <div className="flex items-center gap-3">
-                        <HiOutlineMenuAlt2 className="text-xl text-primary dark:text-primary-400" />
-                        <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                    <div className="flex items-center gap-2">
+                        <div className="p-1.5 rounded-md bg-gradient-to-br from-primary-100 to-blue-100 dark:from-primary-900/40 dark:to-blue-900/40">
+                            <HiOutlineMenuAlt2 className="text-lg text-primary-600 dark:text-primary-400" />
+                        </div>
+                        <span className="text-base font-medium text-gray-800 dark:text-gray-200">
                             Browse Categories
                         </span>
                     </div>
                     <HiOutlineChevronRight
-                        className={`text-xl text-gray-500 dark:text-gray-400 transition-transform duration-200 ${
+                        className={`text-lg text-gray-500 dark:text-gray-400 transition-transform ${
                             isOpen ? "rotate-90" : ""
                         }`}
                     />
@@ -62,19 +114,29 @@ const LeftSideBar = ({ posts }) => {
 
             {/* Sidebar Content */}
             <div
-                className={`md:block transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                className={`md:block transition-all duration-500 ${
                     isOpen
                         ? "max-h-screen opacity-100 mt-2"
                         : "max-h-0 opacity-0 md:max-h-screen md:opacity-100"
-                }`}
+                } overflow-hidden md:overflow-visible`}
             >
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-xl border border-gray-100 dark:border-gray-700 hover:shadow-2xl dark:hover:shadow-gray-900/30 transition-all duration-300">
-                    {/* Header with decorative elements */}
-                    <div className="mb-6 relative">
-                        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 bg-clip-text bg-gradient-to-r from-primary to-blue-600 dark:from-primary-400 dark:to-blue-500">
-                            Explore Topics
-                        </h2>
-                        <div className="absolute -bottom-1 left-0 w-20 h-1 bg-gradient-to-r from-primary to-blue-400 dark:from-primary-500 dark:to-blue-400 rounded-full"></div>
+                {/* Categories Card */}
+                <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-md border border-gray-100 dark:border-gray-700">
+                    {/* Header */}
+                    <div className="mb-5">
+                        <div className="flex items-center gap-2">
+                            <div className="p-1.5 rounded-md bg-gradient-to-br from-primary-100 to-blue-100 dark:from-primary-900/40 dark:to-blue-900/40">
+                                <HiOutlineSparkles className="text-lg text-primary-600 dark:text-primary-400" />
+                            </div>
+                            <div>
+                                <h2 className="text-base font-semibold text-gray-800 dark:text-gray-200">
+                                    Explore Topics
+                                </h2>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                    Discover pet-related discussions
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Categories List */}
@@ -86,30 +148,42 @@ const LeftSideBar = ({ posts }) => {
                                     onClick={() =>
                                         setActiveCategory(category.id)
                                     }
-                                    className={`flex items-center justify-between p-3 rounded-xl transition-all duration-200 ${
+                                    className={`flex items-center justify-between p-3 rounded-lg text-sm border transition group ${
                                         activeCategory === category.id
-                                            ? "bg-primary/10 dark:bg-primary/20 border border-primary/30 dark:border-primary/40"
-                                            : "hover:bg-gray-50 dark:hover:bg-gray-700 border border-transparent"
+                                            ? `bg-gradient-to-r ${category.gradient} border-transparent`
+                                            : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-sm"
                                     }`}
                                 >
                                     <div className="flex items-center gap-3">
-                                        <span className="text-xl text-gray-700 dark:text-gray-300">
+                                        <div
+                                            className={`p-2 rounded-md ${category.color} bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700`}
+                                        >
                                             {category.icon}
-                                        </span>
+                                        </div>
                                         <div>
-                                            <span className="block font-medium text-gray-800 dark:text-gray-200 capitalize">
+                                            <span
+                                                className={`block text-gray-800 dark:text-gray-200 capitalize ${
+                                                    activeCategory ===
+                                                    category.id
+                                                        ? "font-semibold"
+                                                        : "font-normal"
+                                                }`}
+                                            >
                                                 {category.name}
                                             </span>
                                             <span className="block text-xs text-gray-500 dark:text-gray-400">
-                                                {category.count} threads
+                                                {category.count}{" "}
+                                                {category.count === 1
+                                                    ? "thread"
+                                                    : "threads"}
                                             </span>
                                         </div>
                                     </div>
                                     <HiOutlineChevronRight
-                                        className={`h-5 w-5 ${
+                                        className={`text-sm transition-transform ${
                                             activeCategory === category.id
-                                                ? "text-primary dark:text-primary-400"
-                                                : "text-gray-400 dark:text-gray-500"
+                                                ? "text-primary-600 dark:text-primary-400 translate-x-1"
+                                                : "text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 group-hover:translate-x-1"
                                         }`}
                                     />
                                 </a>
@@ -118,28 +192,38 @@ const LeftSideBar = ({ posts }) => {
                     </ul>
 
                     {/* All Categories Link */}
-                    <div className="mt-6 pt-4 border-t border-gray-100 dark:border-gray-700">
+                    <div className="mt-5 pt-4 border-t border-gray-100 dark:border-gray-700">
                         <a
                             href="/categories"
-                            className="flex items-center justify-center gap-2 w-full px-4 py-2 text-sm font-medium text-primary dark:text-primary-400 rounded-lg hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors duration-200"
+                            className="flex items-center justify-center gap-1 w-full px-3 py-2 text-xs font-medium text-primary-600 dark:text-primary-400 rounded-md hover:bg-primary-50/60 dark:hover:bg-primary-900/20 transition"
                         >
-                            View all categories
-                            <HiOutlineChevronRight className="h-4 w-4" />
+                            <span>View all categories</span>
+                            <HiOutlineChevronRight className="text-sm group-hover:translate-x-1" />
                         </a>
                     </div>
                 </div>
 
-                {/* Popular Tags Section (Bonus) */}
-                <div className="mt-6 bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-xl border border-gray-100 dark:border-gray-700">
-                    <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4">
-                        Popular Tags
-                    </h3>
+                {/* Popular Tags Card */}
+                <div className="mt-5 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-md border border-gray-100 dark:border-gray-700">
+                    <div className="flex items-center gap-2 mb-4">
+                        <div className="p-1.5 rounded-md bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/40 dark:to-orange-900/40">
+                            <HiOutlineTag className="text-lg text-amber-600 dark:text-amber-400" />
+                        </div>
+                        <div>
+                            <h3 className="text-base font-semibold text-gray-800 dark:text-gray-200">
+                                Popular Tags
+                            </h3>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                                Explore trending topics
+                            </p>
+                        </div>
+                    </div>
                     <div className="flex flex-wrap gap-2">
                         {tags.map((tag) => (
                             <a
                                 key={tag}
                                 href={`/tags/${tag.toLowerCase()}`}
-                                className="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-700 hover:bg-primary/10 dark:hover:bg-primary/20 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-400 rounded-full transition-colors duration-200"
+                                className="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-700 hover:bg-primary-100 dark:hover:bg-primary-900/30 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 rounded-full transition-all duration-300 hover:scale-105"
                             >
                                 #{tag}
                             </a>
