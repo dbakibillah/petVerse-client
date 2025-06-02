@@ -27,6 +27,10 @@ const Forum = () => {
         });
     }, []);
 
+    const sortedPosts = [...posts].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
     return (
         <section className="container mx-auto py-8 flex flex-col md:flex-row gap-6 max-w-7xl">
             {/* Left Sidebar */}
@@ -37,19 +41,20 @@ const Forum = () => {
             >
                 <LeftSideBar posts={posts} refetch={refetch} />
             </div>
+
             {/* Main Content */}
             <main className="flex-1">
                 <div>
                     <CreateThreads refetch={refetch} />
                 </div>
 
-                <div className="bg-white rounded-lg shadow-sm p-2">
+                <div className="bg-white rounded-lg p-2 dark:bg-gray-900 dark:border dark:border-gray-700">
                     {/* Thread items would go here */}
-                    <div className="divide-y divide-gray-150">
-                        {posts.map((post, index) => (
+                    <div className="">
+                        {sortedPosts.map((post, index) => (
                             <div
                                 key={post.id}
-                                className="hover:bg-gray-50 transition-colors duration-200"
+                                className="transition-colors duration-200"
                                 data-aos="fade-up"
                                 data-aos-easing="ease-in-out"
                                 data-aos-mirror="true"
