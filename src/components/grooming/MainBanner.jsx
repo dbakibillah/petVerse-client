@@ -9,6 +9,8 @@ import { GiFeather } from "react-icons/gi";
 import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Link } from "react-router-dom";
+
 
 const MainBanner = () => {
     const [isHovering, setIsHovering] = useState(false);
@@ -89,8 +91,8 @@ const MainBanner = () => {
                         data-aos-delay="250"
                         data-aos-once="false"
                     >
-                        <a
-                            href="#appointment"
+                        <Link
+                            to="/grooming-appointment"
                             className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-primary to-orange-500 hover:to-orange-600 text-white text-lg rounded-lg transition-all duration-500 shadow-lg hover:shadow-xl"
                             onMouseEnter={() => setIsHovering(true)}
                             onMouseLeave={() => setIsHovering(false)}
@@ -106,7 +108,7 @@ const MainBanner = () => {
                                     }`}
                                 />
                             </span>
-                        </a>
+                        </Link>
 
                         <a
                             href="tel:+880123456789"

@@ -21,74 +21,80 @@ import Forum from "./pages/forum/Forum";
 import UserProfile from "./pages/user/UserProfile";
 import HealthCare from "./pages/healthcare/HealthCare";
 import PrivateRoute from "./routes/PrivateRoute";
+import GroomingAppointment from "./pages/grooming/GroomingAppoinment";
+
 
 // tanstackQuery
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
-    {
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      {
         path: "/",
-        element: <Root />,
-        children: [
-            {
-                path: "/",
-                element: <Home />,
-            },
-            {
-                path: "/login",
-                element: <Login />,
-            },
-            {
-                path: "/register",
-                element: <Registration />,
-            },
-            {
-                path: "/shop",
-                element: <Shop />,
-            },
-            {
-                path: "/product/:id",
-                element: <ProductDetails />,
-            },
-            {
-                path: "/cart",
-                element: <Cart />,
-            },
-            {
-                path: "/forum",
-                element: (
-                    <PrivateRoute>
-                        <Forum />
-                    </PrivateRoute>
-                ),
-            },
-            {
-                path: "/profile",
-                element: <UserProfile />,
-            },
-            {
-                path: "/grooming",
-                element: <Grooming />,
-            },
-            {
-                path: "/healthcare",
-                element: <HealthCare />,
-            },
-        ],
-    },
+        element: <Home />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Registration />,
+      },
+      {
+        path: "/shop",
+        element: <Shop />,
+      },
+      {
+        path: "/product/:id",
+        element: <ProductDetails />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
+        path: "/forum",
+        element: (
+          <PrivateRoute>
+            <Forum />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/profile",
+        element: <UserProfile />,
+      },
+      {
+        path: "/grooming",
+        element: <Grooming />,
+      },
+      {
+        path: "/grooming-appointment",
+        element: <GroomingAppointment />,
+      },
+      {
+        path: "/healthcare",
+        element: <HealthCare />,
+      },
+    ],
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
-    <StrictMode>
-        <ThemeProvider>
-            <QueryClientProvider client={queryClient}>
-                <AuthProvider>
-                    <CartProvider>
-                        <RouterProvider router={router} />
-                    </CartProvider>
-                </AuthProvider>
-            </QueryClientProvider>
-        </ThemeProvider>
-        <ToastContainer />
-    </StrictMode>
+  <StrictMode>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <CartProvider>
+            <RouterProvider router={router} />
+          </CartProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
+    <ToastContainer />
+  </StrictMode>
 );
