@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import ProductCard from "../../components/shop/ProductCard";
 import { HiOutlineSearch, HiX, HiFilter, HiSparkles } from "react-icons/hi";
@@ -8,9 +9,11 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const AllProducts = () => {
     const axiosPublic = useAxiosPublic();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const categoryParam = searchParams.get("category");
 
     const [searchTerm, setSearchTerm] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState(categoryParam || "");
     const [priceRange, setPriceRange] = useState([0, 99999]);
     const [showFiltersMobile, setShowFiltersMobile] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -24,6 +27,15 @@ const AllProducts = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    // Update selectedCategory when URL parameter changes
+    useEffect(() => {
+        if (categoryParam) {
+            setSelectedCategory(categoryParam);
+        } else {
+            setSelectedCategory("");
+        }
+    }, [categoryParam]);
+
     const {
         data: products = [],
         isLoading,
@@ -33,7 +45,6 @@ const AllProducts = () => {
         queryKey: ["products"],
         queryFn: async () => {
             const response = await axiosPublic.get("/products");
-            // Calculate max price from products
             const prices = response.data.map((p) => p.price);
             const calculatedMax = Math.max(...prices, 99999);
             setMaxPrice(calculatedMax);
@@ -43,7 +54,6 @@ const AllProducts = () => {
         staleTime: 5 * 60 * 1000,
     });
 
-    // Extract unique categories
     const categories = useMemo(() => {
         return [...new Set(products.map((product) => product.category))];
     }, [products]);
@@ -63,17 +73,27 @@ const AllProducts = () => {
         });
     }, [products, searchTerm, selectedCategory, priceRange]);
 
+    const handleCategorySelect = (category) => {
+        setSelectedCategory(category);
+        if (category) {
+            searchParams.set("category", category);
+        } else {
+            searchParams.delete("category");
+        }
+        setSearchParams(searchParams);
+    };
+
     const resetFilters = () => {
         setSearchTerm("");
         setSelectedCategory("");
         setPriceRange([0, maxPrice]);
+        setSearchParams({});
     };
 
     const handlePriceChange = (index, value) => {
         const newPriceRange = [...priceRange];
         const numValue = Number(value);
 
-        // Validate input
         if (isNaN(numValue)) return;
 
         newPriceRange[index] = Math.min(
@@ -81,7 +101,6 @@ const AllProducts = () => {
             index === 0 ? priceRange[1] : maxPrice
         );
 
-        // Ensure min doesn't exceed max and vice versa
         if (index === 0 && newPriceRange[0] > newPriceRange[1]) {
             newPriceRange[1] = newPriceRange[0];
         } else if (index === 1 && newPriceRange[1] < newPriceRange[0]) {
@@ -99,7 +118,6 @@ const AllProducts = () => {
         }).format(price);
     };
 
-    // Calculate slider percentages
     const minPercentage = (priceRange[0] / maxPrice) * 100;
     const maxPercentage = 100 - (priceRange[1] / maxPrice) * 100;
 
@@ -162,7 +180,6 @@ const AllProducts = () => {
 
     return (
         <div className="container mx-auto px-4 sm:px-6 py-10">
-            {/* Floating Search on Scroll */}
             <AnimatePresence>
                 {isScrolled && (
                     <motion.div
@@ -186,7 +203,6 @@ const AllProducts = () => {
                 )}
             </AnimatePresence>
 
-            {/* Hero Section with Search */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -207,7 +223,6 @@ const AllProducts = () => {
                     healthy, and stylish
                 </p>
 
-                {/* Search Bar with Animation */}
                 <motion.div
                     whileHover={{ scale: 1.01 }}
                     className="max-w-3xl mx-auto relative"
@@ -226,7 +241,6 @@ const AllProducts = () => {
             </motion.div>
 
             <div className="flex flex-col lg:flex-row gap-8">
-                {/* Filters Sidebar - Desktop */}
                 <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -248,7 +262,6 @@ const AllProducts = () => {
                             </motion.button>
                         </div>
 
-                        {/* Category Section */}
                         <div className="mb-8">
                             <h3 className="text-gray-700 font-medium mb-3 text-sm uppercase tracking-wider">
                                 Categories
@@ -256,7 +269,7 @@ const AllProducts = () => {
                             <div className="space-y-2">
                                 <motion.button
                                     whileHover={{ x: 5 }}
-                                    onClick={() => setSelectedCategory("")}
+                                    onClick={() => handleCategorySelect("")}
                                     className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
                                         selectedCategory === ""
                                             ? "bg-orange-50 text-orange-700 border-l-4 border-orange-600 shadow-inner"
@@ -269,7 +282,7 @@ const AllProducts = () => {
                                     <motion.button
                                         key={cat}
                                         whileHover={{ x: 5 }}
-                                        onClick={() => setSelectedCategory(cat)}
+                                        onClick={() => handleCategorySelect(cat)}
                                         className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
                                             selectedCategory === cat
                                                 ? "bg-orange-50 text-orange-700 border-l-4 border-orange-600 shadow-inner"
@@ -282,7 +295,6 @@ const AllProducts = () => {
                             </div>
                         </div>
 
-                        {/* Price Filter */}
                         <div className="mb-8">
                             <h3 className="text-gray-700 font-medium mb-4 text-sm uppercase tracking-wider">
                                 Price Range
@@ -393,7 +405,6 @@ const AllProducts = () => {
                     </div>
                 </motion.div>
 
-                {/* Mobile Filters Overlay */}
                 <AnimatePresence>
                     {showFiltersMobile && (
                         <motion.div
@@ -403,7 +414,6 @@ const AllProducts = () => {
                             className="fixed inset-0 z-50 overflow-y-auto"
                         >
                             <div className="flex min-h-screen">
-                                {/* Overlay */}
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
@@ -412,7 +422,6 @@ const AllProducts = () => {
                                     onClick={() => setShowFiltersMobile(false)}
                                 ></motion.div>
 
-                                {/* Filters Panel */}
                                 <motion.div
                                     initial={{ x: "100%" }}
                                     animate={{ x: 0 }}
@@ -435,7 +444,6 @@ const AllProducts = () => {
                                     </div>
 
                                     <div className="p-6">
-                                        {/* Mobile Category Filters */}
                                         <div className="mb-8">
                                             <h3 className="text-gray-700 font-medium mb-4 text-sm uppercase tracking-wider">
                                                 Categories
@@ -444,7 +452,7 @@ const AllProducts = () => {
                                                 <motion.button
                                                     whileTap={{ scale: 0.95 }}
                                                     onClick={() =>
-                                                        setSelectedCategory("")
+                                                        handleCategorySelect("")
                                                     }
                                                     className={`px-4 py-3 rounded-xl text-sm font-medium transition ${
                                                         selectedCategory === ""
@@ -461,7 +469,7 @@ const AllProducts = () => {
                                                             scale: 0.95,
                                                         }}
                                                         onClick={() =>
-                                                            setSelectedCategory(
+                                                            handleCategorySelect(
                                                                 cat
                                                             )
                                                         }
@@ -478,7 +486,6 @@ const AllProducts = () => {
                                             </div>
                                         </div>
 
-                                        {/* Mobile Price Filter */}
                                         <div className="mb-8">
                                             <h3 className="text-gray-700 font-medium mb-4 text-sm uppercase tracking-wider">
                                                 Price Range
@@ -615,9 +622,7 @@ const AllProducts = () => {
                     )}
                 </AnimatePresence>
 
-                {/* Main Content */}
                 <div className="flex-1">
-                    {/* Header with Results Count and Mobile Filter Button */}
                     <div className="flex justify-between items-center mb-8">
                         <div>
                             <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
@@ -642,7 +647,6 @@ const AllProducts = () => {
                         </motion.button>
                     </div>
 
-                    {/* Products Grid */}
                     {filteredProducts.length > 0 ? (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             {filteredProducts.map((product) => (

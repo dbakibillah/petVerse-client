@@ -13,20 +13,19 @@ import Home from "./pages/common/Home";
 import Login from "./pages/common/Login";
 import Registration from "./pages/common/Registration";
 import Dashboard from "./pages/dashboard/Dashboard";
+import ProfilePage from "./pages/dashboard/ProfilePage";
 import Forum from "./pages/forum/Forum";
 import Grooming from "./pages/grooming/Grooming";
 import GroomingAppointment from "./pages/grooming/GroomingAppoinment";
 import HealthCare from "./pages/healthcare/HealthCare";
+import HealthCareAppointment from "./pages/healthcare/HealthCareAppointment";
+import AllProducts from "./pages/shop/AllProducts";
 import Shop from "./pages/shop/shop";
-import UserProfile from "./pages/user/UserProfile";
 import AuthProvider from "./providers/AuthProviders";
 import { CartProvider } from "./providers/CartProvider";
 import ThemeProvider from "./providers/ThemeProvider";
 import PrivateRoute from "./routes/PrivateRoute";
 import Root from "./routes/Root";
-import HealthCareAppointment from "./pages/healthcare/HealthCareAppointment";
-import AllProducts from "./pages/shop/AllProducts";
-import ProfilePage from "./pages/dashboard/ProfilePage";
 // tanstackQuery
 const queryClient = new QueryClient();
 
@@ -67,10 +66,6 @@ const router = createBrowserRouter([
                         <Forum />
                     </PrivateRoute>
                 ),
-            },
-            {
-                path: "/profile",
-                element: <UserProfile />,
             },
             {
                 path: "/grooming",
