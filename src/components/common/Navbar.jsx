@@ -140,20 +140,6 @@ const Navbar = () => {
                     ))}
                 </div>
             </li>
-            <li>
-                <NavLink
-                    to="/pet-care"
-                    className={({ isActive }) =>
-                        `px-3 py-2 rounded-lg transition-all text-sm ${
-                            isActive
-                                ? "text-primary font-semibold bg-primary/10"
-                                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        }`
-                    }
-                >
-                    Pet Care
-                </NavLink>
-            </li>
         </>
     );
 
