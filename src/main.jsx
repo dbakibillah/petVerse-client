@@ -26,6 +26,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import Root from "./routes/Root";
 import HealthCareAppointment from "./pages/healthcare/HealthCareAppointment";
 import AllProducts from "./pages/shop/AllProducts";
+import ProfilePage from "./pages/dashboard/ProfilePage";
 // tanstackQuery
 const queryClient = new QueryClient();
 
@@ -105,6 +106,10 @@ const router = createBrowserRouter([
             {
                 path: "/dashboard/grooming",
                 element: <GroomingAdmin />,
+            },
+            {
+                path: "/dashboard/profile",
+                element: <ProfilePage />,
             },
         ],
     },

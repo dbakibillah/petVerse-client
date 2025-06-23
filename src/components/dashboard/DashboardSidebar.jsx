@@ -32,8 +32,8 @@ const DashboardSidebar = () => {
             icon: <FiPieChart className="text-lg" />,
         },
         {
-            path: "/dashboard/reports",
-            name: "Reports",
+            path: "/dashboard/healthappointments",
+            name: "Health Appointments",
             icon: <FiFileText className="text-lg" />,
         },
         {
