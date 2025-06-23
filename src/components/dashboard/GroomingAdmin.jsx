@@ -1,26 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import {
-    FiHome,
-    FiUser,
-    FiCalendar,
-    FiClock,
-    FiPhone,
-    FiMapPin,
+    FiAlertCircle,
+    FiCheckCircle,
     FiEdit2,
-    FiTrash2,
+    FiInfo,
     FiPlus,
     FiSearch,
-    FiMail,
-    FiHeart,
-    FiCheckCircle,
-    FiAlertCircle,
-    FiInfo,
+    FiTrash2,
+    FiUser,
+    FiX,
 } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import GroomingCardsAdmin from "./GroomingCardsAdmin";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const GroomingAdmin = () => {
     const axiosPublic = useAxiosPublic();
@@ -28,6 +22,18 @@ const GroomingAdmin = () => {
     const [selectedStatus, setSelectedStatus] = useState("All");
     const [selectedAppointment, setSelectedAppointment] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+
+    // Debounce search term
+    useEffect(() => {
+        const timerId = setTimeout(() => {
+            setDebouncedSearchTerm(searchTerm);
+        }, 500);
+
+        return () => {
+            clearTimeout(timerId);
+        };
+    }, [searchTerm]);
 
     const {
         data: groomings = [],
@@ -41,7 +47,7 @@ const GroomingAdmin = () => {
                 const response = await axiosPublic.get("/grooming");
                 return response.data;
             } catch (error) {
-                toast.error("Failed to fetch appointments");
+                toast.error("Failed to fetch grooming appointments");
                 throw error;
             }
         },
@@ -50,12 +56,12 @@ const GroomingAdmin = () => {
     const filteredAppointments = groomings.filter((appointment) => {
         const matchesSearch =
             appointment.petName
-                .toLowerCase()
-                .includes(searchTerm.toLowerCase()) ||
-            appointment.phone.includes(searchTerm) ||
+                ?.toLowerCase()
+                .includes(debouncedSearchTerm.toLowerCase()) ||
+            appointment.phone?.includes(debouncedSearchTerm) ||
             appointment.ownerName
-                .toLowerCase()
-                .includes(searchTerm.toLowerCase());
+                ?.toLowerCase()
+                .includes(debouncedSearchTerm.toLowerCase());
         const matchesStatus =
             selectedStatus === "All" || appointment.status === selectedStatus;
         return matchesSearch && matchesStatus;
@@ -118,11 +124,9 @@ const GroomingAdmin = () => {
         );
 
         try {
-            if (selectedAppointment) {
-                await axiosPublic.put(
-                    `/grooming/${selectedAppointment._id}`,
-                    selectedAppointment
-                );
+            if (selectedAppointment?._id) {
+                const { _id, ...appointmentData } = selectedAppointment;
+                await axiosPublic.put(`/grooming/${_id}`, appointmentData);
                 toast.update(toastId, {
                     render: "Appointment updated successfully",
                     type: "success",
@@ -130,7 +134,11 @@ const GroomingAdmin = () => {
                     autoClose: 3000,
                 });
             } else {
-                await axiosPublic.post("/grooming", selectedAppointment || {});
+                const response = await axiosPublic.post(
+                    "/grooming",
+                    selectedAppointment || {}
+                );
+                console.log("Creation response:", response.data); // Log successful response
                 toast.update(toastId, {
                     render: "Appointment created successfully",
                     type: "success",
@@ -141,6 +149,7 @@ const GroomingAdmin = () => {
             setIsModalOpen(false);
             refetch();
         } catch (error) {
+            console.error("Error details:", error.response?.data); // Log detailed error
             toast.update(toastId, {
                 render: selectedAppointment
                     ? "Failed to update appointment"
@@ -149,7 +158,6 @@ const GroomingAdmin = () => {
                 isLoading: false,
                 autoClose: 3000,
             });
-            console.error(error);
         }
     };
 
@@ -208,7 +216,7 @@ const GroomingAdmin = () => {
     return (
         <section className="min-h-screen bg-gray-50">
             <ToastContainer
-                position="top-right"
+                position="top-center"
                 autoClose={5000}
                 hideProgressBar={false}
                 newestOnTop={false}
@@ -243,16 +251,26 @@ const GroomingAdmin = () => {
                         <input
                             type="text"
                             placeholder="Search pets, owners or phone..."
-                            className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FF552A] focus:border-transparent"
+                            className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FF552A] focus:border-transparent transition-all duration-200"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
+                        {searchTerm && (
+                            <button
+                                onClick={() => setSearchTerm("")}
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                            >
+                                <FiX className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                            </button>
+                        )}
                     </div>
-                    <button
+                    <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                         className="flex items-center gap-2 bg-[#FF552A] hover:bg-[#FF7350] text-white px-5 py-2.5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
                         onClick={() => {
                             setSelectedAppointment({
-                                status: "Pending",
+                                status: "pending",
                                 vaccinated: "Fully Vaccinated",
                                 friendly: "Yes",
                                 trained: "Yes",
@@ -262,20 +280,22 @@ const GroomingAdmin = () => {
                     >
                         <FiPlus className="text-lg" />
                         <span className="font-medium">New Appointment</span>
-                    </button>
+                    </motion.button>
                 </div>
 
                 {/* Status Filters */}
                 <div className="flex flex-wrap gap-3 mb-8">
                     {[
                         "All",
-                        "Pending",
+                        "pending",
                         "Confirmed",
                         "Completed",
                         "Cancelled",
                     ].map((status) => (
-                        <button
+                        <motion.button
                             key={status}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                             onClick={() => setSelectedStatus(status)}
                             className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                                 status === selectedStatus
@@ -284,13 +304,17 @@ const GroomingAdmin = () => {
                             }`}
                         >
                             {status}
-                        </button>
+                        </motion.button>
                     ))}
                 </div>
 
                 {/* Appointments List */}
                 {filteredAppointments.length === 0 ? (
-                    <div className="bg-white rounded-xl shadow-md p-8 text-center">
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="bg-white rounded-xl shadow-md p-8 text-center"
+                    >
                         <div className="mx-auto h-24 w-24 text-gray-300 mb-4">
                             <FiUser className="w-full h-full" />
                         </div>
@@ -300,17 +324,296 @@ const GroomingAdmin = () => {
                         <p className="text-gray-500">
                             Try adjusting your search or filter criteria
                         </p>
-                    </div>
+                    </motion.div>
                 ) : (
-                    <GroomingCardsAdmin
-                        appointments={filteredAppointments}
-                        handleStatusUpdate={handleStatusUpdate}
-                        handleDelete={handleDelete}
-                        setSelectedAppointment={setSelectedAppointment}
-                        setIsModalOpen={setIsModalOpen}
-                        getStatusColor={getStatusColor}
-                        getStatusIcon={getStatusIcon}
-                    />
+                    <div className="space-y-6">
+                        <AnimatePresence>
+                            {filteredAppointments.map((appointment) => (
+                                <motion.div
+                                    key={appointment._id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -20 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-200 border border-gray-100"
+                                >
+                                    {/* Card Header with Status */}
+                                    <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                                        <div>
+                                            <h3 className="text-xl font-bold text-gray-800">
+                                                {appointment.petName}
+                                            </h3>
+                                            <p className="text-gray-600 text-sm">
+                                                {appointment.petType} •{" "}
+                                                {appointment.breed}
+                                            </p>
+                                        </div>
+                                        <span
+                                            className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                                                appointment.status
+                                            )}`}
+                                        >
+                                            {getStatusIcon(appointment.status)}
+                                            {appointment.status}
+                                        </span>
+                                    </div>
+
+                                    {/* Card Content */}
+                                    <div className="p-6">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            {/* Owner Information */}
+                                            <div className="space-y-4">
+                                                <div>
+                                                    <h4 className="text-sm font-semibold text-gray-500 mb-2">
+                                                        Owner Information
+                                                    </h4>
+                                                    <div className="space-y-3">
+                                                        <div>
+                                                            <p className="text-xs text-gray-500">
+                                                                Name
+                                                            </p>
+                                                            <p className="font-medium">
+                                                                {
+                                                                    appointment.ownerName
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-xs text-gray-500">
+                                                                Contact
+                                                            </p>
+                                                            <p className="font-medium">
+                                                                {
+                                                                    appointment.phone
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-xs text-gray-500">
+                                                                Address
+                                                            </p>
+                                                            <p className="font-medium text-sm">
+                                                                {
+                                                                    appointment.address
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Pet Details */}
+                                                <div>
+                                                    <h4 className="text-sm font-semibold text-gray-500 mb-2">
+                                                        Pet Details
+                                                    </h4>
+                                                    <div className="grid grid-cols-2 gap-4">
+                                                        <div>
+                                                            <p className="text-xs text-gray-500">
+                                                                Age
+                                                            </p>
+                                                            <p className="font-medium">
+                                                                {
+                                                                    appointment.age
+                                                                }{" "}
+                                                                years
+                                                            </p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-xs text-gray-500">
+                                                                Weight
+                                                            </p>
+                                                            <p className="font-medium">
+                                                                {
+                                                                    appointment.weight
+                                                                }{" "}
+                                                                lbs
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Health and Appointment Info */}
+                                            <div className="space-y-4">
+                                                {/* Health Information */}
+                                                <div>
+                                                    <h4 className="text-sm font-semibold text-gray-500 mb-2">
+                                                        Health Information
+                                                    </h4>
+                                                    <div className="grid grid-cols-3 gap-2 mb-3">
+                                                        <div>
+                                                            <p className="text-xs text-gray-500">
+                                                                Friendly
+                                                            </p>
+                                                            <p className="font-medium text-sm">
+                                                                {
+                                                                    appointment.friendly
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-xs text-gray-500">
+                                                                Trained
+                                                            </p>
+                                                            <p className="font-medium text-sm">
+                                                                {
+                                                                    appointment.trained
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-xs text-gray-500">
+                                                                Vaccinated
+                                                            </p>
+                                                            <p className="font-medium text-sm">
+                                                                {
+                                                                    appointment.vaccinated
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-xs text-gray-500">
+                                                            Temperament
+                                                        </p>
+                                                        <p className="font-medium text-sm">
+                                                            {appointment.temperament ||
+                                                                "Not specified"}
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                {/* Appointment Times */}
+                                                <div>
+                                                    <h4 className="text-sm font-semibold text-gray-500 mb-2">
+                                                        Appointment Times
+                                                    </h4>
+                                                    <div className="grid grid-cols-2 gap-4">
+                                                        <div>
+                                                            <p className="text-xs text-gray-500">
+                                                                Pickup
+                                                            </p>
+                                                            <p className="font-medium text-sm">
+                                                                {
+                                                                    appointment.pickupTime
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-xs text-gray-500">
+                                                                Delivery
+                                                            </p>
+                                                            <p className="font-medium text-sm">
+                                                                {
+                                                                    appointment.deliveryTime
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Medical Notes */}
+                                        {appointment.medical && (
+                                            <div className="mt-6">
+                                                <h4 className="text-sm font-semibold text-gray-500 mb-2">
+                                                    Medical Notes
+                                                </h4>
+                                                <p className="text-sm bg-gray-50 p-3 rounded-lg">
+                                                    {appointment.medical}
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Card Footer with Actions */}
+                                    <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
+                                        <div className="flex space-x-2">
+                                            <motion.button
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                                onClick={() => {
+                                                    setSelectedAppointment(
+                                                        appointment
+                                                    );
+                                                    setIsModalOpen(true);
+                                                }}
+                                                className="p-2 text-gray-600 hover:text-[#FF552A] transition-colors"
+                                                title="Edit"
+                                            >
+                                                <FiEdit2 className="w-4 h-4" />
+                                            </motion.button>
+                                            <motion.button
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                                onClick={() =>
+                                                    handleDelete(
+                                                        appointment._id
+                                                    )
+                                                }
+                                                className="p-2 text-gray-600 hover:text-red-500 transition-colors"
+                                                title="Delete"
+                                            >
+                                                <FiTrash2 className="w-4 h-4" />
+                                            </motion.button>
+                                        </div>
+
+                                        <div className="flex space-x-2">
+                                            {appointment.status !==
+                                                "Confirmed" && (
+                                                <motion.button
+                                                    whileHover={{ scale: 1.05 }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                    onClick={() =>
+                                                        handleStatusUpdate(
+                                                            appointment._id,
+                                                            "Confirmed"
+                                                        )
+                                                    }
+                                                    className="px-3 py-1 bg-blue-50 text-blue-600 text-xs rounded hover:bg-blue-100 transition-colors border border-blue-100"
+                                                >
+                                                    Confirm
+                                                </motion.button>
+                                            )}
+                                            {appointment.status !==
+                                                "Completed" && (
+                                                <motion.button
+                                                    whileHover={{ scale: 1.05 }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                    onClick={() =>
+                                                        handleStatusUpdate(
+                                                            appointment._id,
+                                                            "Completed"
+                                                        )
+                                                    }
+                                                    className="px-3 py-1 bg-green-50 text-green-600 text-xs rounded hover:bg-green-100 transition-colors border border-green-100"
+                                                >
+                                                    Complete
+                                                </motion.button>
+                                            )}
+                                            {appointment.status !==
+                                                "Cancelled" && (
+                                                <motion.button
+                                                    whileHover={{ scale: 1.05 }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                    onClick={() =>
+                                                        handleStatusUpdate(
+                                                            appointment._id,
+                                                            "Cancelled"
+                                                        )
+                                                    }
+                                                    className="px-3 py-1 bg-red-50 text-red-600 text-xs rounded hover:bg-red-100 transition-colors border border-red-100"
+                                                >
+                                                    Cancel
+                                                </motion.button>
+                                            )}
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
+                    </div>
                 )}
             </main>
 
@@ -447,12 +750,15 @@ const GroomingAdmin = () => {
                                             name="petType"
                                             value={
                                                 selectedAppointment?.petType ||
-                                                "Dog"
+                                                ""
                                             }
                                             onChange={handleInputChange}
                                             required
                                             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF552A] focus:border-transparent"
                                         >
+                                            <option value="">
+                                                Select Pet Type
+                                            </option>
                                             <option value="Dog">Dog</option>
                                             <option value="Cat">Cat</option>
                                             <option value="Rabbit">
@@ -645,13 +951,13 @@ const GroomingAdmin = () => {
                                             name="status"
                                             value={
                                                 selectedAppointment?.status ||
-                                                "Pending"
+                                                "pending"
                                             }
                                             onChange={handleInputChange}
                                             required
                                             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF552A] focus:border-transparent"
                                         >
-                                            <option value="Pending">
+                                            <option value="pending">
                                                 Pending
                                             </option>
                                             <option value="Confirmed">

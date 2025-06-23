@@ -1,229 +1,692 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import ProductCard from "../../components/shop/ProductCard";
-import { HiOutlineSearch, HiX } from "react-icons/hi";
-
-const categories = ["Food", "Grooming", "Accessories", "Toys", "Training Items"];
+import { HiOutlineSearch, HiX, HiFilter, HiSparkles } from "react-icons/hi";
+import { FiRefreshCw, FiChevronDown } from "react-icons/fi";
+import { motion, AnimatePresence } from "framer-motion";
 
 const AllProducts = () => {
-  const axiosPublic = useAxiosPublic();
+    const axiosPublic = useAxiosPublic();
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [priceRange, setPriceRange] = useState([0, 1000]);
-  const [showFiltersMobile, setShowFiltersMobile] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [priceRange, setPriceRange] = useState([0, 99999]);
+    const [showFiltersMobile, setShowFiltersMobile] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [maxPrice, setMaxPrice] = useState(99999);
 
-  const { data: products = [], isLoading, isError, error } = useQuery({
-    queryKey: ["products"],
-    queryFn: async () => {
-      const response = await axiosPublic.get("/products");
-      return response.data;
-    },
-  });
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50);
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
-  const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
-      const matchesSearch = product.name
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-      const matchesCategory = selectedCategory
-        ? product.category === selectedCategory
-        : true;
-      const matchesPrice =
-        product.price >= priceRange[0] && product.price <= priceRange[1];
-      return matchesSearch && matchesCategory && matchesPrice;
+    const {
+        data: products = [],
+        isLoading,
+        isError,
+        error,
+    } = useQuery({
+        queryKey: ["products"],
+        queryFn: async () => {
+            const response = await axiosPublic.get("/products");
+            // Calculate max price from products
+            const prices = response.data.map((p) => p.price);
+            const calculatedMax = Math.max(...prices, 99999);
+            setMaxPrice(calculatedMax);
+            setPriceRange([0, calculatedMax]);
+            return response.data;
+        },
+        staleTime: 5 * 60 * 1000,
     });
-  }, [products, searchTerm, selectedCategory, priceRange]);
 
-  const resetFilters = () => {
-    setSelectedCategory("");
-    setPriceRange([0, 1000]);
-  };
+    // Extract unique categories
+    const categories = useMemo(() => {
+        return [...new Set(products.map((product) => product.category))];
+    }, [products]);
 
-  if (isLoading)
-    return (
-      <div className="flex justify-center items-center h-96 text-xl text-gray-500 animate-pulse">
-        Loading products...
-      </div>
-    );
+    const filteredProducts = useMemo(() => {
+        return products.filter((product) => {
+            const matchesSearch = product.name
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase());
+            const matchesCategory = selectedCategory
+                ? product.category === selectedCategory
+                : true;
+            const matchesPrice =
+                product.price >= priceRange[0] &&
+                product.price <= priceRange[1];
+            return matchesSearch && matchesCategory && matchesPrice;
+        });
+    }, [products, searchTerm, selectedCategory, priceRange]);
 
-  if (isError)
-    return (
-      <div className="flex justify-center items-center h-96 text-red-600 text-xl">
-        Error: {error?.message || "Something went wrong"}
-      </div>
-    );
+    const resetFilters = () => {
+        setSearchTerm("");
+        setSelectedCategory("");
+        setPriceRange([0, maxPrice]);
+    };
 
-  return (
-    <div className="max-w-7xl mx-auto px-4 py-10">
-      {/* Search Bar at top */}
-      <div className="mb-8 max-w-3xl mx-auto relative">
-        <HiOutlineSearch className="absolute left-4 top-3.5 text-gray-400" />
-        <input
-          type="search"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search products..."
-          className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 transition text-gray-800"
-        />
-      </div>
+    const handlePriceChange = (index, value) => {
+        const newPriceRange = [...priceRange];
+        const numValue = Number(value);
 
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Filters Sidebar */}
-        <div
-          className={`fixed inset-0 bg-gray-50 z-40 lg:static lg:bg-transparent lg:z-auto transition-transform duration-300 ${
-            showFiltersMobile
-              ? "translate-x-0"
-              : "-translate-x-full lg:translate-x-0"
-          } w-72 lg:w-80 p-6 overflow-y-auto lg:overflow-visible h-full lg:h-auto shadow-lg lg:shadow-none rounded-r-lg`}
-        >
-          <div className="flex items-center justify-between mb-8 lg:hidden">
-            <h2 className="text-2xl font-semibold text-gray-700">Filters</h2>
-            <button
-              onClick={() => setShowFiltersMobile(false)}
-              className="text-gray-700 text-3xl"
-              aria-label="Close Filters"
-            >
-              <HiX />
-            </button>
-          </div>
+        // Validate input
+        if (isNaN(numValue)) return;
 
-          {/* Category Pills */}
-          <div className="mb-8">
-            <h3 className="text-gray-700 font-semibold mb-3">Categories</h3>
-            <div className="flex flex-wrap gap-3">
-              <button
-                onClick={() => setSelectedCategory("")}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition border ${
-                  selectedCategory === ""
-                    ? "bg-blue-600 text-white border-blue-600 shadow"
-                    : "border-gray-300 text-gray-700 hover:bg-blue-100 hover:border-blue-400"
-                }`}
-              >
-                All
-              </button>
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition border ${
-                    selectedCategory === cat
-                      ? "bg-blue-600 text-white border-blue-600 shadow"
-                      : "border-gray-300 text-gray-700 hover:bg-blue-100 hover:border-blue-400"
-                  }`}
+        newPriceRange[index] = Math.min(
+            Math.max(numValue, 0),
+            index === 0 ? priceRange[1] : maxPrice
+        );
+
+        // Ensure min doesn't exceed max and vice versa
+        if (index === 0 && newPriceRange[0] > newPriceRange[1]) {
+            newPriceRange[1] = newPriceRange[0];
+        } else if (index === 1 && newPriceRange[1] < newPriceRange[0]) {
+            newPriceRange[0] = newPriceRange[1];
+        }
+
+        setPriceRange(newPriceRange);
+    };
+
+    const formatPrice = (price) => {
+        return new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+            maximumFractionDigits: 0,
+        }).format(price);
+    };
+
+    // Calculate slider percentages
+    const minPercentage = (priceRange[0] / maxPrice) * 100;
+    const maxPercentage = 100 - (priceRange[1] / maxPrice) * 100;
+
+    if (isLoading) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[70vh]">
+                <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        ease: "linear",
+                    }}
+                    className="w-14 h-14 border-4 border-primary border-t-transparent rounded-full mb-6"
+                ></motion.div>
+                <motion.p
+                    initial={{ opacity: 0.5 }}
+                    animate={{ opacity: 1 }}
+                    transition={{
+                        repeat: Infinity,
+                        repeatType: "reverse",
+                        duration: 1,
+                    }}
+                    className="text-xl text-gray-600 font-medium"
                 >
-                  {cat}
-                </button>
-              ))}
+                    Loading our furry favorites...
+                </motion.p>
             </div>
-          </div>
+        );
+    }
 
-          {/* Price Range */}
-          <div className="mb-8">
-            <h3 className="text-gray-700 font-semibold mb-3">
-              Price Range (${priceRange[0]} - ${priceRange[1]})
-            </h3>
-            <div className="flex items-center space-x-4 mb-3">
-              <input
-                type="number"
-                min={0}
-                max={priceRange[1]}
-                value={priceRange[0]}
-                onChange={(e) =>
-                  setPriceRange([
-                    Math.min(Number(e.target.value), priceRange[1]),
-                    priceRange[1],
-                  ])
-                }
-                className="w-20 rounded-lg px-3 py-2 border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
-                aria-label="Minimum Price"
-              />
-              <span className="text-gray-600">to</span>
-              <input
-                type="number"
-                min={priceRange[0]}
-                max={10000}
-                value={priceRange[1]}
-                onChange={(e) =>
-                  setPriceRange([
-                    priceRange[0],
-                    Math.max(Number(e.target.value), priceRange[0]),
-                  ])
-                }
-                className="w-20 rounded-lg px-3 py-2 border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
-                aria-label="Maximum Price"
-              />
-            </div>
-            {/* Range sliders */}
-            <input
-              type="range"
-              min={0}
-              max={1000}
-              step={1}
-              value={priceRange[0]}
-              onChange={(e) =>
-                setPriceRange([
-                  Math.min(Number(e.target.value), priceRange[1]),
-                  priceRange[1],
-                ])
-              }
-              className="w-full accent-blue-600"
-            />
-            <input
-              type="range"
-              min={0}
-              max={1000}
-              step={1}
-              value={priceRange[1]}
-              onChange={(e) =>
-                setPriceRange([
-                  priceRange[0],
-                  Math.max(Number(e.target.value), priceRange[0]),
-                ])
-              }
-              className="w-full accent-blue-600 mt-2"
-            />
-          </div>
-
-          {/* Reset Filters */}
-          <button
-            onClick={resetFilters}
-            className="w-full bg-red-600 hover:bg-red-700 transition rounded-lg py-3 font-semibold text-white"
-          >
-            Clear Filters
-          </button>
-        </div>
-
-        {/* Main Content */}
-        <div className="flex-1">
-          {/* Mobile Filter Toggle */}
-          <div className="lg:hidden flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold text-gray-800">Products</h1>
-            <button
-              onClick={() => setShowFiltersMobile(true)}
-              className="bg-blue-600 text-white px-5 py-2 rounded-full shadow-md hover:bg-blue-700 transition"
+    if (isError) {
+        return (
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex flex-col items-center justify-center min-h-[70vh] p-6 text-center"
             >
-              Filters
-            </button>
-          </div>
+                <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                    <HiX className="text-red-600 text-3xl" />
+                </div>
+                <h3 className="text-2xl font-semibold text-red-600 mb-3">
+                    Oops!
+                </h3>
+                <p className="text-gray-600 max-w-md mb-6">
+                    {error?.message ||
+                        "We couldn't fetch the products. Please try again later."}
+                </p>
+                <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => window.location.reload()}
+                    className="px-8 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
+                >
+                    <FiRefreshCw className="animate-spin" /> Retry
+                </motion.button>
+            </motion.div>
+        );
+    }
 
-          {/* Products Grid */}
-          {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-8">
-              {filteredProducts.map((product) => (
-                <ProductCard key={product._id} product={product} />
-              ))}
+    return (
+        <div className="container mx-auto px-4 sm:px-6 py-10">
+            {/* Floating Search on Scroll */}
+            <AnimatePresence>
+                {isScrolled && (
+                    <motion.div
+                        initial={{ y: -100, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -100, opacity: 0 }}
+                        transition={{ type: "spring", damping: 25 }}
+                        className="fixed top-0 left-0 right-0 bg-white shadow-md z-50 py-3 px-4"
+                    >
+                        <div className="max-w-4xl mx-auto relative">
+                            <HiOutlineSearch className="absolute left-4 top-3.5 text-gray-400 text-xl" />
+                            <input
+                                type="search"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                placeholder="Search for pet products..."
+                                className="w-full pl-12 pr-5 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent shadow-sm text-gray-700 placeholder-gray-400 transition"
+                            />
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Hero Section with Search */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-12 text-center"
+            >
+                <div className="inline-flex items-center bg-orange-50 text-primary px-4 py-2 rounded-full mb-4">
+                    <HiSparkles className="mr-2" />
+                    <span className="text-sm font-medium">
+                        Premium Pet Products
+                    </span>
+                </div>
+                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    Pamper Your{" "}
+                    <span className="text-primary">Furry Friend</span>
+                </h1>
+                <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                    Discover handpicked products to keep your pet happy,
+                    healthy, and stylish
+                </p>
+
+                {/* Search Bar with Animation */}
+                <motion.div
+                    whileHover={{ scale: 1.01 }}
+                    className="max-w-3xl mx-auto relative"
+                >
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <HiOutlineSearch className="text-gray-400 text-xl" />
+                    </div>
+                    <input
+                        type="search"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder="Search for treats, toys, or accessories..."
+                        className="w-full pl-12 pr-5 py-3 md:py-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent shadow-lg text-gray-700 placeholder-gray-400 transition"
+                    />
+                </motion.div>
+            </motion.div>
+
+            <div className="flex flex-col lg:flex-row gap-8">
+                {/* Filters Sidebar - Desktop */}
+                <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="hidden lg:block w-72 xl:w-80 flex-shrink-0"
+                >
+                    <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 sticky top-24">
+                        <div className="flex justify-between items-center mb-6">
+                            <h2 className="text-xl font-semibold text-gray-800">
+                                Filters
+                            </h2>
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={resetFilters}
+                                className="text-sm text-orange-600 hover:text-orange-800 transition flex items-center gap-1"
+                            >
+                                <FiRefreshCw size={14} /> Reset
+                            </motion.button>
+                        </div>
+
+                        {/* Category Section */}
+                        <div className="mb-8">
+                            <h3 className="text-gray-700 font-medium mb-3 text-sm uppercase tracking-wider">
+                                Categories
+                            </h3>
+                            <div className="space-y-2">
+                                <motion.button
+                                    whileHover={{ x: 5 }}
+                                    onClick={() => setSelectedCategory("")}
+                                    className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                                        selectedCategory === ""
+                                            ? "bg-orange-50 text-orange-700 border-l-4 border-orange-600 shadow-inner"
+                                            : "text-gray-700 hover:bg-gray-50 hover:shadow-sm"
+                                    }`}
+                                >
+                                    All Products
+                                </motion.button>
+                                {categories.map((cat) => (
+                                    <motion.button
+                                        key={cat}
+                                        whileHover={{ x: 5 }}
+                                        onClick={() => setSelectedCategory(cat)}
+                                        className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                                            selectedCategory === cat
+                                                ? "bg-orange-50 text-orange-700 border-l-4 border-orange-600 shadow-inner"
+                                                : "text-gray-700 hover:bg-gray-50 hover:shadow-sm"
+                                        }`}
+                                    >
+                                        {cat}
+                                    </motion.button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Price Filter */}
+                        <div className="mb-8">
+                            <h3 className="text-gray-700 font-medium mb-4 text-sm uppercase tracking-wider">
+                                Price Range
+                            </h3>
+                            <div className="mb-4">
+                                <div className="flex justify-between text-sm text-gray-500 mb-2">
+                                    <span>{formatPrice(priceRange[0])}</span>
+                                    <span>{formatPrice(priceRange[1])}</span>
+                                </div>
+                                <div className="relative h-2 bg-gray-200 rounded-full">
+                                    <div
+                                        className="absolute h-2 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full"
+                                        style={{
+                                            left: `${minPercentage}%`,
+                                            right: `${maxPercentage}%`,
+                                        }}
+                                    ></div>
+                                    <input
+                                        type="range"
+                                        min={0}
+                                        max={maxPrice}
+                                        step={
+                                            maxPrice > 1000
+                                                ? Math.floor(maxPrice / 100)
+                                                : 1
+                                        }
+                                        value={priceRange[0]}
+                                        onChange={(e) =>
+                                            handlePriceChange(0, e.target.value)
+                                        }
+                                        className="absolute w-full appearance-none h-2 bg-transparent pointer-events-none top-0 left-0"
+                                    />
+                                    <input
+                                        type="range"
+                                        min={0}
+                                        max={maxPrice}
+                                        step={
+                                            maxPrice > 1000
+                                                ? Math.floor(maxPrice / 100)
+                                                : 1
+                                        }
+                                        value={priceRange[1]}
+                                        onChange={(e) =>
+                                            handlePriceChange(1, e.target.value)
+                                        }
+                                        className="absolute w-full appearance-none h-2 bg-transparent pointer-events-none top-0 left-0"
+                                    />
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <div className="flex-1">
+                                    <label className="block text-xs text-gray-500 mb-1">
+                                        Min
+                                    </label>
+                                    <div className="relative">
+                                        <span className="absolute left-3 top-2.5 text-gray-400">
+                                            $
+                                        </span>
+                                        <input
+                                            type="number"
+                                            min={0}
+                                            max={priceRange[1]}
+                                            value={priceRange[0]}
+                                            onChange={(e) =>
+                                                handlePriceChange(
+                                                    0,
+                                                    e.target.value
+                                                )
+                                            }
+                                            className="w-full pl-8 pr-3 py-2 rounded-lg border border-gray-300 text-gray-700 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <label className="block text-xs text-gray-500 mb-1">
+                                        Max
+                                    </label>
+                                    <div className="relative">
+                                        <span className="absolute left-3 top-2.5 text-gray-400">
+                                            $
+                                        </span>
+                                        <input
+                                            type="number"
+                                            min={priceRange[0]}
+                                            max={maxPrice}
+                                            value={priceRange[1]}
+                                            onChange={(e) =>
+                                                handlePriceChange(
+                                                    1,
+                                                    e.target.value
+                                                )
+                                            }
+                                            className="w-full pl-8 pr-3 py-2 rounded-lg border border-gray-300 text-gray-700 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={resetFilters}
+                            className="w-full bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 transition-all rounded-xl py-3 font-medium text-white flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                        >
+                            <HiX /> Clear All Filters
+                        </motion.button>
+                    </div>
+                </motion.div>
+
+                {/* Mobile Filters Overlay */}
+                <AnimatePresence>
+                    {showFiltersMobile && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-50 overflow-y-auto"
+                        >
+                            <div className="flex min-h-screen">
+                                {/* Overlay */}
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    className="fixed inset-0 bg-black bg-opacity-50"
+                                    onClick={() => setShowFiltersMobile(false)}
+                                ></motion.div>
+
+                                {/* Filters Panel */}
+                                <motion.div
+                                    initial={{ x: "100%" }}
+                                    animate={{ x: 0 }}
+                                    exit={{ x: "100%" }}
+                                    transition={{ type: "spring", damping: 30 }}
+                                    className="relative bg-white w-4/5 max-w-sm ml-auto h-screen overflow-y-auto"
+                                >
+                                    <div className="sticky top-0 bg-white z-10 p-4 border-b flex justify-between items-center shadow-sm">
+                                        <h2 className="text-xl font-semibold text-gray-800">
+                                            Filters
+                                        </h2>
+                                        <button
+                                            onClick={() =>
+                                                setShowFiltersMobile(false)
+                                            }
+                                            className="text-gray-500 hover:text-gray-700"
+                                        >
+                                            <HiX className="text-2xl" />
+                                        </button>
+                                    </div>
+
+                                    <div className="p-6">
+                                        {/* Mobile Category Filters */}
+                                        <div className="mb-8">
+                                            <h3 className="text-gray-700 font-medium mb-4 text-sm uppercase tracking-wider">
+                                                Categories
+                                            </h3>
+                                            <div className="grid grid-cols-2 gap-3">
+                                                <motion.button
+                                                    whileTap={{ scale: 0.95 }}
+                                                    onClick={() =>
+                                                        setSelectedCategory("")
+                                                    }
+                                                    className={`px-4 py-3 rounded-xl text-sm font-medium transition ${
+                                                        selectedCategory === ""
+                                                            ? "bg-orange-600 text-white shadow-md"
+                                                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                                                    }`}
+                                                >
+                                                    All
+                                                </motion.button>
+                                                {categories.map((cat) => (
+                                                    <motion.button
+                                                        key={cat}
+                                                        whileTap={{
+                                                            scale: 0.95,
+                                                        }}
+                                                        onClick={() =>
+                                                            setSelectedCategory(
+                                                                cat
+                                                            )
+                                                        }
+                                                        className={`px-4 py-3 rounded-xl text-sm font-medium transition ${
+                                                            selectedCategory ===
+                                                            cat
+                                                                ? "bg-orange-600 text-white shadow-md"
+                                                                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                                                        }`}
+                                                    >
+                                                        {cat}
+                                                    </motion.button>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Mobile Price Filter */}
+                                        <div className="mb-8">
+                                            <h3 className="text-gray-700 font-medium mb-4 text-sm uppercase tracking-wider">
+                                                Price Range
+                                            </h3>
+                                            <div className="mb-4">
+                                                <div className="flex justify-between text-sm text-gray-500 mb-2">
+                                                    <span>
+                                                        {formatPrice(
+                                                            priceRange[0]
+                                                        )}
+                                                    </span>
+                                                    <span>
+                                                        {formatPrice(
+                                                            priceRange[1]
+                                                        )}
+                                                    </span>
+                                                </div>
+                                                <div className="relative h-2 bg-gray-200 rounded-full">
+                                                    <div
+                                                        className="absolute h-2 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full"
+                                                        style={{
+                                                            left: `${minPercentage}%`,
+                                                            right: `${maxPercentage}%`,
+                                                        }}
+                                                    ></div>
+                                                    <input
+                                                        type="range"
+                                                        min={0}
+                                                        max={maxPrice}
+                                                        step={
+                                                            maxPrice > 1000
+                                                                ? Math.floor(
+                                                                      maxPrice /
+                                                                          100
+                                                                  )
+                                                                : 1
+                                                        }
+                                                        value={priceRange[0]}
+                                                        onChange={(e) =>
+                                                            handlePriceChange(
+                                                                0,
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        className="absolute w-full appearance-none h-2 bg-transparent pointer-events-none top-0 left-0"
+                                                    />
+                                                    <input
+                                                        type="range"
+                                                        min={0}
+                                                        max={maxPrice}
+                                                        step={
+                                                            maxPrice > 1000
+                                                                ? Math.floor(
+                                                                      maxPrice /
+                                                                          100
+                                                                  )
+                                                                : 1
+                                                        }
+                                                        value={priceRange[1]}
+                                                        onChange={(e) =>
+                                                            handlePriceChange(
+                                                                1,
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        className="absolute w-full appearance-none h-2 bg-transparent pointer-events-none top-0 left-0"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <div className="flex-1">
+                                                    <label className="block text-xs text-gray-500 mb-1">
+                                                        Min
+                                                    </label>
+                                                    <input
+                                                        type="number"
+                                                        min={0}
+                                                        max={priceRange[1]}
+                                                        value={priceRange[0]}
+                                                        onChange={(e) =>
+                                                            handlePriceChange(
+                                                                0,
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        className="w-full px-3 py-2 rounded-lg border border-gray-300 text-gray-700 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                                    />
+                                                </div>
+                                                <div className="flex-1">
+                                                    <label className="block text-xs text-gray-500 mb-1">
+                                                        Max
+                                                    </label>
+                                                    <input
+                                                        type="number"
+                                                        min={priceRange[0]}
+                                                        max={maxPrice}
+                                                        value={priceRange[1]}
+                                                        onChange={(e) =>
+                                                            handlePriceChange(
+                                                                1,
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        className="w-full px-3 py-2 rounded-lg border border-gray-300 text-gray-700 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex gap-4">
+                                            <motion.button
+                                                whileHover={{ scale: 1.02 }}
+                                                whileTap={{ scale: 0.98 }}
+                                                onClick={resetFilters}
+                                                className="flex-1 bg-gray-100 hover:bg-gray-200 transition-all rounded-xl py-3 font-medium text-gray-700 shadow-md"
+                                            >
+                                                Reset
+                                            </motion.button>
+                                            <motion.button
+                                                whileHover={{ scale: 1.02 }}
+                                                whileTap={{ scale: 0.98 }}
+                                                onClick={() =>
+                                                    setShowFiltersMobile(false)
+                                                }
+                                                className="flex-1 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 transition-all rounded-xl py-3 font-medium text-white shadow-md hover:shadow-lg"
+                                            >
+                                                Apply
+                                            </motion.button>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
+                {/* Main Content */}
+                <div className="flex-1">
+                    {/* Header with Results Count and Mobile Filter Button */}
+                    <div className="flex justify-between items-center mb-8">
+                        <div>
+                            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+                                {selectedCategory || "All"} Products
+                            </h2>
+                            <p className="text-sm text-gray-500 mt-1">
+                                Showing {filteredProducts.length}{" "}
+                                {filteredProducts.length === 1
+                                    ? "item"
+                                    : "items"}
+                                {searchTerm && ` for "${searchTerm}"`}
+                            </p>
+                        </div>
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => setShowFiltersMobile(true)}
+                            className="lg:hidden flex items-center gap-2 px-5 py-2.5 bg-white border border-gray-200 rounded-xl shadow-md hover:shadow-lg transition-all"
+                        >
+                            <HiFilter className="text-gray-600" />
+                            <span className="text-sm font-medium">Filters</span>
+                        </motion.button>
+                    </div>
+
+                    {/* Products Grid */}
+                    {filteredProducts.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            {filteredProducts.map((product) => (
+                                <motion.div
+                                    key={product._id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    whileHover={{ y: -5 }}
+                                >
+                                    <ProductCard product={product} />
+                                </motion.div>
+                            ))}
+                        </div>
+                    ) : (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="text-center py-16"
+                        >
+                            <div className="mx-auto w-28 h-28 bg-gray-100 rounded-full flex items-center justify-center mb-5">
+                                <HiOutlineSearch className="text-gray-400 text-4xl" />
+                            </div>
+                            <h3 className="text-2xl font-medium text-gray-900 mb-3">
+                                No products found
+                            </h3>
+                            <p className="text-gray-500 max-w-md mx-auto mb-6">
+                                Try adjusting your search or filters to find
+                                what you're looking for.
+                            </p>
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={resetFilters}
+                                className="px-8 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+                            >
+                                Reset All Filters
+                            </motion.button>
+                        </motion.div>
+                    )}
+                </div>
             </div>
-          ) : (
-            <div className="text-center text-gray-500 text-xl mt-20">
-              No products found matching your filters.
-            </div>
-          )}
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default AllProducts;

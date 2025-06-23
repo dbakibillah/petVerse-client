@@ -25,7 +25,6 @@ import ThemeProvider from "./providers/ThemeProvider";
 import PrivateRoute from "./routes/PrivateRoute";
 import Root from "./routes/Root";
 import HealthCareAppointment from "./pages/healthcare/HealthCareAppointment";
-
 import AllProducts from "./pages/shop/AllProducts";
 // tanstackQuery
 const queryClient = new QueryClient();
