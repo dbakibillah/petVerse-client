@@ -15,6 +15,7 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 const GroomingAdmin = () => {
     const axiosPublic = useAxiosPublic();
@@ -90,9 +91,17 @@ const GroomingAdmin = () => {
     };
 
     const handleDelete = async (id) => {
-        if (
-            window.confirm("Are you sure you want to delete this appointment?")
-        ) {
+        const result = await Swal.fire({
+            title: "Delete Appointment",
+            text: "Are you sure you want to delete this appointment?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        });
+
+        if (result.isConfirmed) {
             const toastId = toast.loading("Deleting appointment...");
             try {
                 await axiosPublic.delete(`/grooming/${id}`);
