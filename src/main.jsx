@@ -22,7 +22,7 @@ import UserProfile from "./pages/user/UserProfile";
 import HealthCare from "./pages/healthcare/HealthCare";
 import PrivateRoute from "./routes/PrivateRoute";
 import GroomingAppointment from "./pages/grooming/GroomingAppoinment";
-
+import HealthCareAppointment from "./pages/healthcare/HealthCareAppointment";
 
 // tanstackQuery
 const queryClient = new QueryClient();
@@ -79,6 +79,10 @@ const router = createBrowserRouter([
       {
         path: "/healthcare",
         element: <HealthCare />,
+      },
+      {
+        path: "/healthcare-appointment",
+        element: <HealthCareAppointment />,
       },
     ],
   },
