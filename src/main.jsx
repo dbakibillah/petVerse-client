@@ -25,6 +25,8 @@ import ThemeProvider from "./providers/ThemeProvider";
 import PrivateRoute from "./routes/PrivateRoute";
 import Root from "./routes/Root";
 import HealthCareAppointment from "./pages/healthcare/HealthCareAppointment";
+
+import AllProducts from "./pages/shop/AllProducts";
 // tanstackQuery
 const queryClient = new QueryClient();
 
@@ -35,6 +37,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/",
+
                 element: <Home />,
             },
             {
@@ -85,15 +88,23 @@ const router = createBrowserRouter([
                 path: "/healthcare-appointment",
                 element: <HealthCareAppointment />,
             },
+            {
+                path: "/products",
+                element: <AllProducts />,
+            },
         ],
     },
     {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: (
+            <PrivateRoute>
+                <Dashboard />
+            </PrivateRoute>
+        ),
         children: [
-            // Admin Dashboard Routes
+            // Admin routes
             {
-                path: "grooming",
+                path: "/dashboard/grooming",
                 element: <GroomingAdmin />,
             },
         ],
