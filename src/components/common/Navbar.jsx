@@ -49,9 +49,6 @@ const Navbar = () => {
     const services = [
         { name: "Pet Grooming", path: "/grooming" },
         { name: "Healthcare", path: "/healthcare" },
-        { name: "SEO Optimization", path: "/services/seo", icon: "🔍" },
-        { name: "Mobile Apps", path: "/services/mobile", icon: "📱" },
-        { name: "Consulting", path: "/services/consulting", icon: "💡" },
     ];
 
     const links = (

@@ -9,8 +9,81 @@ import {
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import AOS from "aos";
-import "aos/dist/aos.css";
+
+const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
+    return (
+        <div className="grid grid-cols-12 p-4 items-center hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors duration-200">
+            {/* Product Info */}
+            <div className="col-span-5 flex items-center space-x-4">
+                <div className="w-20 h-20 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+                    <img
+                        src={item.productImage}
+                        alt={item.productName}
+                        className="w-full h-full object-cover"
+                    />
+                </div>
+                <div>
+                    <h3 className="font-medium text-gray-800 dark:text-gray-100">
+                        {item.productName}
+                    </h3>
+                    <button
+                        onClick={onRemove}
+                        className="text-sm text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 flex items-center mt-1"
+                    >
+                        <FaTrash className="mr-1 text-xs" />
+                        Remove
+                    </button>
+                </div>
+            </div>
+
+            {/* Price */}
+            <div className="col-span-2 text-center text-gray-700 dark:text-gray-300">
+                {item.discount > 0 ? (
+                    <>
+                        <span className="line-through text-gray-400 dark:text-gray-500 mr-2">
+                            ${item.unitPrice.toFixed(2)}
+                        </span>
+                        <span>
+                            $
+                            {(
+                                item.unitPrice *
+                                (1 - item.discount / 100)
+                            ).toFixed(2)}
+                        </span>
+                    </>
+                ) : (
+                    <span>${item.unitPrice.toFixed(2)}</span>
+                )}
+            </div>
+
+            {/* Quantity */}
+            <div className="col-span-3 flex items-center justify-center">
+                <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden">
+                    <button
+                        onClick={onDecrease}
+                        className="px-3 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600"
+                    >
+                        <FaMinus className="text-xs" />
+                    </button>
+                    <span className="px-4 py-1 text-center w-12 dark:text-gray-100">
+                        {item.quantity}
+                    </span>
+                    <button
+                        onClick={onIncrease}
+                        className="px-3 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600"
+                    >
+                        <FaPlus className="text-xs" />
+                    </button>
+                </div>
+            </div>
+
+            {/* Total */}
+            <div className="col-span-2 text-right font-medium text-gray-800 dark:text-gray-100">
+                ${item.price.toFixed(2)}
+            </div>
+        </div>
+    );
+};
 
 const Cart = () => {
     const {
@@ -25,12 +98,6 @@ const Cart = () => {
     } = useCart();
 
     useEffect(() => {
-        AOS.init({
-            duration: 800,
-            easing: "ease-in-out",
-            once: false,
-            mirror: true,
-        });
         refetchCart();
     }, [refetchCart]);
 
@@ -54,7 +121,7 @@ const Cart = () => {
     // Destructure shipping info from cart or provide defaults
     const shippingInfo = cart?.shippingInfo || {
         freeShipping: false,
-        shippingCost: 5.99,
+        shippingCost: 0.0,
         estimatedDelivery: "2-4 business days",
     };
 
@@ -63,14 +130,6 @@ const Cart = () => {
         subtotalBeforeDiscount -
         totalDiscount +
         (shippingInfo.freeShipping ? 0 : shippingInfo.shippingCost);
-
-    const handleupdateQuantity = (product) => {
-        updateQuantity(product);
-    };
-
-    const handleDecreaseQuantity = (product) => {
-        decreaseQuantity(product);
-    };
 
     const handleRemoveItem = (product) => {
         removeFromCart(product);
@@ -107,51 +166,35 @@ const Cart = () => {
     if (isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-                <div
-                    className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary dark:border-primary-400"
-                    data-aos="zoom-in"
-                ></div>
+                <div className="rounded-full h-16 w-16 border-t-4 border-b-4 border-primary dark:border-primary-400"></div>
             </div>
         );
     }
-
 
     if (!cart) {
         return (
             <section className="min-h-screen py-12 px-4 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
                 <div className="max-w-6xl mx-auto">
-                    <div className="text-center py-12" data-aos="fade-up">
-                        <div
-                            className="inline-block p-6 bg-primary/10 dark:bg-primary-400/10 rounded-full mb-6 transition-all duration-300 hover:scale-110 hover:shadow-lg dark:hover:shadow-gray-700/20"
-                            data-aos="zoom-in"
-                            data-aos-delay="100"
-                        >
+                    <div className="text-center py-12">
+                        <div className="inline-block p-6 bg-primary/10 dark:bg-primary-400/10 rounded-full mb-6">
                             <FaShoppingCart className="text-4xl text-primary dark:text-primary-400" />
                         </div>
-                        <h2
-                            className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4"
-                            data-aos="fade-up"
-                            data-aos-delay="200"
-                        >
+                        <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4">
                             Your Cart is Empty
                         </h2>
-                        <p
-                            className="text-gray-600 dark:text-gray-300 mb-8 max-w-md mx-auto"
-                            data-aos="fade-up"
-                            data-aos-delay="300"
-                        >
+                        <p className="text-gray-600 dark:text-gray-300 mb-8 max-w-md mx-auto">
                             Looks like you haven't added anything to your cart
                             yet. Start shopping to discover amazing products!
                         </p>
-                        <Link
-                            to="/shop"
-                            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-secondary to-primary dark:from-primary-500 dark:to-primary-600 text-white font-medium rounded-lg shadow-md hover:bg-gradient-to-l dark:hover:shadow-primary-500/30 transition-all duration-300 transform hover:-translate-y-1"
-                            data-aos="fade-up"
-                            data-aos-delay="400"
-                        >
-                            <FaArrowLeft className="mr-2" />
-                            Continue Shopping
-                        </Link>
+                        <div>
+                            <Link
+                                to="/shop"
+                                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-secondary to-primary dark:from-primary-500 dark:to-primary-600 text-white font-medium rounded-lg shadow-md hover:bg-gradient-to-l dark:hover:shadow-primary-500/30 transition-all duration-300"
+                            >
+                                <FaArrowLeft className="mr-2" />
+                                Continue Shopping
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -161,10 +204,7 @@ const Cart = () => {
     return (
         <section className="min-h-screen py-12 px-4 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
             <div className="max-w-6xl mx-auto">
-                <h1
-                    className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-8"
-                    data-aos="fade-right"
-                >
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-8">
                     Shopping Cart ({totalItems}{" "}
                     {totalItems === 1 ? "item" : "items"})
                 </h1>
@@ -172,11 +212,7 @@ const Cart = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Cart Items */}
                     <div className="lg:col-span-2">
-                        <div
-                            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl dark:hover:shadow-gray-700/20"
-                            data-aos="fade-right"
-                            data-aos-delay="100"
-                        >
+                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
                             {/* Cart Header */}
                             <div className="hidden md:grid grid-cols-12 bg-gray-100 dark:bg-gray-700 p-4 font-medium text-gray-700 dark:text-gray-300">
                                 <div className="col-span-5">Product</div>
@@ -193,99 +229,16 @@ const Cart = () => {
 
                             {/* Cart Items List */}
                             <div className="divide-y divide-gray-200 dark:divide-gray-700">
-                                {cart.cartItems.map((item, index) => (
-                                    <div
+                                {cart.cartItems.map((item) => (
+                                    <CartItem
                                         key={item.productId}
-                                        className="grid grid-cols-12 p-4 items-center hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors duration-200"
-                                        data-aos="fade-up"
-                                        data-aos-delay={100 * index}
-                                    >
-                                        {/* Product Info */}
-                                        <div className="col-span-5 flex items-center space-x-4">
-                                            <div className="w-20 h-20 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 transition-transform duration-300 hover:scale-105">
-                                                <img
-                                                    src={item.productImage}
-                                                    alt={item.productName}
-                                                    className="w-full h-full object-cover"
-                                                />
-                                            </div>
-                                            <div>
-                                                <h3 className="font-medium text-gray-800 dark:text-gray-100">
-                                                    {item.productName}
-                                                </h3>
-                                                <button
-                                                    onClick={() =>
-                                                        handleRemoveItem(item)
-                                                    }
-                                                    className="text-sm text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 flex items-center mt-1 transition-all duration-200 hover:scale-105"
-                                                >
-                                                    <FaTrash className="mr-1 text-xs" />
-                                                    Remove
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        {/* Price */}
-                                        <div className="col-span-2 text-center text-gray-700 dark:text-gray-300">
-                                            {item.discount > 0 ? (
-                                                <>
-                                                    <span className="line-through text-gray-400 dark:text-gray-500 mr-2">
-                                                        $
-                                                        {item.unitPrice.toFixed(
-                                                            2
-                                                        )}
-                                                    </span>
-                                                    <span>
-                                                        $
-                                                        {(
-                                                            item.unitPrice *
-                                                            (1 -
-                                                                item.discount /
-                                                                    100)
-                                                        ).toFixed(2)}
-                                                    </span>
-                                                </>
-                                            ) : (
-                                                <span>
-                                                    ${item.unitPrice.toFixed(2)}
-                                                </span>
-                                            )}
-                                        </div>
-
-                                        {/* Quantity */}
-                                        <div className="col-span-3 flex items-center justify-center">
-                                            <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden">
-                                                <button
-                                                    onClick={() =>
-                                                        handleDecreaseQuantity(
-                                                            item
-                                                        )
-                                                    }
-                                                    className="px-3 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200 active:scale-95"
-                                                >
-                                                    <FaMinus className="text-xs" />
-                                                </button>
-                                                <span className="px-4 py-1 text-center w-12 dark:text-gray-100">
-                                                    {item.quantity}
-                                                </span>
-                                                <button
-                                                    onClick={() =>
-                                                        handleupdateQuantity(
-                                                            item
-                                                        )
-                                                    }
-                                                    className="px-3 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200 active:scale-95"
-                                                >
-                                                    <FaPlus className="text-xs" />
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        {/* Total */}
-                                        <div className="col-span-2 text-right font-medium text-gray-800 dark:text-gray-100">
-                                            ${item.price.toFixed(2)}
-                                        </div>
-                                    </div>
+                                        item={item}
+                                        onIncrease={() => updateQuantity(item)}
+                                        onDecrease={() =>
+                                            decreaseQuantity(item)
+                                        }
+                                        onRemove={() => handleRemoveItem(item)}
+                                    />
                                 ))}
                             </div>
 
@@ -293,8 +246,7 @@ const Cart = () => {
                             <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end">
                                 <button
                                     onClick={handleClearCart}
-                                    className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 flex items-center transition-all duration-200 hover:scale-105"
-                                    data-aos="fade-left"
+                                    className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 flex items-center"
                                 >
                                     <FaTrash className="mr-2" />
                                     Clear Cart
@@ -305,11 +257,7 @@ const Cart = () => {
 
                     {/* Order Summary */}
                     <div>
-                        <div
-                            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 sticky top-4 transition-all duration-300 hover:shadow-xl dark:hover:shadow-gray-700/20"
-                            data-aos="fade-left"
-                            data-aos-delay="200"
-                        >
+                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 sticky top-4">
                             <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6">
                                 Order Summary
                             </h2>
@@ -367,23 +315,19 @@ const Cart = () => {
                                 </div>
                             </div>
 
-                            <button
-                                className="w-full bg-gradient-to-r from-secondary to-primary dark:from-primary-500 dark:to-primary-600 text-white py-3 rounded-lg font-medium shadow-md hover:bg-gradient-to-l dark:hover:shadow-primary-500/30 transition-all duration-300 hover:scale-102 active:scale-95 mb-4"
-                                data-aos="zoom-in"
-                                data-aos-delay="300"
-                            >
+                            <button className="w-full bg-gradient-to-r from-secondary to-primary dark:from-primary-500 dark:to-primary-600 text-white py-3 rounded-lg font-medium shadow-md hover:bg-gradient-to-l dark:hover:shadow-primary-500/30 mb-4">
                                 Proceed to Checkout
                             </button>
 
-                            <Link
-                                to="/shop"
-                                className="flex items-center justify-center text-primary hover:text-primary-dark dark:text-primary-400 dark:hover:text-primary-300 font-medium transition-colors duration-200"
-                                data-aos="fade-up"
-                                data-aos-delay="400"
-                            >
-                                <FaArrowLeft className="mr-2" />
-                                Continue Shopping
-                            </Link>
+                            <div>
+                                <Link
+                                    to="/shop"
+                                    className="flex items-center justify-center text-primary hover:text-primary-dark dark:text-primary-400 dark:hover:text-primary-300 font-medium transition-colors duration-200"
+                                >
+                                    <FaArrowLeft className="mr-2" />
+                                    Continue Shopping
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>

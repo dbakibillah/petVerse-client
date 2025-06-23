@@ -22,79 +22,91 @@ import UserProfile from "./pages/user/UserProfile";
 import HealthCare from "./pages/healthcare/HealthCare";
 import PrivateRoute from "./routes/PrivateRoute";
 import GroomingAppointment from "./pages/grooming/GroomingAppoinment";
-
+import Dashboard from "./pages/dashboard/Dashboard";
+import GroomingAdmin from "./components/dashboard/GroomingAdmin";
 
 // tanstackQuery
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-    children: [
-      {
+    {
         path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Registration />,
-      },
-      {
-        path: "/shop",
-        element: <Shop />,
-      },
-      {
-        path: "/product/:id",
-        element: <ProductDetails />,
-      },
-      {
-        path: "/cart",
-        element: <Cart />,
-      },
-      {
-        path: "/forum",
-        element: (
-          <PrivateRoute>
-            <Forum />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/profile",
-        element: <UserProfile />,
-      },
-      {
-        path: "/grooming",
-        element: <Grooming />,
-      },
-      {
-        path: "/grooming-appointment",
-        element: <GroomingAppointment />,
-      },
-      {
-        path: "/healthcare",
-        element: <HealthCare />,
-      },
-    ],
-  },
+        element: <Root />,
+        children: [
+            {
+                path: "/",
+                element: <Home />,
+            },
+            {
+                path: "/login",
+                element: <Login />,
+            },
+            {
+                path: "/register",
+                element: <Registration />,
+            },
+            {
+                path: "/shop",
+                element: <Shop />,
+            },
+            {
+                path: "/product/:id",
+                element: <ProductDetails />,
+            },
+            {
+                path: "/cart",
+                element: <Cart />,
+            },
+            {
+                path: "/forum",
+                element: (
+                    <PrivateRoute>
+                        <Forum />
+                    </PrivateRoute>
+                ),
+            },
+            {
+                path: "/profile",
+                element: <UserProfile />,
+            },
+            {
+                path: "/grooming",
+                element: <Grooming />,
+            },
+            {
+                path: "/grooming-appointment",
+                element: <GroomingAppointment />,
+            },
+            {
+                path: "/healthcare",
+                element: <HealthCare />,
+            },
+        ],
+    },
+    {
+        path: "/dashboard",
+        element: <Dashboard />,
+        children: [
+            // Admin Dashboard Routes
+            {
+                path: "grooming",
+                element: <GroomingAdmin />,
+            },
+        ],
+    },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <ThemeProvider>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <CartProvider>
-            <RouterProvider router={router} />
-          </CartProvider>
-        </AuthProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
-    <ToastContainer />
-  </StrictMode>
+    <StrictMode>
+        <ThemeProvider>
+            <QueryClientProvider client={queryClient}>
+                <AuthProvider>
+                    <CartProvider>
+                        <RouterProvider router={router} />
+                    </CartProvider>
+                </AuthProvider>
+            </QueryClientProvider>
+        </ThemeProvider>
+        <ToastContainer />
+    </StrictMode>
 );
