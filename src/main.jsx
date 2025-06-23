@@ -24,7 +24,7 @@ import { CartProvider } from "./providers/CartProvider";
 import ThemeProvider from "./providers/ThemeProvider";
 import PrivateRoute from "./routes/PrivateRoute";
 import Root from "./routes/Root";
-
+import HealthCareAppointment from "./pages/healthcare/HealthCareAppointment";
 // tanstackQuery
 const queryClient = new QueryClient();
 
@@ -84,7 +84,7 @@ const router = createBrowserRouter([
             {
                 path: "/healthcare-appointment",
                 element: <HealthCareAppointment />,
-            }
+            },
         ],
     },
     {
