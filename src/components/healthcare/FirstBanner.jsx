@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import { GiDogBowl } from "react-icons/gi";
 import { RiCustomerService2Fill } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const FirstBanner = () => {
     useEffect(() => {
@@ -137,8 +138,8 @@ const FirstBanner = () => {
 
                         {/* Book Now Button */}
                         <div className="flex flex-col sm:flex-row gap-4">
-                            <a
-                                href="#"
+                            <Link
+                                to="/healthcare-appointment"
                                 className="relative inline-flex items-center justify-center bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl active:translate-y-0 overflow-hidden group"
                             >
                                 <span className="relative z-10 flex items-center gap-2">
@@ -146,7 +147,7 @@ const FirstBanner = () => {
                                     <FaArrowRight className="transition-transform group-hover:translate-x-1" />
                                 </span>
                                 <span className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                            </a>
+                            </Link>
                         </div>
 
                         {/* Features Grid */}
