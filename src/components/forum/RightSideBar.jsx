@@ -1,7 +1,7 @@
 import { FaFire, FaThumbsUp, FaChartBar, FaTags } from "react-icons/fa";
 import { motion } from "framer-motion";
 
-const RightSideBar = ({ posts, refetch }) => {
+const RightSideBar = ({ posts, selectedCategory, onCategorySelect }) => {
     const popularThreads = [...posts]
         .sort((a, b) => b.likesCount - a.likesCount)
         .slice(0, 3);
@@ -171,19 +171,35 @@ const RightSideBar = ({ posts, refetch }) => {
                             (post) => post.category === category
                         ).length;
                         return (
-                            <motion.a
+                            <motion.button
                                 key={category}
                                 variants={itemVariants}
-                                href="#"
-                                className="flex items-center justify-between p-3 rounded-xl transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-700/50 group"
+                                onClick={() => onCategorySelect(category)}
+                                className={`flex items-center justify-between w-full p-3 rounded-xl transition-all duration-200 ${
+                                    selectedCategory === category
+                                        ? "bg-primary-50/50 dark:bg-primary-900/20"
+                                        : "hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                                }`}
                             >
-                                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-primary dark:group-hover:text-primary-400 transition-colors capitalize">
+                                <span
+                                    className={`text-sm font-medium text-gray-700 dark:text-gray-300 ${
+                                        selectedCategory === category
+                                            ? "text-primary-600 dark:text-primary-400"
+                                            : "group-hover:text-primary dark:group-hover:text-primary-400"
+                                    } transition-colors capitalize`}
+                                >
                                     {category}
                                 </span>
-                                <span className="text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 group-hover:bg-primary/10 dark:group-hover:bg-primary/20 group-hover:text-primary dark:group-hover:text-primary-400 px-2.5 py-1 rounded-full transition-colors">
+                                <span
+                                    className={`text-xs font-medium ${
+                                        selectedCategory === category
+                                            ? "bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400"
+                                            : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
+                                    } px-2.5 py-1 rounded-full transition-colors`}
+                                >
                                     {count}
                                 </span>
-                            </motion.a>
+                            </motion.button>
                         );
                     })}
                 </motion.div>

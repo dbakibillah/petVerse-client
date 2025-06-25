@@ -1,18 +1,16 @@
 import { useState } from "react";
 import {
-    HiOutlineChevronRight,
-    HiOutlineMenuAlt2,
-    HiOutlineHashtag,
-    HiOutlineFire,
-    HiOutlineStar,
-    HiOutlineCollection,
-    HiOutlineTag,
-    HiOutlineSparkles,
-    HiOutlineQuestionMarkCircle,
-    HiOutlineHeart,
     HiOutlineCalendar,
     HiOutlineChatAlt2,
+    HiOutlineChevronRight,
+    HiOutlineCollection,
+    HiOutlineFire,
+    HiOutlineHeart,
     HiOutlineLightBulb,
+    HiOutlineMenuAlt2,
+    HiOutlineQuestionMarkCircle,
+    HiOutlineSparkles,
+    HiOutlineTag
 } from "react-icons/hi";
 
 const categoryStyles = {
@@ -68,9 +66,17 @@ const getCategoryStyle = (category) =>
         icon: <HiOutlineCollection className="text-xl" />,
     };
 
-const LeftSideBar = ({ posts }) => {
+const LeftSideBar = ({
+    posts,
+    selectedCategory,
+    selectedTags,
+    onCategorySelect,
+    onTagSelect,
+}) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [activeCategory, setActiveCategory] = useState(null);
+
+    // Get all unique tags from posts
+    const allTags = [...new Set(posts.flatMap((post) => post.tags || []))];
 
     const categories = [...new Set(posts.map((post) => post.category))]
         .map((category, index) => {
@@ -86,7 +92,16 @@ const LeftSideBar = ({ posts }) => {
         })
         .sort((a, b) => b.count - a.count);
 
-    const tags = [...new Set(posts.flatMap((post) => post.tags || []))];
+    // Count tag occurrences
+    const tagCounts = posts.reduce((acc, post) => {
+        post.tags?.forEach((tag) => {
+            acc[tag] = (acc[tag] || 0) + 1;
+        });
+        return acc;
+    }, {});
+
+    // Sort tags by count (most popular first)
+    const sortedTags = [...allTags].sort((a, b) => tagCounts[b] - tagCounts[a]);
 
     return (
         <section className="w-full md:w-72 space-y-3 sticky top-20 h-[calc(100vh-6rem)] overflow-y-auto pb-4 scrollbar-hide">
@@ -143,13 +158,12 @@ const LeftSideBar = ({ posts }) => {
                     <ul className="space-y-2">
                         {categories.map((category) => (
                             <li key={category.id}>
-                                <a
-                                    href={`/category/${category.name.toLowerCase()}`}
+                                <button
                                     onClick={() =>
-                                        setActiveCategory(category.id)
+                                        onCategorySelect(category.name)
                                     }
-                                    className={`flex items-center justify-between p-3 rounded-lg text-sm border transition group ${
-                                        activeCategory === category.id
+                                    className={`flex items-center justify-between w-full p-3 rounded-lg text-sm border transition group ${
+                                        selectedCategory === category.name
                                             ? `bg-gradient-to-r ${category.gradient} border-transparent`
                                             : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-sm"
                                     }`}
@@ -163,8 +177,8 @@ const LeftSideBar = ({ posts }) => {
                                         <div>
                                             <span
                                                 className={`block text-gray-800 dark:text-gray-200 capitalize ${
-                                                    activeCategory ===
-                                                    category.id
+                                                    selectedCategory ===
+                                                    category.name
                                                         ? "font-semibold"
                                                         : "font-normal"
                                                 }`}
@@ -181,12 +195,12 @@ const LeftSideBar = ({ posts }) => {
                                     </div>
                                     <HiOutlineChevronRight
                                         className={`text-sm transition-transform ${
-                                            activeCategory === category.id
+                                            selectedCategory === category.name
                                                 ? "text-primary-600 dark:text-primary-400 translate-x-1"
                                                 : "text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 group-hover:translate-x-1"
                                         }`}
                                     />
-                                </a>
+                                </button>
                             </li>
                         ))}
                     </ul>
@@ -214,21 +228,36 @@ const LeftSideBar = ({ posts }) => {
                                 Popular Tags
                             </h3>
                             <p className="text-xs text-gray-500 dark:text-gray-400">
-                                Explore trending topics
+                                Filter threads by tags
                             </p>
                         </div>
                     </div>
                     <div className="flex flex-wrap gap-2">
-                        {tags.map((tag) => (
-                            <a
+                        {sortedTags.map((tag) => (
+                            <button
                                 key={tag}
-                                href={`/tags/${tag.toLowerCase()}`}
-                                className="px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-700 hover:bg-primary-100 dark:hover:bg-primary-900/30 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 rounded-full transition-all duration-300 hover:scale-105"
+                                onClick={() => onTagSelect(tag)}
+                                className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-300 hover:scale-105 ${
+                                    selectedTags.includes(tag)
+                                        ? "bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400"
+                                        : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+                                }`}
                             >
-                                #{tag}
-                            </a>
+                                #{tag}{" "}
+                                {tagCounts[tag] ? `(${tagCounts[tag]})` : ""}
+                            </button>
                         ))}
                     </div>
+                    {selectedTags.length > 0 && (
+                        <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
+                            <button
+                                onClick={() => onTagSelect("clear-all")}
+                                className="text-xs text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
+                            >
+                                Clear tag filters
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </section>
