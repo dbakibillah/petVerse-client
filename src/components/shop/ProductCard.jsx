@@ -8,13 +8,14 @@ const ProductCard = ({ product }) => {
         : null;
 
     return (
-        <section className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition transform flex flex-col justify-between my-5 mb-10">
-            <div className="relative">
-                <figure>
+        <section className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition transform flex flex-col h-full min-h-[400px] my-5">
+            <div className="relative flex flex-col h-full">
+                {/* Image (Fixed Height) */}
+                <figure className="h-48 flex-shrink-0">
                     <img
                         src={product.image}
                         alt={product.name}
-                        className="w-full h-72 object-contain rounded-t-2xl p-4 bg-white dark:bg-gray-800"
+                        className="w-full h-full object-contain p-4 bg-white dark:bg-gray-800"
                     />
                 </figure>
                 {hasDiscount && (
@@ -22,59 +23,60 @@ const ProductCard = ({ product }) => {
                         {product.discount}% OFF
                     </span>
                 )}
-            </div>
-            <div className="p-4 space-y-2 flex-1 flex flex-col justify-between">
-                <div>
-                    <h3 className="text-lg font-bold text-gray-800 dark:text-white">
-                        {product.name.slice(0, 20)}
-                    </h3>
 
-                    <div className="flex items-center space-x-2">
-                        <Rating
-                            initialValue={product.rating}
-                            size={20}
-                            readonly
-                            allowFraction
-                            SVGstyle={{ display: "inline-block" }}
-                            className="flex"
-                        />
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                            ({product.rating})
-                        </span>
+                {/* Content (Flexible, Anchored to Bottom) */}
+                <div className="p-4 flex flex-col flex-grow">
+                    <div className="flex-grow">
+                        <h3 className="text-lg font-bold text-gray-800 dark:text-white line-clamp-2">
+                            {product.name.slice(0, 15)}
+                            {product.name.length > 15 ? "..." : ""}
+                        </h3>
+                        <div className="flex items-center space-x-2 mt-2">
+                            <Rating
+                                initialValue={product.rating}
+                                size={20}
+                                readonly
+                                allowFraction
+                                SVGstyle={{ display: "inline-block" }}
+                            />
+                            <span className="text-sm text-gray-500 dark:text-gray-400">
+                                ({product.rating})
+                            </span>
+                        </div>
+                        <p className="text-sm text-gray-600 dark:text-gray-300 mt-2 line-clamp-2">
+                            {product.description}
+                        </p>
                     </div>
 
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                        {product.description.slice(0, 60)}...
-                    </p>
-                </div>
-
-                <div>
-                    <div className="flex justify-between items-center pt-2">
-                        <div>
-                            {hasDiscount ? (
-                                <div className="text-sm space-x-1">
+                    {/* Price/Button (Anchored to Bottom) */}
+                    <div className="mt-auto">
+                        <div className="flex justify-between items-center pt-2">
+                            <div>
+                                {hasDiscount ? (
+                                    <div className="space-x-1">
+                                        <span className="text-lg font-bold text-primary">
+                                            ${discountedPrice}
+                                        </span>
+                                        <span className="text-sm line-through text-gray-400">
+                                            ${product.price}
+                                        </span>
+                                    </div>
+                                ) : (
                                     <span className="text-lg font-bold text-primary">
-                                        ${discountedPrice}
-                                    </span>
-                                    <span className="line-through text-gray-400">
                                         ${product.price}
                                     </span>
-                                </div>
-                            ) : (
-                                <span className="text-lg font-bold text-primary">
-                                    ${product.price}
-                                </span>
-                            )}
+                                )}
+                            </div>
+                            <span className="text-sm text-gray-500 dark:text-gray-400">
+                                {product.totalSold} Sold
+                            </span>
                         </div>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                            {product.totalSold} Sold
-                        </span>
+                        <Link to={`/product/${product._id}`}>
+                            <button className="mt-3 w-full bg-primary hover:bg-primary/90 text-white py-2 rounded-lg">
+                                View Details
+                            </button>
+                        </Link>
                     </div>
-                    <Link to={`/product/${product._id}`}>
-                        <button className="mt-3 w-full bg-primary hover:bg-primary/90 text-white text-sm font-medium py-2 rounded-lg transition duration-300 cursor-pointer">
-                            View Details
-                        </button>
-                    </Link>
                 </div>
             </div>
         </section>

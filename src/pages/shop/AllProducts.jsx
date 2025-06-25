@@ -1,11 +1,11 @@
-import React, { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useMemo, useState } from "react";
+import { FiRefreshCw } from "react-icons/fi";
+import { HiFilter, HiOutlineSearch, HiSparkles, HiX } from "react-icons/hi";
 import { useSearchParams } from "react-router-dom";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
 import ProductCard from "../../components/shop/ProductCard";
-import { HiOutlineSearch, HiX, HiFilter, HiSparkles } from "react-icons/hi";
-import { FiRefreshCw, FiChevronDown } from "react-icons/fi";
-import { motion, AnimatePresence } from "framer-motion";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const AllProducts = () => {
     const axiosPublic = useAxiosPublic();
@@ -13,12 +13,24 @@ const AllProducts = () => {
     const categoryParam = searchParams.get("category");
 
     const [searchTerm, setSearchTerm] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState(categoryParam || "");
+    const [selectedCategory, setSelectedCategory] = useState(
+        categoryParam || ""
+    );
     const [priceRange, setPriceRange] = useState([0, 99999]);
     const [showFiltersMobile, setShowFiltersMobile] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [maxPrice, setMaxPrice] = useState(99999);
+    const [hasInitialScroll, setHasInitialScroll] = useState(false);
 
+    // Scroll to top only on initial load
+    useEffect(() => {
+        if (!hasInitialScroll) {
+            window.scrollTo(0, 0);
+            setHasInitialScroll(true);
+        }
+    }, [hasInitialScroll]);
+
+    // Handle scroll event for showing/hiding search bar
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50);
@@ -282,7 +294,9 @@ const AllProducts = () => {
                                     <motion.button
                                         key={cat}
                                         whileHover={{ x: 5 }}
-                                        onClick={() => handleCategorySelect(cat)}
+                                        onClick={() =>
+                                            handleCategorySelect(cat)
+                                        }
                                         className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
                                             selectedCategory === cat
                                                 ? "bg-orange-50 text-orange-700 border-l-4 border-orange-600 shadow-inner"

@@ -4,8 +4,17 @@ import Categories from "../../components/shop/Categories";
 import Bestsellers from "../../components/shop/Bestsellers";
 import { Helmet } from "react-helmet";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useEffect, useState } from "react";
 
 const Shop = () => {
+    // Scroll to top only on initial load
+    const [hasInitialScroll, setHasInitialScroll] = useState(false);
+    useEffect(() => {
+        if (!hasInitialScroll) {
+            window.scrollTo(0, 0);
+            setHasInitialScroll(true);
+        }
+    }, [hasInitialScroll]);
     const axiosPublic = useAxiosPublic();
     // Fetch products
     const {
