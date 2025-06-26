@@ -27,6 +27,7 @@ import ThemeProvider from "./providers/ThemeProvider";
 import PrivateRoute from "./routes/PrivateRoute";
 import Root from "./routes/Root";
 import HealthCareAdmin from "./components/dashboard/HealthCareAdmin";
+import AboutUs from "./pages/common/AboutUs";
 // tanstackQuery
 const queryClient = new QueryClient();
 
@@ -87,6 +88,10 @@ const router = createBrowserRouter([
             {
                 path: "/products",
                 element: <AllProducts />,
+            },
+            {
+                path: "/about",
+                element: <AboutUs />,
             },
         ],
     },
