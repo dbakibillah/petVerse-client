@@ -12,10 +12,10 @@ import {
     FaPhone,
     FaShower,
 } from "react-icons/fa";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { AuthContext } from "../../providers/AuthProviders";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
-const HealthCareAppointment = () => {
+const HealthCareAppoinment = () => {
     const axiosPublic = useAxiosPublic();
     const [currentStep, setCurrentStep] = useState(0);
     const [formData, setFormData] = useState({});
@@ -26,7 +26,6 @@ const HealthCareAppointment = () => {
     const [selectedPetType, setSelectedPetType] = useState(null);
     const { user } = useContext(AuthContext);
 
-    // Pet type options with icons
     const petTypes = [
         { value: "Dog", label: "Dog", icon: <FaDog className="inline mr-2" /> },
         { value: "Cat", label: "Cat", icon: <FaCat className="inline mr-2" /> },
@@ -40,11 +39,6 @@ const HealthCareAppointment = () => {
             label: "Bird",
             icon: <FaBone className="inline mr-2" />,
         },
-        // {
-        //     value: "Other",
-        //     label: "Other",
-        //     icon: <FaPaw className="inline mr-2" />,
-        // },
     ];
 
     const steps = [
@@ -70,7 +64,6 @@ const HealthCareAppointment = () => {
         { id: "review", title: "Review", icon: <FaCheck />, color: "green" },
     ];
 
-    // Pet animation effect
     useEffect(() => {
         if (showPetAnimation) {
             const timer = setTimeout(() => {
@@ -82,28 +75,78 @@ const HealthCareAppointment = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const groomingData = {
+
+        // Check if checkbox is checked
+        const isChecked = document.getElementById("terms-checkbox")?.checked;
+        if (!isChecked) {
+            alert("Please agree to the terms and conditions");
+            return;
+        }
+
+        const healthCareData = {
             ownerName: user?.displayName || "Anonymous",
             ownerEmail: user?.email || "Anonymous",
             status: "pending",
-            ...formData,
+            createdAt: new Date().toISOString(),
+            petName: formData.petName,
+            petType: formData.petType,
+            age: formData.age || null,
+            weight: formData.weight || null,
+            breed: formData.breed || null,
+            temperament: formData.temperament || null,
+            phone: formData.phone,
+            address: formData.address,
+            friendly: formData.friendly,
+            trained: formData.trained,
+            vaccinated: formData.vaccinated,
+            medical: formData.medical || null,
+            pickupTime: formData.pickupTime,
+            deliveryTime: formData.deliveryTime,
         };
+
         setIsSubmitting(true);
+
         try {
             const res = await axiosPublic.post(
-                "/grooming/appointment",
-                groomingData
+                "/healthcare/appointment",
+                healthCareData
             );
+
             if (res.data.insertedId) {
                 setSubmitSuccess(true);
                 setCurrentStep(steps.length - 1);
                 setShowPetAnimation(true);
+
+                setTimeout(() => {
+                    setFormData({});
+                    setCurrentStep(0);
+                    setVisitedSteps([0]);
+                    setSelectedPetType(null);
+                    setSubmitSuccess(false);
+                }, 5000);
             } else {
-                alert("Submission failed. Please try again.");
+                console.error("Submission failed:", res.data);
+                alert(
+                    "Submission received but confirmation failed. Please contact support."
+                );
             }
         } catch (error) {
-            console.error("Error submitting appointment:", error);
-            alert("Something went wrong. Please try again.");
+            console.error(
+                "Error details:",
+                error.response?.data || error.message
+            );
+            if (error.response?.data?.missingFields) {
+                alert(
+                    `Missing fields: ${error.response.data.missingFields.join(
+                        ", "
+                    )}`
+                );
+            } else {
+                alert(
+                    error.response?.data?.message ||
+                        "Something went wrong. Please try again."
+                );
+            }
         } finally {
             setIsSubmitting(false);
         }
@@ -144,24 +187,26 @@ const HealthCareAppointment = () => {
 
     const isStepComplete = (stepIndex) => {
         switch (stepIndex) {
-            case 0: // Pet Info
-                return formData.petName && formData.petType;
-            case 1: // Contact Info
-                return formData.phone && formData.address;
-            case 2: // Additional Info
+            case 0:
+                return !!formData.petName && !!formData.petType;
+            case 1:
+                return !!formData.phone && !!formData.address;
+            case 2:
                 return (
-                    formData.friendly && formData.trained && formData.vaccinated
+                    !!formData.friendly &&
+                    !!formData.trained &&
+                    !!formData.vaccinated
                 );
-            case 3: // Schedule
-                return formData.pickupTime && formData.deliveryTime;
-            case 4: // Review
-                return true;
+            case 3:
+                return !!formData.pickupTime && !!formData.deliveryTime;
+            case 4:
+                return document.querySelector('input[type="checkbox"]')
+                    ?.checked;
             default:
                 return false;
         }
     };
 
-    // Animation variants
     const formVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0 },
@@ -176,7 +221,6 @@ const HealthCareAppointment = () => {
 
     return (
         <section className="font-sans text-gray-800 min-h-screen relative overflow-hidden p-2">
-            {/* Floating pet animation */}
             <AnimatePresence>
                 {showPetAnimation && (
                     <motion.div
@@ -204,7 +248,6 @@ const HealthCareAppointment = () => {
                 )}
             </AnimatePresence>
 
-            {/* Why Choose Us */}
             <section className="max-w-4xl mx-auto text-center px-4 py-12 relative">
                 <div className="absolute -top-20 -left-20 w-40 h-40 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
                 <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-yellow-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
@@ -221,22 +264,9 @@ const HealthCareAppointment = () => {
                         Why Choose Our Pet Spa?
                     </h2>
                     <p className="text-lg text-gray-700 leading-relaxed">
-                        Our professional pet grooming service ensures that your
-                        furry friend receives the best care, hygiene, and
-                        comfort. We offer{" "}
-                        <span className="font-semibold text-orange-600">
-                            home pickup and delivery
-                        </span>
-                        ,{" "}
-                        <span className="font-semibold text-pink-600">
-                            trained professionals
-                        </span>
-                        , and a
-                        <span className="font-semibold text-yellow-600">
-                            {" "}
-                            clean, pet-friendly environment
-                        </span>
-                        .
+                        Our professional pet healthcare service ensures that
+                        your furry friend receives the best care, hygiene, and
+                        comfort.
                     </p>
                     <div className="flex flex-wrap justify-center gap-4 mt-8">
                         {[
@@ -278,7 +308,6 @@ const HealthCareAppointment = () => {
                 </motion.div>
             </section>
 
-            {/* Progress Bar */}
             <div className="max-w-6xl mx-auto px-6 mb-8">
                 <motion.div
                     initial={{ y: 20, opacity: 0 }}
@@ -365,7 +394,6 @@ const HealthCareAppointment = () => {
                 </motion.div>
             </div>
 
-            {/* Form */}
             <section className="max-w-6xl mx-auto bg-white p-6 sm:p-10 mt-6 mb-16 rounded-3xl shadow-2xl border border-orange-200 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-orange-50/30 to-pink-50/30 z-0"></div>
                 <div className="relative z-10">
@@ -379,7 +407,6 @@ const HealthCareAppointment = () => {
                                 exit="exit"
                                 transition={{ duration: 0.3 }}
                             >
-                                {/* Pet Info */}
                                 {currentStep === 0 && (
                                     <div className="space-y-8">
                                         <div className="flex items-center mb-8">
@@ -537,7 +564,6 @@ const HealthCareAppointment = () => {
                                     </div>
                                 )}
 
-                                {/* Pickup & Contact Info */}
                                 {currentStep === 1 && (
                                     <div className="space-y-8">
                                         <div className="flex items-center mb-8">
@@ -593,7 +619,6 @@ const HealthCareAppointment = () => {
                                     </div>
                                 )}
 
-                                {/* Additional Info */}
                                 {currentStep === 2 && (
                                     <div className="space-y-8">
                                         <div className="flex items-center mb-8">
@@ -716,7 +741,6 @@ const HealthCareAppointment = () => {
                                     </div>
                                 )}
 
-                                {/* Schedule */}
                                 {currentStep === 3 && (
                                     <div className="space-y-8">
                                         <div className="flex items-center mb-8">
@@ -776,7 +800,6 @@ const HealthCareAppointment = () => {
                                     </div>
                                 )}
 
-                                {/* Review */}
                                 {currentStep === 4 && (
                                     <div className="space-y-8">
                                         <div className="flex items-center mb-8">
@@ -822,11 +845,11 @@ const HealthCareAppointment = () => {
                                                     Appointment Confirmed!
                                                 </h4>
                                                 <p className="text-gray-600 mb-6">
-                                                    We've received your grooming
-                                                    appointment request. Our
-                                                    team will contact you
-                                                    shortly to confirm the
-                                                    details.
+                                                    We've received your
+                                                    healthcare appointment
+                                                    request. Our team will
+                                                    contact you shortly to
+                                                    confirm the details.
                                                 </p>
                                                 <motion.button
                                                     whileHover={{ scale: 1.05 }}
@@ -997,6 +1020,7 @@ const HealthCareAppointment = () => {
                                                 <div className="mt-6 bg-blue-50 p-4 rounded-xl border border-blue-200">
                                                     <label className="flex items-start gap-3">
                                                         <input
+                                                            id="terms-checkbox"
                                                             type="checkbox"
                                                             className="mt-1 h-5 w-5 text-blue-600 rounded focus:ring-blue-500 border-gray-300"
                                                             required
@@ -1006,7 +1030,7 @@ const HealthCareAppointment = () => {
                                                             above information is
                                                             accurate and I
                                                             accept the terms of
-                                                            the grooming
+                                                            the healthcare
                                                             service. *
                                                         </span>
                                                     </label>
@@ -1018,40 +1042,32 @@ const HealthCareAppointment = () => {
                             </motion.div>
                         </AnimatePresence>
 
-                        {/* Navigation Buttons */}
                         {!submitSuccess && (
                             <div className="flex justify-between mt-10 border-t border-gray-200 pt-6">
-                                <motion.button
-                                    whileHover={{
-                                        scale: currentStep > 0 ? 1.05 : 1,
-                                    }}
-                                    whileTap={{
-                                        scale: currentStep > 0 ? 0.95 : 1,
-                                    }}
-                                    type="button"
-                                    onClick={handlePrev}
-                                    disabled={currentStep === 0}
-                                    className={`px-8 py-3 rounded-xl font-medium flex items-center gap-2 ${
-                                        currentStep === 0
-                                            ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                                            : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                                    }`}
-                                >
-                                    <svg
-                                        className="w-5 h-5"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
+                                {currentStep > 0 && (
+                                    <motion.button
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        type="button"
+                                        onClick={handlePrev}
+                                        className="px-8 py-3 rounded-xl font-medium flex items-center gap-2 bg-gray-200 text-gray-700 hover:bg-gray-300"
                                     >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M15 19l-7-7 7-7"
-                                        ></path>
-                                    </svg>
-                                    Previous
-                                </motion.button>
+                                        <svg
+                                            className="w-5 h-5"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                d="M15 19l-7-7 7-7"
+                                            ></path>
+                                        </svg>
+                                        Previous
+                                    </motion.button>
+                                )}
 
                                 {currentStep < steps.length - 1 ? (
                                     <motion.button
@@ -1094,7 +1110,13 @@ const HealthCareAppointment = () => {
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                         type="submit"
-                                        disabled={isSubmitting}
+                                        onClick={handleSubmit}
+                                        disabled={
+                                            isSubmitting ||
+                                            !document.querySelector(
+                                                'input[type="checkbox"]'
+                                            )?.checked
+                                        }
                                         className="px-8 py-3 bg-gradient-to-r from-red-500 to-orange-500 hover:from-orange-600 hover:to-red-600 text-white font-bold rounded-xl shadow-lg transition-all duration-300 flex items-center gap-2"
                                     >
                                         {isSubmitting ? (
@@ -1151,4 +1173,4 @@ const HealthCareAppointment = () => {
     );
 };
 
-export default HealthCareAppointment;
+export default HealthCareAppoinment;

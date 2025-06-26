@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { useContext, useEffect, useState } from "react";
 import {
@@ -12,6 +13,7 @@ import {
     FaPhone,
     FaShower,
 } from "react-icons/fa";
+import { toast } from "react-toastify";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { AuthContext } from "../../providers/AuthProviders";
 
@@ -25,6 +27,16 @@ const GroomingAppointment = () => {
     const [showPetAnimation, setShowPetAnimation] = useState(false);
     const [selectedPetType, setSelectedPetType] = useState(null);
     const { user } = useContext(AuthContext);
+    const { data: currentUser, isLoading } = useQuery({
+        queryKey: ["currentUser", user?.email],
+        queryFn: async () => {
+            const res = await axiosPublic.get(
+                `/singleuser?email=${user.email}`
+            );
+            return res.data.data;
+        },
+        enabled: !!user?.email,
+    });
 
     const petTypes = [
         { value: "Dog", label: "Dog", icon: <FaDog className="inline mr-2" /> },
@@ -75,11 +87,14 @@ const GroomingAppointment = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        if (
-            currentStep !== steps.length - 1 ||
-            !document.querySelector('input[type="checkbox"]')?.checked
-        ) {
+        // Check if checkbox is checked
+        const isChecked = document.getElementById("terms-checkbox")?.checked;
+        if (!isChecked) {
+            toast("Please agree to the terms and conditions", {
+                type: "warning",
+                autoClose: 3000,
+                position: "top-center",
+            });
             return;
         }
 
@@ -397,15 +412,7 @@ const GroomingAppointment = () => {
             <section className="max-w-6xl mx-auto bg-white p-6 sm:p-10 mt-6 mb-16 rounded-3xl shadow-2xl border border-orange-200 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-orange-50/30 to-pink-50/30 z-0"></div>
                 <div className="relative z-10">
-                    <form
-                        onSubmit={(e) => {
-                            if (currentStep === steps.length - 1) {
-                                handleSubmit(e);
-                            } else {
-                                e.preventDefault();
-                            }
-                        }}
-                    >
+                    <form onSubmit={handleSubmit}>
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={currentStep}
@@ -1028,6 +1035,7 @@ const GroomingAppointment = () => {
                                                 <div className="mt-6 bg-blue-50 p-4 rounded-xl border border-blue-200">
                                                     <label className="flex items-start gap-3">
                                                         <input
+                                                            id="terms-checkbox"
                                                             type="checkbox"
                                                             className="mt-1 h-5 w-5 text-blue-600 rounded focus:ring-blue-500 border-gray-300"
                                                             required

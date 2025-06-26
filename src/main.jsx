@@ -26,6 +26,7 @@ import { CartProvider } from "./providers/CartProvider";
 import ThemeProvider from "./providers/ThemeProvider";
 import PrivateRoute from "./routes/PrivateRoute";
 import Root from "./routes/Root";
+import HealthCareAdmin from "./components/dashboard/HealthCareAdmin";
 // tanstackQuery
 const queryClient = new QueryClient();
 
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
             {
                 path: "/dashboard/grooming",
                 element: <GroomingAdmin />,
+            },
+            {
+                path: "/dashboard/healthappointments",
+                element: <HealthCareAdmin />,
             },
             {
                 path: "/dashboard/profile",
