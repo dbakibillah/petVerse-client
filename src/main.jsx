@@ -28,6 +28,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import Root from "./routes/Root";
 import HealthCareAdmin from "./components/dashboard/HealthCareAdmin";
 import AboutUs from "./pages/common/AboutUs";
+import ContactUs from "./pages/common/ContactUs";
 // tanstackQuery
 const queryClient = new QueryClient();
 
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
             {
                 path: "/about",
                 element: <AboutUs />,
+            },
+            {
+                path: "/contact",
+                element: <ContactUs />,
             },
         ],
     },
