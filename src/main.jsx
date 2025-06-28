@@ -29,6 +29,7 @@ import Root from "./routes/Root";
 import HealthCareAdmin from "./components/dashboard/HealthCareAdmin";
 import AboutUs from "./pages/common/AboutUs";
 import ContactUs from "./pages/common/ContactUs";
+import MyGroomingAppointments from "./components/dashboard/user/MyGroomingAppoinments";
 // tanstackQuery
 const queryClient = new QueryClient();
 
@@ -120,6 +121,10 @@ const router = createBrowserRouter([
             {
                 path: "/dashboard/profile",
                 element: <ProfilePage />,
+            },
+            {
+                path:"/dashboard/mygroomingappointments",
+                element:<MyGroomingAppointments/>
             },
         ],
     },

@@ -1,6 +1,7 @@
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 const AboutUsSec = () => {
     useEffect(() => {
         AOS.init({
@@ -40,9 +41,11 @@ const AboutUsSec = () => {
                     we provide love, comfort, and expert care to ensure their
                     happiness and well-being.
                 </p>
+                <Link to="/about" className="inline-block">
                 <button className="py-4 px-8 bg-gradient-to-r from-secondary to-primary hover:from-primary hover:to-secondary transition rounded-full text-white text-lg font-semibold shadow-md hover:shadow-lg">
-                    Discover More
+                    About Us
                 </button>
+                </Link>
             </div>
         </section>
     );
