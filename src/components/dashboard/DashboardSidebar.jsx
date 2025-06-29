@@ -44,10 +44,8 @@ const DashboardSidebar = () => {
 
     const userLinks = [
         { path: "/dashboard/profile", name: "Profile", icon: <FiUser className="text-lg" /> },
-        { path: "/dashboard/adoptions", name: "My Adoptions", icon: <FiHeart className="text-lg" /> },
-        { path: "/dashboard/mygroomingappointments", name: "Appointments", icon: <FiCalendar className="text-lg" /> },
-        { path: "/dashboard/orders", name: "Orders", icon: <FiShoppingCart className="text-lg" /> },
-        { path: "/dashboard/community", name: "Community", icon: <FiMessageCircle className="text-lg" /> },
+        { path: "/dashboard/mygroomingappointments", name: "My Appointments", icon: <FiCalendar className="text-lg" /> },
+        { path: "/dashboard/orders", name: "My Orders", icon: <FiShoppingCart className="text-lg" /> },
     ];
 
     // Show nothing while loading user role
