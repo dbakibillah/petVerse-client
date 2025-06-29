@@ -119,6 +119,8 @@ const GroomingAppointment = () => {
             deliveryTime: formData.deliveryTime,
         };
 
+        console.log(groomingData);
+
         setIsSubmitting(true);
 
         try {
