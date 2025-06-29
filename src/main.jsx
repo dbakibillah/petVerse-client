@@ -31,6 +31,7 @@ import Payment from "./payment/Payment";
 import AboutUs from "./pages/common/AboutUs";
 import ContactUs from "./pages/common/ContactUs";
 import MyGroomingAppointments from "./components/dashboard/user/MyGroomingAppoinments";
+import MyOrders from "./components/dashboard/user/MyOrders";
 
 // tanstackQuery
 const queryClient = new QueryClient();
@@ -148,10 +149,19 @@ const router = createBrowserRouter([
                     </PrivateRoute>
                 ),
             },
+            // User routes
             {
                 path: "/dashboard/mygroomingappointments",
                 element: <MyGroomingAppointments />,
             },
+            {
+                path: "/dashboard/my-orders",
+                element: (
+                    <PrivateRoute>
+                        <MyOrders />
+                    </PrivateRoute>
+                ),
+            }
         ],
     },
 ]);

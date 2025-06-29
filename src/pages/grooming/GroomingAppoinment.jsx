@@ -87,6 +87,7 @@ const GroomingAppointment = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
         // Check if checkbox is checked
         const isChecked = document.getElementById("terms-checkbox")?.checked;
         if (!isChecked) {
@@ -97,73 +98,28 @@ const GroomingAppointment = () => {
             });
             return;
         }
-
+        setIsSubmitting(true);
         const groomingData = {
-            ownerName: user?.displayName || "Anonymous",
-            ownerEmail: user?.email || "Anonymous",
-            status: "pending",
-            createdAt: new Date().toISOString(),
-            petName: formData.petName,
-            petType: formData.petType,
-            age: formData.age || null,
-            weight: formData.weight || null,
-            breed: formData.breed || null,
-            temperament: formData.temperament || null,
-            phone: formData.phone,
-            address: formData.address,
-            friendly: formData.friendly,
-            trained: formData.trained,
-            vaccinated: formData.vaccinated,
-            medical: formData.medical || null,
-            pickupTime: formData.pickupTime,
-            deliveryTime: formData.deliveryTime,
+            ...formData,
+            petType: selectedPetType?.value || formData.petType,
+            userEmail: user?.email,
+            userName: currentUser?.name || "Guest",
         };
 
-        console.log(groomingData);
-
-        setIsSubmitting(true);
-
         try {
-            const res = await axiosPublic.post(
+            await axiosPublic.post(
                 "/grooming/appointment",
                 groomingData
             );
 
-            if (res.data.insertedId) {
-                setSubmitSuccess(true);
-                setCurrentStep(steps.length - 1);
-                setShowPetAnimation(true);
-
-                setTimeout(() => {
-                    setFormData({});
-                    setCurrentStep(0);
-                    setVisitedSteps([0]);
-                    setSelectedPetType(null);
-                    setSubmitSuccess(false);
-                }, 5000);
-            } else {
-                console.error("Submission failed:", res.data);
-                alert(
-                    "Submission received but confirmation failed. Please contact support."
-                );
-            }
         } catch (error) {
             console.error(
                 "Error details:",
                 error.response?.data || error.message
             );
-            if (error.response?.data?.missingFields) {
-                alert(
-                    `Missing fields: ${error.response.data.missingFields.join(
-                        ", "
-                    )}`
-                );
-            } else {
-                alert(
-                    error.response?.data?.message ||
-                        "Something went wrong. Please try again."
-                );
-            }
+            toast.error(
+                error.response?.data?.message || "Failed to submit appointment"
+            );
         } finally {
             setIsSubmitting(false);
         }
@@ -1127,7 +1083,6 @@ const GroomingAppointment = () => {
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                         type="submit"
-                                        onClick={handleSubmit}
                                         disabled={
                                             isSubmitting ||
                                             !document.querySelector(
