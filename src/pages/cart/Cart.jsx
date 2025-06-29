@@ -9,6 +9,7 @@ import {
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
     return (
@@ -96,6 +97,8 @@ const Cart = () => {
         totalItems,
         refetchCart,
     } = useCart();
+
+    const axiosPublic = useAxiosPublic();
 
     useEffect(() => {
         refetchCart();
@@ -315,9 +318,11 @@ const Cart = () => {
                                 </div>
                             </div>
 
-                            <button className="w-full bg-gradient-to-r from-secondary to-primary dark:from-primary-500 dark:to-primary-600 text-white py-3 rounded-lg font-medium shadow-md hover:bg-gradient-to-l dark:hover:shadow-primary-500/30 mb-4">
-                                Proceed to Checkout
-                            </button>
+                            <Link to="/payment">
+                                <button className="w-full bg-gradient-to-r from-secondary to-primary dark:from-primary-500 dark:to-primary-600 text-white py-3 rounded-lg font-medium shadow-md hover:bg-gradient-to-l dark:hover:shadow-primary-500/30 mb-4">
+                                    Proceed to Checkout
+                                </button>
+                            </Link>
 
                             <div>
                                 <Link

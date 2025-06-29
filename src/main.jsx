@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import GroomingAdmin from "./components/dashboard/GroomingAdmin";
+import HealthCareAdmin from "./components/dashboard/HealthCareAdmin";
 import ProductDetails from "./components/shop/ProductDetails";
 import Cart from "./pages/cart/Cart";
 import Home from "./pages/common/Home";
@@ -26,7 +27,7 @@ import { CartProvider } from "./providers/CartProvider";
 import ThemeProvider from "./providers/ThemeProvider";
 import PrivateRoute from "./routes/PrivateRoute";
 import Root from "./routes/Root";
-import HealthCareAdmin from "./components/dashboard/HealthCareAdmin";
+import Payment from "./payment/Payment";
 // tanstackQuery
 const queryClient = new QueryClient();
 
@@ -58,7 +59,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/cart",
-                element: <Cart />,
+                element: (
+                    <PrivateRoute>
+                        <Cart />
+                    </PrivateRoute>
+                ),
             },
             {
                 path: "/forum",
@@ -74,7 +79,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/grooming-appointment",
-                element: <GroomingAppointment />,
+                element: (
+                    <PrivateRoute>
+                        <GroomingAppointment />
+                    </PrivateRoute>
+                ),
             },
             {
                 path: "/healthcare",
@@ -82,11 +91,23 @@ const router = createBrowserRouter([
             },
             {
                 path: "/healthcare-appointment",
-                element: <HealthCareAppointment />,
+                element: (
+                    <PrivateRoute>
+                        <HealthCareAppointment />
+                    </PrivateRoute>
+                ),
             },
             {
                 path: "/products",
                 element: <AllProducts />,
+            },
+            {
+                path: "/payment",
+                element: (
+                    <PrivateRoute>
+                        <Payment />
+                    </PrivateRoute>
+                ),
             },
         ],
     },
@@ -109,7 +130,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/dashboard/profile",
-                element: <ProfilePage />,
+                element: (
+                    <PrivateRoute>
+                        <ProfilePage />
+                    </PrivateRoute>
+                ),
             },
         ],
     },

@@ -111,7 +111,7 @@ export const CartProvider = ({ children }) => {
             const cartData = {
                 email: user.email,
                 cartItems: [newItem],
-                totalPrice: newItem.price,
+                totalPrice: parseFloat((newItem.price + (newItem.shippingInfo?.shippingCost || 0)).toFixed(2)),
                 totalItems: 1,
                 updatedAt: new Date().toLocaleString(),
             };
