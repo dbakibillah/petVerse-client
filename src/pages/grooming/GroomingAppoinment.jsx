@@ -86,44 +86,49 @@ const GroomingAppointment = () => {
     }, [showPetAnimation]);
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+    event.preventDefault();
 
-        // Check if checkbox is checked
-        const isChecked = document.getElementById("terms-checkbox")?.checked;
-        if (!isChecked) {
-            toast("Please agree to the terms and conditions", {
-                type: "warning",
-                autoClose: 3000,
-                position: "top-center",
-            });
-            return;
-        }
-        setIsSubmitting(true);
-        const groomingData = {
-            ...formData,
-            petType: selectedPetType?.value || formData.petType,
-            userEmail: user?.email,
-            userName: currentUser?.name || "Guest",
-        };
-
-        try {
-            await axiosPublic.post(
-                "/grooming/appointment",
-                groomingData
-            );
-
-        } catch (error) {
-            console.error(
-                "Error details:",
-                error.response?.data || error.message
-            );
-            toast.error(
-                error.response?.data?.message || "Failed to submit appointment"
-            );
-        } finally {
-            setIsSubmitting(false);
-        }
+    // Check if checkbox is checked
+    const isChecked = document.getElementById("terms-checkbox")?.checked;
+    if (!isChecked) {
+        toast("Please agree to the terms and conditions", {
+            type: "warning",
+            autoClose: 3000,
+            position: "top-center",
+        });
+        return;
+    }
+    
+    setIsSubmitting(true);
+    const groomingData = {
+        ...formData,
+        petType: selectedPetType?.value || formData.petType,
+        userEmail: user?.email,
+        userName: currentUser?.name || "Guest",
     };
+
+    try {
+        await axiosPublic.post("/grooming/appointment", groomingData);
+        
+        toast.success("Appointment submitted successfully!", {
+            autoClose: 3000,
+            position: "top-center",
+        });
+        
+        // Reset form state
+        setFormData({});
+        setCurrentStep(0);
+        setVisitedSteps([0]);
+        setSelectedPetType(null);
+        setShowPetAnimation(true);
+        
+    } catch (error) {
+        console.error("Error details:", error.response?.data || error.message);
+        toast.error(error.response?.data?.message || "Failed to submit appointment");
+    } finally {
+        setIsSubmitting(false);
+    }
+};
 
     const handleNext = () => {
         if (currentStep < steps.length - 1 && isStepComplete(currentStep)) {
@@ -1075,10 +1080,10 @@ const GroomingAppointment = () => {
                                                 strokeLinejoin="round"
                                                 strokeWidth="2"
                                                 d="M9 5l7 7-7 7"
-                                            ></path>
+                                            />
                                         </svg>
                                     </motion.button>
-                                ) : (
+                                ) : !submitSuccess ? (
                                     <motion.button
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
@@ -1106,18 +1111,18 @@ const GroomingAppointment = () => {
                                                         r="10"
                                                         stroke="currentColor"
                                                         strokeWidth="4"
-                                                    ></circle>
+                                                    />
                                                     <path
                                                         className="opacity-75"
                                                         fill="currentColor"
                                                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                    ></path>
+                                                    />
                                                 </svg>
                                                 Processing...
                                             </>
                                         ) : (
                                             <>
-                                                <FaPaw className="inline mr-2" />{" "}
+                                                <FaPaw className="inline mr-2" />
                                                 Submit Appointment
                                                 <svg
                                                     className="w-5 h-5"
@@ -1130,12 +1135,12 @@ const GroomingAppointment = () => {
                                                         strokeLinejoin="round"
                                                         strokeWidth="2"
                                                         d="M5 13l4 4L19 7"
-                                                    ></path>
+                                                    />
                                                 </svg>
                                             </>
                                         )}
                                     </motion.button>
-                                )}
+                                ) : null}
                             </div>
                         )}
                     </form>
