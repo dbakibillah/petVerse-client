@@ -5,6 +5,7 @@ import Bestsellers from "../../components/shop/Bestsellers";
 import { Helmet } from "react-helmet";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useEffect, useState } from "react";
+import AllProductCom from "../../components/shop/AllProductCom";
 
 const Shop = () => {
     // Scroll to top only on initial load
@@ -55,6 +56,7 @@ const Shop = () => {
             <ShopBanner />
             <Bestsellers products={products} />
             <Categories products={products} />
+            <AllProductCom />
         </section>
     );
 };

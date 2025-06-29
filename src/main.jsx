@@ -31,142 +31,147 @@ import Payment from "./payment/Payment";
 import AboutUs from "./pages/common/AboutUs";
 import ContactUs from "./pages/common/ContactUs";
 import MyGroomingAppointments from "./components/dashboard/user/MyGroomingAppoinments";
+import AdminAnalytics from "./pages/dashboard/AdminAnalytics";
 
 // tanstackQuery
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
-    {
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      {
         path: "/",
-        element: <Root />,
-        children: [
-            {
-                path: "/",
 
-                element: <Home />,
-            },
-            {
-                path: "/login",
-                element: <Login />,
-            },
-            {
-                path: "/register",
-                element: <Registration />,
-            },
-            {
-                path: "/shop",
-                element: <Shop />,
-            },
-            {
-                path: "/product/:id",
-                element: <ProductDetails />,
-            },
-            {
-                path: "/cart",
-                element: (
-                    <PrivateRoute>
-                        <Cart />
-                    </PrivateRoute>
-                ),
-            },
-            {
-                path: "/forum",
-                element: (
-                    <PrivateRoute>
-                        <Forum />
-                    </PrivateRoute>
-                ),
-            },
-            {
-                path: "/grooming",
-                element: <Grooming />,
-            },
-            {
-                path: "/grooming-appointment",
-                element: (
-                    <PrivateRoute>
-                        <GroomingAppointment />
-                    </PrivateRoute>
-                ),
-            },
-            {
-                path: "/healthcare",
-                element: <HealthCare />,
-            },
-            {
-                path: "/healthcare-appointment",
-                element: (
-                    <PrivateRoute>
-                        <HealthCareAppointment />
-                    </PrivateRoute>
-                ),
-            },
-            {
-                path: "/products",
-                element: <AllProducts />,
-            },
-            {
-                path: "/payment",
-                element: (
-                    <PrivateRoute>
-                        <Payment />
-                    </PrivateRoute>
-                ),
-            },
-            {
-                path: "/about",
-                element: <AboutUs />,
-            },
-            {
-                path: "/contact",
-                element: <ContactUs />,
-            },
-        ],
-    },
-    {
-        path: "/dashboard",
+        element: <Home />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Registration />,
+      },
+      {
+        path: "/shop",
+        element: <Shop />,
+      },
+      {
+        path: "/product/:id",
+        element: <ProductDetails />,
+      },
+      {
+        path: "/cart",
         element: (
-            <PrivateRoute>
-                <Dashboard />
-            </PrivateRoute>
+          <PrivateRoute>
+            <Cart />
+          </PrivateRoute>
         ),
-        children: [
-            // Admin routes
-            {
-                path: "/dashboard/grooming",
-                element: <GroomingAdmin />,
-            },
-            {
-                path: "/dashboard/healthappointments",
-                element: <HealthCareAdmin />,
-            },
-            {
-                path: "/dashboard/profile",
-                element: (
-                    <PrivateRoute>
-                        <ProfilePage />
-                    </PrivateRoute>
-                ),
-            },
-            {
-                path: "/dashboard/mygroomingappointments",
-                element: <MyGroomingAppointments />,
-            },
-        ],
-    },
+      },
+      {
+        path: "/forum",
+        element: (
+          <PrivateRoute>
+            <Forum />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/grooming",
+        element: <Grooming />,
+      },
+      {
+        path: "/grooming-appointment",
+        element: (
+          <PrivateRoute>
+            <GroomingAppointment />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/healthcare",
+        element: <HealthCare />,
+      },
+      {
+        path: "/healthcare-appointment",
+        element: (
+          <PrivateRoute>
+            <HealthCareAppointment />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/products",
+        element: <AllProducts />,
+      },
+      {
+        path: "/payment",
+        element: (
+          <PrivateRoute>
+            <Payment />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/about",
+        element: <AboutUs />,
+      },
+      {
+        path: "/contact",
+        element: <ContactUs />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
+    children: [
+      // Admin routes
+      {
+        path: "/dashboard/grooming",
+        element: <GroomingAdmin />,
+      },
+      {
+        path: "/dashboard/healthappointments",
+        element: <HealthCareAdmin />,
+      },
+      {
+        path: "/dashboard/profile",
+        element: (
+          <PrivateRoute>
+            <ProfilePage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/mygroomingappointments",
+        element: <MyGroomingAppointments />,
+      },
+      {
+        path: "/dashboard/admin-analytics",
+        element: <AdminAnalytics />,
+      },
+    ],
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
-    <StrictMode>
-        <ThemeProvider>
-            <QueryClientProvider client={queryClient}>
-                <AuthProvider>
-                    <CartProvider>
-                        <RouterProvider router={router} />
-                    </CartProvider>
-                </AuthProvider>
-            </QueryClientProvider>
-        </ThemeProvider>
-        <ToastContainer />
-    </StrictMode>
+  <StrictMode>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <CartProvider>
+            <RouterProvider router={router} />
+          </CartProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
+    <ToastContainer />
+  </StrictMode>
 );

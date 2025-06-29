@@ -42,10 +42,10 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
                 {item.discount > 0 ? (
                     <>
                         <span className="line-through text-gray-400 dark:text-gray-500 mr-2">
-                            ${item.unitPrice.toFixed(2)}
+                            ৳{item.unitPrice.toFixed(2)}
                         </span>
                         <span>
-                            $
+                            ৳
                             {(
                                 item.unitPrice *
                                 (1 - item.discount / 100)
@@ -53,7 +53,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
                         </span>
                     </>
                 ) : (
-                    <span>${item.unitPrice.toFixed(2)}</span>
+                    <span>৳{item.unitPrice.toFixed(2)}</span>
                 )}
             </div>
 
@@ -80,7 +80,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
 
             {/* Total */}
             <div className="col-span-2 text-right font-medium text-gray-800 dark:text-gray-100">
-                ${item.price.toFixed(2)}
+                ৳{item.price.toFixed(2)}
             </div>
         </div>
     );
@@ -271,7 +271,7 @@ const Cart = () => {
                                         Subtotal ({totalItems} items)
                                     </span>
                                     <span className="font-medium dark:text-gray-100">
-                                        ${subtotalBeforeDiscount.toFixed(2)}
+                                        ৳{subtotalBeforeDiscount.toFixed(2)}
                                     </span>
                                 </div>
 
@@ -281,7 +281,7 @@ const Cart = () => {
                                             Discounts Applied
                                         </span>
                                         <span className="font-medium text-green-600 dark:text-green-400">
-                                            -${totalDiscount.toFixed(2)}
+                                            -৳{totalDiscount.toFixed(2)}
                                         </span>
                                     </div>
                                 )}
@@ -293,7 +293,7 @@ const Cart = () => {
                                     <span className="font-medium dark:text-gray-100">
                                         {shippingInfo.freeShipping
                                             ? "Free Shipping"
-                                            : `$${shippingInfo.shippingCost.toFixed(
+                                            : `৳${shippingInfo.shippingCost.toFixed(
                                                   2
                                               )}`}
                                     </span>
@@ -313,7 +313,7 @@ const Cart = () => {
                                         Total
                                     </span>
                                     <span className="font-bold text-lg text-primary dark:text-primary-400">
-                                        ${finalTotal.toFixed(2)}
+                                        ৳{finalTotal.toFixed(2)}
                                     </span>
                                 </div>
                             </div>

@@ -35,9 +35,8 @@ const DashboardSidebar = () => {
     const isActive = (path) => pathname.startsWith(path);
 
     const adminLinks = [
-        { path: "/dashboard/overview", name: "Overview", icon: <FiHome className="text-lg" /> },
         { path: "/dashboard/profile", name: "Profile", icon: <FiUser className="text-lg" /> },
-        { path: "/dashboard/analytics", name: "Analytics", icon: <FiPieChart className="text-lg" /> },
+        { path: "/dashboard/admin-analytics", name: "Analytics", icon: <FiPieChart className="text-lg" /> },
         { path: "/dashboard/healthappointments", name: "Health Appointments", icon: <FiFileText className="text-lg" /> },
         { path: "/dashboard/grooming", name: "Grooming", icon: <FiSettings className="text-lg" /> },
     ];
