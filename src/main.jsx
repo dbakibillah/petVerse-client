@@ -28,6 +28,10 @@ import ThemeProvider from "./providers/ThemeProvider";
 import PrivateRoute from "./routes/PrivateRoute";
 import Root from "./routes/Root";
 import Payment from "./payment/Payment";
+import AboutUs from "./pages/common/AboutUs";
+import ContactUs from "./pages/common/ContactUs";
+import MyGroomingAppointments from "./components/dashboard/user/MyGroomingAppoinments";
+
 // tanstackQuery
 const queryClient = new QueryClient();
 
@@ -109,6 +113,14 @@ const router = createBrowserRouter([
                     </PrivateRoute>
                 ),
             },
+            {
+                path: "/about",
+                element: <AboutUs />,
+            },
+            {
+                path: "/contact",
+                element: <ContactUs />,
+            },
         ],
     },
     {
@@ -135,6 +147,10 @@ const router = createBrowserRouter([
                         <ProfilePage />
                     </PrivateRoute>
                 ),
+            },
+            {
+                path: "/dashboard/mygroomingappointments",
+                element: <MyGroomingAppointments />,
             },
         ],
     },

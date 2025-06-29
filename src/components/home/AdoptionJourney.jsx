@@ -7,6 +7,7 @@ import {
     FiHome,
     FiArrowRight,
 } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 const AdoptionJourney = () => {
     useEffect(() => {
@@ -90,10 +91,12 @@ const AdoptionJourney = () => {
                             data-aos="fade-up"
                             data-aos-delay="500"
                         >
+                            <Link to="/forum?category=Pet+Adoption">
                             <button className="px-8 py-4 bg-gradient-to-r from-secondary to-primary hover:from-purple-700 hover:to-indigo-700 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex items-center">
                                 Search Adoption Posts
                                 <FiArrowRight className="ml-2 h-5 w-5" />
                             </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
