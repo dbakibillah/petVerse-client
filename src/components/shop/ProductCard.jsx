@@ -55,15 +55,15 @@ const ProductCard = ({ product }) => {
                                 {hasDiscount ? (
                                     <div className="space-x-1">
                                         <span className="text-lg font-bold text-primary">
-                                            ${discountedPrice}
+                                            ৳{discountedPrice}
                                         </span>
                                         <span className="text-sm line-through text-gray-400">
-                                            ${product.price}
+                                            ৳{product.price}
                                         </span>
                                     </div>
                                 ) : (
                                     <span className="text-lg font-bold text-primary">
-                                        ${product.price}
+                                        ৳{product.price}
                                     </span>
                                 )}
                             </div>

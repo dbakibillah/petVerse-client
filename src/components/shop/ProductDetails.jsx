@@ -150,12 +150,12 @@ const ProductDetails = () => {
 
                         <div className="flex items-center gap-3">
                             <span className="text-2xl font-bold text-primary">
-                                ${discountedPrice || product.price}
+                                ৳{discountedPrice || product.price}
                             </span>
                             {hasDiscount && (
                                 <>
                                     <span className="line-through text-gray-400">
-                                        ${product.price}
+                                        ৳{product.price}
                                     </span>
                                     <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">
                                         {product.discount}% OFF
@@ -226,7 +226,7 @@ const ProductDetails = () => {
                                 <strong>Shipping:</strong>{" "}
                                 {product.shippingInfo.freeShipping
                                     ? "Free Shipping"
-                                    : `$${product.shippingInfo.shippingCost}`}
+                                    : `৳${product.shippingInfo.shippingCost}`}
                             </p>
                             <p className="flex items-center gap-2">
                                 <MdOutlineTimer className="text-lg text-primary" />
