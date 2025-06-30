@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     FaPaw,
     FaEnvelope,
@@ -77,6 +77,14 @@ const services = [
 ];
 
 const AboutUs = () => {
+    // Scroll to top only on initial load
+    const [hasInitialScroll, setHasInitialScroll] = useState(false);
+    useEffect(() => {
+        if (!hasInitialScroll) {
+            window.scrollTo(0, 0);
+            setHasInitialScroll(true);
+        }
+    }, [hasInitialScroll]);
     return (
         <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white py-16 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">

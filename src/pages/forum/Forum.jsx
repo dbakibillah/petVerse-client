@@ -19,6 +19,15 @@ const Forum = () => {
         searchParams.get("tags")?.split(",") || []
     );
 
+    // Scroll to top only on initial load
+    const [hasInitialScroll, setHasInitialScroll] = useState(false);
+    useEffect(() => {
+        if (!hasInitialScroll) {
+            window.scrollTo(0, 0);
+            setHasInitialScroll(true);
+        }
+    }, [hasInitialScroll]);
+
     const { data: posts = [], refetch } = useQuery({
         queryKey: ["posts"],
         queryFn: async () => {
