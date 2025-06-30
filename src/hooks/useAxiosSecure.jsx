@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
 
 const axiosSecure = axios.create({
-    baseURL: 'http://localhost:5000/',
-    // baseURL: "https://pet-verse-server.vercel.app/",
-    // headers: {
-    //     "Content-Type": "application/json",
-    // },
+    // baseURL: 'http://localhost:5000/',
+    baseURL: "https://pet-verse-server.vercel.app/",
+    headers: {
+        "Content-Type": "application/json",
+    },
 });
 const useAxiosSecure = () => {
     const navigate = useNavigate();
