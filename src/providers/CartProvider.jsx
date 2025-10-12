@@ -6,8 +6,8 @@ import {
     useState,
 } from "react";
 import { toast } from "react-toastify";
-import { AuthContext } from "./AuthProviders";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import { AuthContext } from "./AuthProviders";
 
 const CartContext = createContext();
 
@@ -111,7 +111,12 @@ export const CartProvider = ({ children }) => {
             const cartData = {
                 email: user.email,
                 cartItems: [newItem],
-                totalPrice: parseFloat((newItem.price + (newItem.shippingInfo?.shippingCost || 0)).toFixed(2)),
+                totalPrice: parseFloat(
+                    (
+                        newItem.price +
+                        (newItem.shippingInfo?.shippingCost || 0)
+                    ).toFixed(2)
+                ),
                 totalItems: 1,
                 updatedAt: new Date().toLocaleString(),
             };

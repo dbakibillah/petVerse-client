@@ -8,11 +8,17 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import GroomingAdmin from "./components/dashboard/GroomingAdmin";
 import HealthCareAdmin from "./components/dashboard/HealthCareAdmin";
+import MyGroomingAppointments from "./components/dashboard/user/MyGroomingAppoinments";
+import MyOrders from "./components/dashboard/user/MyOrders";
 import ProductDetails from "./components/shop/ProductDetails";
 import Cart from "./pages/cart/Cart";
+import AboutUs from "./pages/common/AboutUs";
+import ContactUs from "./pages/common/ContactUs";
 import Home from "./pages/common/Home";
 import Login from "./pages/common/Login";
 import Registration from "./pages/common/Registration";
+import AddProduct from "./pages/dashboard/AddProduct";
+import AdminAnalytics from "./pages/dashboard/AdminAnalytics";
 import Dashboard from "./pages/dashboard/Dashboard";
 import ProfilePage from "./pages/dashboard/ProfilePage";
 import Forum from "./pages/forum/Forum";
@@ -22,17 +28,12 @@ import HealthCare from "./pages/healthcare/HealthCare";
 import HealthCareAppointment from "./pages/healthcare/HealthCareAppointment";
 import AllProducts from "./pages/shop/AllProducts";
 import Shop from "./pages/shop/shop";
+import Payment from "./payment/Payment";
 import AuthProvider from "./providers/AuthProviders";
 import { CartProvider } from "./providers/CartProvider";
 import ThemeProvider from "./providers/ThemeProvider";
 import PrivateRoute from "./routes/PrivateRoute";
 import Root from "./routes/Root";
-import Payment from "./payment/Payment";
-import AboutUs from "./pages/common/AboutUs";
-import ContactUs from "./pages/common/ContactUs";
-import MyGroomingAppointments from "./components/dashboard/user/MyGroomingAppoinments";
-import MyOrders from "./components/dashboard/user/MyOrders";
-import AdminAnalytics from "./pages/dashboard/AdminAnalytics";
 
 // tanstackQuery
 const queryClient = new QueryClient();
@@ -161,6 +162,10 @@ const router = createBrowserRouter([
             {
                 path: "/dashboard/my-orders",
                 element: <MyOrders />,
+            },
+            {
+                path: "/dashboard/add-product",
+                element: <AddProduct />,
             },
         ],
     },

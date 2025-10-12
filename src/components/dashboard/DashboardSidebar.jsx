@@ -12,6 +12,7 @@ import {
     FiCalendar,
     FiShoppingCart,
     FiMessageCircle,
+    FiPlus,
 } from "react-icons/fi";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
@@ -49,6 +50,7 @@ const DashboardSidebar = () => {
     const adminLinks = [
         { path: "/dashboard/admin-analytics", name: "Analytics", icon: <FiPieChart className="text-lg" /> },
         { path: "/dashboard/profile", name: "Profile", icon: <FiUser className="text-lg" /> },
+        { path: "/dashboard/add-product", name: "Add Product", icon: <FiPlus className="text-lg" /> },
         { path: "/dashboard/healthappointments", name: "Health Appointments", icon: <FiFileText className="text-lg" /> },
         { path: "/dashboard/grooming", name: "Grooming", icon: <FiSettings className="text-lg" /> },
     ];
