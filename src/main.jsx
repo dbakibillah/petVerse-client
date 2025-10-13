@@ -32,6 +32,8 @@ import AboutUs from "./pages/common/AboutUs";
 import ContactUs from "./pages/common/ContactUs";
 import MyGroomingAppointments from "./components/dashboard/user/MyGroomingAppoinments";
 import AdminAnalytics from "./pages/dashboard/AdminAnalytics";
+import AdminProductDashboard from "./pages/dashboard/admin/AdminProductDashboard";
+import PetHealthWellness from "./components/home/PetHealthWellness";
 
 // tanstackQuery
 const queryClient = new QueryClient();
@@ -122,6 +124,10 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <ContactUs />,
       },
+      {
+        path: "/pethealthwellness",
+        element: <PetHealthWellness />,
+      },
     ],
   },
   {
@@ -156,6 +162,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/admin-analytics",
         element: <AdminAnalytics />,
+      },
+      {
+        path: "/dashboard/add-product",
+        element: <AdminProductDashboard />,
       },
     ],
   },
