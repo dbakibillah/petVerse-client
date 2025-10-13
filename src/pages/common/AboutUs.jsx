@@ -1,101 +1,250 @@
-import React from 'react';
-import { FaPaw, FaEnvelope, FaCode } from 'react-icons/fa';
+import React, { useEffect, useState } from "react";
+import {
+    FaPaw,
+    FaEnvelope,
+    FaCode,
+    FaHeart,
+    FaShoppingCart,
+    FaCamera,
+    FaDog,
+    FaUsers,
+} from "react-icons/fa";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const developers = [
-  {
-    name: 'Asif Ahmed',
-    email: 'asifahmed.dev@gmail.com',
-    role: 'Frontend Developer | MERN Stack Enthusiast',
-    img: 'https://i.ibb.co/Lhp7F34W/tushar.jpg',
-  },
-  {
-    name: 'Baki Billah',
-    email: 'bakibillah.dev@gmail.com',
-    role: 'Senior Developer | Full Stack Specialist',
-    img: 'https://i.ibb.co/dwxbd3wn/baki.jpg',
-  },
-  {
-    name: 'Muhaiminul Shafin',
-    email: 'muhaiminul.shafin@gmail.com',
-    role: 'Junior Developer | React & Node.js',
-    img: 'https://i.ibb.co/ZpNv2cRm/shafin.jpg',
-  },
-  {
-    name: 'Rahatul Islam',
-    email: 'rahatul.islam@gmail.com',
-    role: 'Junior Developer | Backend Specialist',
-    img: 'https://i.ibb.co/FbyvCstV/rahat.jpg',
-  },
+    {
+        name: "Asif Ahmed",
+        email: "asifahmed.dev@gmail.com",
+        role: "Frontend Developer | MERN Stack Enthusiast",
+        img: "https://i.ibb.co/Lhp7F34W/tushar.jpg",
+    },
+    {
+        name: "Baki Billah",
+        email: "bakibillah.dev@gmail.com",
+        role: "Senior Developer | Full Stack Specialist",
+        img: "https://i.ibb.co/dwxbd3wn/baki.jpg",
+    },
+    {
+        name: "Muhaiminul Shafin",
+        email: "muhaiminul.shafin@gmail.com",
+        role: "Junior Developer | React & Node.js",
+        img: "https://i.ibb.co/ZpNv2cRm/shafin.jpg",
+    },
+    {
+        name: "Rahatul Islam",
+        email: "rahatul.islam@gmail.com",
+        role: "Junior Developer | Backend Specialist",
+        img: "https://i.ibb.co/FbyvCstV/rahat.jpg",
+    },
+];
+
+const services = [
+    {
+        icon: <FaHeart className="text-2xl" />,
+        title: "Pet Adoption",
+        description:
+            "Find your perfect furry companion through our verified adoption network",
+    },
+    {
+        icon: <FaPaw className="text-2xl" />,
+        title: "Grooming Services",
+        description: "Professional grooming appointments at your convenience",
+    },
+    {
+        icon: <FaShoppingCart className="text-2xl" />,
+        title: "Pet Products",
+        description:
+            "Premium food, toys, and accessories delivered to your door",
+    },
+    {
+        icon: <FaDog className="text-2xl" />,
+        title: "Pet Care",
+        description:
+            "Walking, boarding, and daycare services from trusted providers",
+    },
+    {
+        icon: <FaCamera className="text-2xl" />,
+        title: "Pet Photography",
+        description:
+            "Capture your pet's personality with professional photoshoots",
+    },
+    {
+        icon: <FaUsers className="text-2xl" />,
+        title: "Community",
+        description: "Connect with other pet lovers in our exclusive forums",
+    },
 ];
 
 const AboutUs = () => {
-  return (
-    <div className="bg-orange-50 min-h-screen py-16 px-6 md:px-20 text-gray-800">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <FaPaw className="text-orange-500 text-5xl mx-auto mb-4" />
-          <h1 className="text-4xl font-extrabold text-orange-600">About Us</h1>
+    // Scroll to top only on initial load
+    const [hasInitialScroll, setHasInitialScroll] = useState(false);
+    useEffect(() => {
+        if (!hasInitialScroll) {
+            window.scrollTo(0, 0);
+            setHasInitialScroll(true);
+        }
+    }, [hasInitialScroll]);
+    return (
+        <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white py-16 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto">
+                {/* Hero Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="text-center mb-16"
+                >
+                    <div className="inline-block p-4 bg-orange-100 rounded-full mb-6">
+                        <FaPaw className="text-4xl text-orange-500" />
+                    </div>
+                    <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                        About <span className="text-orange-500">PetVerse</span>
+                    </h1>
+                    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                        Where pets and their people find everything they need
+                    </p>
+                </motion.div>
+
+                {/* Mission Section */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.6 }}
+                    className="bg-white rounded-2xl shadow-lg p-8 mb-16"
+                >
+                    <div className="max-w-4xl mx-auto text-center">
+                        <h2 className="text-3xl font-bold text-gray-800 mb-6">
+                            Our Mission
+                        </h2>
+                        <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+                            At PetVerse, we're revolutionizing pet care by
+                            creating a comprehensive ecosystem that connects pet
+                            owners with trusted services, products, and a
+                            supportive community—all designed to make pet
+                            parenting easier and more enjoyable.
+                        </p>
+                        <div className="bg-orange-50 rounded-xl p-4 inline-block">
+                            <p className="text-orange-600 font-medium">
+                                "Building a better world for pets and their
+                                humans" 🐾
+                            </p>
+                        </div>
+                    </div>
+                </motion.div>
+
+                {/* Services Section */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="mb-16"
+                >
+                    <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 flex items-center justify-center gap-3">
+                        <FaPaw className="text-orange-500" /> Our Comprehensive
+                        Services
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {services.map((service, index) => (
+                            <motion.div
+                                key={index}
+                                whileHover={{ y: -5 }}
+                                className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center hover:shadow-lg transition-all"
+                            >
+                                <div className="bg-orange-100 p-4 rounded-full mb-4 text-orange-500">
+                                    {service.icon}
+                                </div>
+                                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                                    {service.title}
+                                </h3>
+                                <p className="text-gray-600">
+                                    {service.description}
+                                </p>
+                            </motion.div>
+                        ))}
+                    </div>
+                </motion.div>
+
+                {/* Team Section */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="border-t border-orange-200 pt-16"
+                >
+                    <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 flex items-center justify-center gap-3">
+                        <FaCode className="text-orange-500" /> Meet The
+                        Developers
+                    </h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {developers.map((dev, idx) => (
+                            <motion.div
+                                key={idx}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: idx * 0.1 }}
+                                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all"
+                            >
+                                <div className="p-6 text-center">
+                                    <div className="relative w-32 h-32 mx-auto mb-4">
+                                        <img
+                                            src={dev.img}
+                                            alt={dev.name}
+                                            className="w-full h-full rounded-full object-cover border-4 border-orange-100"
+                                        />
+                                        <div className="absolute -bottom-2 right-2 bg-orange-500 text-white p-1 rounded-full">
+                                            <FaPaw className="text-xs" />
+                                        </div>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-gray-800 mb-1">
+                                        {dev.name}
+                                    </h3>
+                                    <p className="text-orange-500 text-sm font-medium mb-3">
+                                        {dev.role}
+                                    </p>
+                                    <a
+                                        href={`mailto:${dev.email}`}
+                                        className="inline-flex items-center text-sm text-gray-600 hover:text-orange-500 transition-colors"
+                                    >
+                                        <FaEnvelope className="mr-2" />
+                                        {dev.email}
+                                    </a>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </motion.div>
+
+                {/* Closing CTA */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="mt-16 text-center"
+                >
+                    <div className="bg-gradient-to-r from-orange-400 to-orange-500 rounded-2xl p-8 text-white">
+                        <h2 className="text-2xl font-bold mb-4">
+                            Join the PetVerse Community
+                        </h2>
+                        <p className="mb-6 max-w-2xl mx-auto">
+                            Whether you're a pet owner, pet lover, or service
+                            provider, there's a place for you in our growing
+                            community.
+                        </p>
+                        <Link to="/forum">
+                            <button className="bg-white text-orange-500 font-semibold px-6 py-3 rounded-full hover:bg-orange-50 transition-all">
+                                Get Started Today
+                            </button>
+                        </Link>
+                    </div>
+                </motion.div>
+            </div>
         </div>
-
-        <p className="text-lg mb-4 text-center">
-          Welcome to <span className="font-bold text-orange-500">PetVerse</span> — your all-in-one digital destination for pet care, adoption, and connection.
-        </p>
-
-        <p className="text-base mb-6 leading-relaxed text-justify">
-          At PetVerse, we believe every pet deserves a loving home, personalized care, and a vibrant community. Built by pet lovers, for pet lovers, our platform offers a full spectrum of services designed to make pet parenting more fulfilling, informed, and accessible.
-        </p>
-
-        <h2 className="text-2xl font-semibold text-orange-500 mt-10 mb-3 flex items-center gap-2">
-          <FaPaw /> Our Services
-        </h2>
-        <ul className="list-disc list-inside mb-6 text-base leading-relaxed">
-          <li>Hassle-free pet adoption platform</li>
-          <li>Grooming appointments & pet spa bookings</li>
-          <li>Wide range of accessories, food, and health products</li>
-          <li>Pet walking, boarding, and photography services</li>
-          <li>Pet community forum and regular newsletters</li>
-        </ul>
-
-        <h2 className="text-2xl font-semibold text-orange-500 mb-3 flex items-center gap-2">
-          <FaPaw /> Why PetVerse?
-        </h2>
-        <p className="text-base leading-relaxed mb-10 text-justify">
-          Whether you're looking to adopt a furry friend or pamper your pet, PetVerse connects you with trusted services all in one place. Our user-friendly platform is built with modern tools and backed by passionate developers who care deeply about animals and their well-being.
-        </p>
-
-        <div className="text-center text-orange-700 text-lg font-medium mb-12">
-          PetVerse is more than a platform — it's a growing universe of love, care, and community for pets and their people. 🐾
-        </div>
-
-        {/* Developer Section */}
-        <div className="border-t border-orange-200 pt-10">
-          <h3 className="text-xl font-bold text-orange-600 text-center mb-8 flex items-center justify-center gap-2">
-            <FaCode /> Developer Info
-          </h3>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {developers.map((dev, idx) => (
-              <div key={idx} className="bg-white rounded-xl shadow-md p-4 text-center">
-                <img
-                  src={dev.img}
-                  alt={dev.name}
-                  className="w-24 h-24 mx-auto rounded-full object-cover border-2 border-orange-300 mb-3"
-                />
-                <p className="font-semibold text-base text-gray-800">{dev.name}</p>
-                <p className="text-sm text-gray-600 mb-1">{dev.role}</p>
-                <p className="text-sm text-gray-600">
-                  <FaEnvelope className="inline mr-1 text-orange-500" />
-                  <a href={`mailto:${dev.email}`} className="hover:underline text-orange-500">
-                    {dev.email}
-                  </a>
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default AboutUs;

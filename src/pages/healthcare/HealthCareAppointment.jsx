@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { useContext, useEffect, useState } from "react";
 import {
@@ -12,8 +13,10 @@ import {
     FaPhone,
     FaShower,
 } from "react-icons/fa";
-import { AuthContext } from "../../providers/AuthProviders";
+import { toast } from "react-toastify";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { AuthContext } from "../../providers/AuthProviders";
+import { useNavigate } from "react-router-dom";
 
 const HealthCareAppoinment = () => {
     const axiosPublic = useAxiosPublic();
@@ -25,6 +28,17 @@ const HealthCareAppoinment = () => {
     const [showPetAnimation, setShowPetAnimation] = useState(false);
     const [selectedPetType, setSelectedPetType] = useState(null);
     const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const { data: currentUser, isLoading } = useQuery({
+        queryKey: ["currentUser", user?.email],
+        queryFn: async () => {
+            const res = await axiosPublic.get(
+                `/singleuser?email=${user.email}`
+            );
+            return res.data.data;
+        },
+        enabled: !!user?.email,
+    });
 
     const petTypes = [
         { value: "Dog", label: "Dog", icon: <FaDog className="inline mr-2" /> },
@@ -79,74 +93,48 @@ const HealthCareAppoinment = () => {
         // Check if checkbox is checked
         const isChecked = document.getElementById("terms-checkbox")?.checked;
         if (!isChecked) {
-            alert("Please agree to the terms and conditions");
+            toast("Please agree to the terms and conditions", {
+                type: "warning",
+                autoClose: 3000,
+                position: "top-center",
+            });
             return;
         }
 
-        const healthCareData = {
-            ownerName: user?.displayName || "Anonymous",
-            ownerEmail: user?.email || "Anonymous",
-            status: "pending",
-            createdAt: new Date().toISOString(),
-            petName: formData.petName,
-            petType: formData.petType,
-            age: formData.age || null,
-            weight: formData.weight || null,
-            breed: formData.breed || null,
-            temperament: formData.temperament || null,
-            phone: formData.phone,
-            address: formData.address,
-            friendly: formData.friendly,
-            trained: formData.trained,
-            vaccinated: formData.vaccinated,
-            medical: formData.medical || null,
-            pickupTime: formData.pickupTime,
-            deliveryTime: formData.deliveryTime,
+        setIsSubmitting(true);
+        const healthcareData = {
+            ...formData,
+            petType: selectedPetType?.value || formData.petType,
+            userEmail: user?.email,
+            userName: currentUser?.name || "Guest",
         };
 
-        setIsSubmitting(true);
-
         try {
-            const res = await axiosPublic.post(
-                "/healthcare/appointment",
-                healthCareData
-            );
+            await axiosPublic.post("/healthcare/appointment", healthcareData);
 
-            if (res.data.insertedId) {
-                setSubmitSuccess(true);
-                setCurrentStep(steps.length - 1);
-                setShowPetAnimation(true);
+            toast.success("Appointment submitted successfully!", {
+                autoClose: 3000,
+                position: "top-center",
+            });
 
-                setTimeout(() => {
-                    setFormData({});
-                    setCurrentStep(0);
-                    setVisitedSteps([0]);
-                    setSelectedPetType(null);
-                    setSubmitSuccess(false);
-                }, 5000);
-            } else {
-                console.error("Submission failed:", res.data);
-                alert(
-                    "Submission received but confirmation failed. Please contact support."
-                );
-            }
+            // Set success state
+            setSubmitSuccess(true);
+
+            navigate("/healthcare");
+            // Reset form state
+            setFormData({});
+            setCurrentStep(0);
+            setVisitedSteps([0]);
+            setSelectedPetType(null);
+            setShowPetAnimation(true);
         } catch (error) {
             console.error(
                 "Error details:",
                 error.response?.data || error.message
             );
-            if (error.response?.data?.missingFields) {
-                alert(
-                    `Missing fields: ${error.response.data.missingFields.join(
-                        ", "
-                    )}`
-                );
-            } else {
-                alert(
-                    error.response?.data?.message ||
-                        "Something went wrong. Please try again."
-                );
-            }
+            toast.error(
+                error.response?.data?.message || "Failed to submit appointment"
+            );
         } finally {
             setIsSubmitting(false);
         }
@@ -264,8 +252,8 @@ const HealthCareAppoinment = () => {
                         Why Choose Our Pet Spa?
                     </h2>
                     <p className="text-lg text-gray-700 leading-relaxed">
-                        Our professional pet healthcare service ensures that
-                        your furry friend receives the best care, hygiene, and
+                        Our professional pet healthcare service ensures that your
+                        furry friend receives the best care, hygiene, and
                         comfort.
                     </p>
                     <div className="flex flex-wrap justify-center gap-4 mt-8">
@@ -845,11 +833,11 @@ const HealthCareAppoinment = () => {
                                                     Appointment Confirmed!
                                                 </h4>
                                                 <p className="text-gray-600 mb-6">
-                                                    We've received your
-                                                    healthcare appointment
-                                                    request. Our team will
-                                                    contact you shortly to
-                                                    confirm the details.
+                                                    We've received your healthcare
+                                                    appointment request. Our
+                                                    team will contact you
+                                                    shortly to confirm the
+                                                    details.
                                                 </p>
                                                 <motion.button
                                                     whileHover={{ scale: 1.05 }}
@@ -1041,7 +1029,6 @@ const HealthCareAppoinment = () => {
                                 )}
                             </motion.div>
                         </AnimatePresence>
-
                         {!submitSuccess && (
                             <div className="flex justify-between mt-10 border-t border-gray-200 pt-6">
                                 {currentStep > 0 && (
@@ -1050,7 +1037,7 @@ const HealthCareAppoinment = () => {
                                         whileTap={{ scale: 0.95 }}
                                         type="button"
                                         onClick={handlePrev}
-                                        className="px-8 py-3 rounded-xl font-medium flex items-center gap-2 bg-gray-200 text-gray-700 hover:bg-gray-300"
+                                        className="px-8 py-3 rounded-xl font-medium flex items-center gap-2 bg-gray-200 text-gray-700 hover:bg-gray-300 transition-all"
                                     >
                                         <svg
                                             className="w-5 h-5"
@@ -1063,31 +1050,24 @@ const HealthCareAppoinment = () => {
                                                 strokeLinejoin="round"
                                                 strokeWidth="2"
                                                 d="M15 19l-7-7 7-7"
-                                            ></path>
+                                            />
                                         </svg>
                                         Previous
                                     </motion.button>
                                 )}
-
+                                <div className="flex-1"></div>{" "}
+                                {/* Spacer to push the next/submit button to the right */}
                                 {currentStep < steps.length - 1 ? (
                                     <motion.button
-                                        whileHover={{
-                                            scale: isStepComplete(currentStep)
-                                                ? 1.05
-                                                : 1,
-                                        }}
-                                        whileTap={{
-                                            scale: isStepComplete(currentStep)
-                                                ? 0.95
-                                                : 1,
-                                        }}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
                                         type="button"
                                         onClick={handleNext}
                                         disabled={!isStepComplete(currentStep)}
-                                        className={`px-8 py-3 rounded-xl font-medium text-white flex items-center gap-2 ${
+                                        className={`px-8 py-3 rounded-xl font-medium text-white flex items-center gap-2 transition-all ${
                                             !isStepComplete(currentStep)
                                                 ? "bg-gray-400 cursor-not-allowed"
-                                                : `bg-primary hover:bg-${steps[currentStep].color}-600`
+                                                : `bg-orange-500 hover:bg-orange-600 shadow-md`
                                         }`}
                                     >
                                         Next Step
@@ -1102,22 +1082,20 @@ const HealthCareAppoinment = () => {
                                                 strokeLinejoin="round"
                                                 strokeWidth="2"
                                                 d="M9 5l7 7-7 7"
-                                            ></path>
+                                            />
                                         </svg>
                                     </motion.button>
-                                ) : (
+                                ) : !submitSuccess ? (
                                     <motion.button
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                         type="submit"
-                                        onClick={handleSubmit}
-                                        disabled={
-                                            isSubmitting ||
-                                            !document.querySelector(
-                                                'input[type="checkbox"]'
-                                            )?.checked
-                                        }
-                                        className="px-8 py-3 bg-gradient-to-r from-red-500 to-orange-500 hover:from-orange-600 hover:to-red-600 text-white font-bold rounded-xl shadow-lg transition-all duration-300 flex items-center gap-2"
+                                        disabled={isSubmitting}
+                                        className={`px-8 py-3 rounded-xl font-bold text-white flex items-center gap-2 transition-all shadow-lg ${
+                                            isSubmitting
+                                                ? "bg-green-600 cursor-wait"
+                                                : "bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600"
+                                        }`}
                                     >
                                         {isSubmitting ? (
                                             <>
@@ -1134,19 +1112,19 @@ const HealthCareAppoinment = () => {
                                                         r="10"
                                                         stroke="currentColor"
                                                         strokeWidth="4"
-                                                    ></circle>
+                                                    />
                                                     <path
                                                         className="opacity-75"
                                                         fill="currentColor"
                                                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                    ></path>
+                                                    />
                                                 </svg>
                                                 Processing...
                                             </>
                                         ) : (
                                             <>
-                                                <FaPaw className="inline mr-2" />{" "}
-                                                Submit Appointment
+                                                <FaPaw className="inline mr-2" />
+                                                Confirm Appointment
                                                 <svg
                                                     className="w-5 h-5"
                                                     fill="none"
@@ -1158,12 +1136,12 @@ const HealthCareAppoinment = () => {
                                                         strokeLinejoin="round"
                                                         strokeWidth="2"
                                                         d="M5 13l4 4L19 7"
-                                                    ></path>
+                                                    />
                                                 </svg>
                                             </>
                                         )}
                                     </motion.button>
-                                )}
+                                ) : null}
                             </div>
                         )}
                     </form>

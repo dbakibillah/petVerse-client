@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
     FiHome,
     FiUser,
@@ -12,14 +12,16 @@ import {
     FiCalendar,
     FiShoppingCart,
     FiMessageCircle,
+    FiPlus,
 } from "react-icons/fi";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 
 const DashboardSidebar = () => {
     const { pathname } = useLocation();
+    const navigate = useNavigate();
     const { user } = useContext(AuthContext);
     const axiosPublic = useAxiosPublic();
 
@@ -32,11 +34,23 @@ const DashboardSidebar = () => {
         enabled: !!user?.email,
     });
 
+    // Redirect logic
+    useEffect(() => {
+        if (!isLoading && pathname === "/dashboard") {
+            if (currentUser?.role === "admin") {
+                navigate("/dashboard/admin-analytics");
+            } else {
+                navigate("/dashboard/profile");
+            }
+        }
+    }, [pathname, currentUser, isLoading, navigate]);
+
     const isActive = (path) => pathname.startsWith(path);
 
     const adminLinks = [
-        { path: "/dashboard/profile", name: "Profile", icon: <FiUser className="text-lg" /> },
         { path: "/dashboard/admin-analytics", name: "Analytics", icon: <FiPieChart className="text-lg" /> },
+        { path: "/dashboard/profile", name: "Profile", icon: <FiUser className="text-lg" /> },
+        { path: "/dashboard/add-product", name: "Add Product", icon: <FiPlus className="text-lg" /> },
         { path: "/dashboard/healthappointments", name: "Health Appointments", icon: <FiFileText className="text-lg" /> },
         { path: "/dashboard/grooming", name: "Grooming", icon: <FiSettings className="text-lg" /> },
     ];
@@ -44,7 +58,7 @@ const DashboardSidebar = () => {
     const userLinks = [
         { path: "/dashboard/profile", name: "Profile", icon: <FiUser className="text-lg" /> },
         { path: "/dashboard/mygroomingappointments", name: "My Appointments", icon: <FiCalendar className="text-lg" /> },
-        { path: "/dashboard/orders", name: "My Orders", icon: <FiShoppingCart className="text-lg" /> },
+        { path: "/dashboard/my-orders", name: "My Orders", icon: <FiShoppingCart className="text-lg" /> },
     ];
 
     // Show nothing while loading user role

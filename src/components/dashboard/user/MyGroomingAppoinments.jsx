@@ -8,7 +8,6 @@ import {
     FaCat,
     FaBone,
     FaFeatherAlt,
-    FaCalendarAlt,
     FaShieldAlt,
     FaGraduationCap,
     FaSmile,
@@ -34,186 +33,236 @@ const MyGroomingAppointments = () => {
         },
     });
 
+    // Icon mappings for different pet types
     const petTypeIcons = {
-        Dog: <FaDog className="inline mr-1" />,
-        Cat: <FaCat className="inline mr-1" />,
-        Rabbit: <FaBone className="inline mr-1" />,
-        Bird: <FaFeatherAlt className="inline mr-1" />,
+        Dog: <FaDog className="text-blue-500" />,
+        Cat: <FaCat className="text-blue-500" />,
+        Rabbit: <FaBone className="text-blue-500" />,
+        Bird: <FaFeatherAlt className="text-blue-500" />,
     };
 
-    const statusIcons = {
-        pending: <FaHourglassHalf className="inline mr-1" />,
-        approved: <FaCheckCircle className="inline mr-1" />,
-        rejected: <FaTimesCircle className="inline mr-1" />,
+    // Status configurations
+    const statusConfig = {
+        pending: {
+            icon: <FaHourglassHalf />,
+            color: "bg-amber-100 text-amber-800",
+            border: "border-amber-200",
+        },
+        approved: {
+            icon: <FaCheckCircle />,
+            color: "bg-green-100 text-green-800",
+            border: "border-green-200",
+        },
+        rejected: {
+            icon: <FaTimesCircle />,
+            color: "bg-red-100 text-red-800",
+            border: "border-red-200",
+        },
     };
 
-    if (isLoading)
+    if (isLoading) {
         return (
-            <div className="flex justify-center items-center h-screen">
-                <div className="loader"></div>
+            <div className="flex justify-center items-center min-h-screen">
+                <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
             </div>
         );
+    }
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white p-6">
-            <div className="max-w-7xl mx-auto">
-                <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-center mb-12"
-                >
-                    <h2 className="text-4xl font-bold text-orange-600 mb-3">
+        <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto">
+                {/* Header */}
+                <div className="text-center mb-12">
+                    <motion.h1
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-3xl font-bold text-gray-900 mb-3"
+                    >
                         My Grooming Appointments
-                    </h2>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                        Here you can view all your pet's grooming appointments
-                        and their current status
+                    </motion.h1>
+                    <p className="text-lg text-gray-600">
+                        View and manage your pet's upcoming grooming sessions
                     </p>
-                </motion.div>
+                </div>
 
+                {/* Content */}
                 {appointments.length === 0 ? (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ delay: 0.3 }}
-                        className="bg-white rounded-2xl shadow-lg p-8 text-center max-w-md mx-auto"
+                        transition={{ delay: 0.2 }}
+                        className="bg-white rounded-xl shadow-sm p-8 text-center border border-gray-100"
                     >
-                        <div className="text-6xl text-gray-300 mb-4">🐾</div>
-                        <h3 className="text-2xl font-semibold text-gray-700 mb-2">
-                            No Appointments Found
+                        <div className="text-blue-500 text-5xl mb-4">
+                            <FaPaw className="inline-block" />
+                        </div>
+                        <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                            No Appointments Scheduled
                         </h3>
-                        <p className="text-gray-500">
-                            You haven't booked any grooming appointments yet.
+                        <p className="text-gray-500 mb-6">
+                            You don't have any grooming appointments booked yet.
                         </p>
+                        <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition duration-200">
+                            Book Appointment
+                        </button>
                     </motion.div>
                 ) : (
-                    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        {appointments.map((item, index) => (
+                    <div className="space-y-6">
+                        {appointments.map((appointment, index) => (
                             <motion.div
-                                key={item._id}
+                                key={appointment._id}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 }}
-                                className="bg-white rounded-2xl shadow-lg overflow-hidden border border-orange-100 hover:shadow-xl transition-shadow duration-300"
+                                className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-md transition-all duration-200"
                             >
-                                <div
-                                    className={`p-5 ${getStatusColor(
-                                        item.status
-                                    )}`}
-                                >
+                                {/* Pet Header */}
+                                <div className="p-5 border-b border-gray-100">
                                     <div className="flex justify-between items-start">
-                                        <div>
-                                            <h3 className="text-2xl font-bold text-white flex items-center">
-                                                {petTypeIcons[item.petType] || (
-                                                    <FaPaw />
+                                        <div className="flex items-center">
+                                            <div className="mr-3 text-xl">
+                                                {petTypeIcons[
+                                                    appointment.petType
+                                                ] || (
+                                                    <FaPaw className="text-blue-500" />
                                                 )}
-                                                {item.petName}
-                                            </h3>
-                                            <p className="text-white opacity-90">
-                                                {item.petType}
-                                            </p>
+                                            </div>
+                                            <div>
+                                                <h3 className="text-xl font-semibold text-gray-800">
+                                                    {appointment.petName}
+                                                </h3>
+                                                <p className="text-sm text-gray-500">
+                                                    {appointment.petType}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <span className="bg-white bg-opacity-30 px-3 py-1 rounded-full text-sm font-semibold flex items-center">
-                                            {statusIcons[item.status]}
-                                            {item.status
+                                        <span
+                                            className={`px-3 py-1 rounded-full text-xs font-medium flex items-center ${
+                                                statusConfig[appointment.status]
+                                                    .color
+                                            } ${
+                                                statusConfig[appointment.status]
+                                                    .border
+                                            } border`}
+                                        >
+                                            <span className="mr-1.5">
+                                                {
+                                                    statusConfig[
+                                                        appointment.status
+                                                    ].icon
+                                                }
+                                            </span>
+                                            {appointment.status
                                                 .charAt(0)
                                                 .toUpperCase() +
-                                                item.status.slice(1)}
+                                                appointment.status.slice(1)}
                                         </span>
                                     </div>
                                 </div>
 
+                                {/* Pet Details */}
                                 <div className="p-5">
-                                    <div className="grid grid-cols-2 gap-4 mb-4">
-                                        <div className="bg-orange-50 p-3 rounded-lg">
-                                            <p className="text-xs text-orange-600 font-semibold">
-                                                BREED
-                                            </p>
-                                            <p className="font-medium">
-                                                {item.breed || "Unknown"}
-                                            </p>
-                                        </div>
-                                        <div className="bg-orange-50 p-3 rounded-lg">
-                                            <p className="text-xs text-orange-600 font-semibold">
-                                                AGE
-                                            </p>
-                                            <p className="font-medium">
-                                                {item.age || "-"} years
-                                            </p>
-                                        </div>
-                                        <div className="bg-orange-50 p-3 rounded-lg">
-                                            <p className="text-xs text-orange-600 font-semibold">
-                                                WEIGHT
-                                            </p>
-                                            <p className="font-medium">
-                                                {item.weight || "-"} kg
-                                            </p>
-                                        </div>
-                                        <div className="bg-orange-50 p-3 rounded-lg">
-                                            <p className="text-xs text-orange-600 font-semibold">
-                                                VACCINATED
-                                            </p>
-                                            <p className="font-medium flex items-center">
-                                                <FaShieldAlt className="mr-1" />
-                                                {item.vaccinated || "-"}
-                                            </p>
-                                        </div>
+                                    <div className="flex flex-wrap gap-3 mb-4">
+                                        <DetailCard
+                                            label="Breed"
+                                            value={appointment.breed || "—"}
+                                        />
+                                        <DetailCard
+                                            label="Age"
+                                            value={
+                                                appointment.age
+                                                    ? `${appointment.age} yrs`
+                                                    : "—"
+                                            }
+                                        />
+                                        <DetailCard
+                                            label="Weight"
+                                            value={
+                                                appointment.weight
+                                                    ? `${appointment.weight} kg`
+                                                    : "—"
+                                            }
+                                        />
+                                        <DetailCard
+                                            label="Vaccinated"
+                                            value={
+                                                appointment.vaccinated || "—"
+                                            }
+                                            icon={
+                                                <FaShieldAlt className="text-blue-400" />
+                                            }
+                                        />
                                     </div>
 
-                                    <div className="space-y-3">
-                                        <div className="flex items-center">
-                                            <FaGraduationCap className="text-gray-400 mr-2" />
-                                            <span className="text-sm">
-                                                Trained: {item.trained}
-                                            </span>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <FaSmile className="text-gray-400 mr-2" />
-                                            <span className="text-sm">
-                                                Friendly: {item.friendly}
-                                            </span>
-                                        </div>
-                                        {item.temperament && (
-                                            <div className="flex items-start">
-                                                <FaNotesMedical className="text-gray-400 mr-2 mt-1" />
-                                                <span className="text-sm">
-                                                    Temperament:{" "}
-                                                    {item.temperament}
-                                                </span>
-                                            </div>
+                                    <div className="space-y-3 text-sm">
+                                        <InfoItem
+                                            icon={
+                                                <FaGraduationCap className="text-gray-400" />
+                                            }
+                                            text={`Trained: ${appointment.trained}`}
+                                        />
+                                        <InfoItem
+                                            icon={
+                                                <FaSmile className="text-gray-400" />
+                                            }
+                                            text={`Friendly: ${appointment.friendly}`}
+                                        />
+                                        {appointment.temperament && (
+                                            <InfoItem
+                                                icon={
+                                                    <FaNotesMedical className="text-gray-400" />
+                                                }
+                                                text={`Temperament: ${appointment.temperament}`}
+                                            />
                                         )}
-                                        {item.medical && (
-                                            <div className="flex items-start">
-                                                <FaNotesMedical className="text-gray-400 mr-2 mt-1" />
-                                                <span className="text-sm">
-                                                    Medical Notes:{" "}
-                                                    {item.medical}
-                                                </span>
-                                            </div>
+                                        {appointment.medical && (
+                                            <InfoItem
+                                                icon={
+                                                    <FaNotesMedical className="text-gray-400" />
+                                                }
+                                                text={`Medical: ${appointment.medical}`}
+                                            />
                                         )}
                                     </div>
 
+                                    {/* Appointment Times */}
                                     <div className="mt-6 pt-4 border-t border-gray-100">
-                                        <div className="flex items-center justify-between mb-2">
-                                            <div className="flex items-center text-sm">
-                                                <FaClock className="text-gray-400 mr-2" />
-                                                <span>
-                                                    Pickup: {item.pickupTime}
-                                                </span>
-                                            </div>
-                                            <div className="flex items-center text-sm">
-                                                <FaTruck className="text-gray-400 mr-2" />
-                                                <span>
-                                                    Delivery:{" "}
-                                                    {item.deliveryTime}
-                                                </span>
-                                            </div>
+                                        <div className="flex flex-col sm:flex-row justify-between gap-3">
+                                            <InfoItem
+                                                icon={
+                                                    <FaClock className="text-gray-400" />
+                                                }
+                                                text={
+                                                    <span className="text-gray-700">
+                                                        Pickup:{" "}
+                                                        <span className="font-medium">
+                                                            {
+                                                                appointment.pickupTime
+                                                            }
+                                                        </span>
+                                                    </span>
+                                                }
+                                            />
+                                            <InfoItem
+                                                icon={
+                                                    <FaTruck className="text-gray-400" />
+                                                }
+                                                text={
+                                                    <span className="text-gray-700">
+                                                        Delivery:{" "}
+                                                        <span className="font-medium">
+                                                            {
+                                                                appointment.deliveryTime
+                                                            }
+                                                        </span>
+                                                    </span>
+                                                }
+                                            />
                                         </div>
-                                        <p className="text-xs text-gray-400 text-right mt-2">
-                                            Booked on:{" "}
+                                        <p className="text-xs text-gray-400 mt-3">
+                                            Booked on{" "}
                                             {new Date(
-                                                item.createdAt
+                                                appointment.createdAt
                                             ).toLocaleDateString()}
                                         </p>
                                     </div>
@@ -227,16 +276,23 @@ const MyGroomingAppointments = () => {
     );
 };
 
-// Helper function for status colors
-function getStatusColor(status) {
-    switch (status) {
-        case "approved":
-            return "bg-green-500";
-        case "rejected":
-            return "bg-red-500";
-        default:
-            return "bg-yellow-500";
-    }
-}
+// Reusable Detail Card Component
+const DetailCard = ({ label, value, icon }) => (
+    <div className="bg-gray-50 p-2.5 rounded-lg min-w-[120px]">
+        <p className="text-xs text-gray-500 font-medium mb-1">{label}</p>
+        <p className="font-medium text-gray-800 flex items-center">
+            {icon && <span className="mr-1.5">{icon}</span>}
+            {value}
+        </p>
+    </div>
+);
+
+// Reusable Info Item Component
+const InfoItem = ({ icon, text }) => (
+    <div className="flex items-start">
+        <span className="mt-0.5 mr-2.5">{icon}</span>
+        <span>{text}</span>
+    </div>
+);
 
 export default MyGroomingAppointments;

@@ -2,17 +2,25 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 
-// react router v6.30.1
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+
 import GroomingAdmin from "./components/dashboard/GroomingAdmin";
 import HealthCareAdmin from "./components/dashboard/HealthCareAdmin";
+import MyGroomingAppointments from "./components/dashboard/user/MyGroomingAppoinments";
+import MyOrders from "./components/dashboard/user/MyOrders";
 import ProductDetails from "./components/shop/ProductDetails";
+
 import Cart from "./pages/cart/Cart";
+import AboutUs from "./pages/common/AboutUs";
+import ContactUs from "./pages/common/ContactUs";
 import Home from "./pages/common/Home";
 import Login from "./pages/common/Login";
 import Registration from "./pages/common/Registration";
+
+import AddProduct from "./pages/dashboard/AddProduct";
+import AdminAnalytics from "./pages/dashboard/AdminAnalytics";
 import Dashboard from "./pages/dashboard/Dashboard";
 import ProfilePage from "./pages/dashboard/ProfilePage";
 import Forum from "./pages/forum/Forum";
@@ -22,20 +30,19 @@ import HealthCare from "./pages/healthcare/HealthCare";
 import HealthCareAppointment from "./pages/healthcare/HealthCareAppointment";
 import AllProducts from "./pages/shop/AllProducts";
 import Shop from "./pages/shop/shop";
+import Payment from "./payment/Payment";
+
 import AuthProvider from "./providers/AuthProviders";
 import { CartProvider } from "./providers/CartProvider";
 import ThemeProvider from "./providers/ThemeProvider";
 import PrivateRoute from "./routes/PrivateRoute";
 import Root from "./routes/Root";
-import Payment from "./payment/Payment";
-import AboutUs from "./pages/common/AboutUs";
-import ContactUs from "./pages/common/ContactUs";
-import MyGroomingAppointments from "./components/dashboard/user/MyGroomingAppoinments";
-import AdminAnalytics from "./pages/dashboard/AdminAnalytics";
-import AdminProductDashboard from "./pages/dashboard/admin/AdminProductDashboard";
-import PetHealthWellness from "./components/home/PetHealthWellness";
 
-// tanstackQuery
+// NEW PAGE
+import PetHealthWellness from "./components/home/PetHealthWellness";
+import AdminProductDashboard from "./pages/dashboard/admin/AdminProductDashboard";
+
+// Initialize Query Client
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -43,27 +50,11 @@ const router = createBrowserRouter([
     path: "/",
     element: <Root />,
     children: [
-      {
-        path: "/",
-
-        element: <Home />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Registration />,
-      },
-      {
-        path: "/shop",
-        element: <Shop />,
-      },
-      {
-        path: "/product/:id",
-        element: <ProductDetails />,
-      },
+      { path: "/", element: <Home /> },
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Registration /> },
+      { path: "/shop", element: <Shop /> },
+      { path: "/product/:id", element: <ProductDetails /> },
       {
         path: "/cart",
         element: (
@@ -80,10 +71,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: "/grooming",
-        element: <Grooming />,
-      },
+      { path: "/grooming", element: <Grooming /> },
       {
         path: "/grooming-appointment",
         element: (
@@ -92,10 +80,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: "/healthcare",
-        element: <HealthCare />,
-      },
+      { path: "/healthcare", element: <HealthCare /> },
       {
         path: "/healthcare-appointment",
         element: (
@@ -104,10 +89,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: "/products",
-        element: <AllProducts />,
-      },
+      { path: "/products", element: <AllProducts /> },
       {
         path: "/payment",
         element: (
@@ -116,18 +98,10 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: "/about",
-        element: <AboutUs />,
-      },
-      {
-        path: "/contact",
-        element: <ContactUs />,
-      },
-      {
-        path: "/pethealthwellness",
-        element: <PetHealthWellness />,
-      },
+      { path: "/about", element: <AboutUs /> },
+      { path: "/contact", element: <ContactUs /> },
+      // NEW PAGE ROUTE
+      { path: "/pethealthwellness", element: <PetHealthWellness /> },
     ],
   },
   {
@@ -138,15 +112,8 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      // Admin routes
-      {
-        path: "/dashboard/grooming",
-        element: <GroomingAdmin />,
-      },
-      {
-        path: "/dashboard/healthappointments",
-        element: <HealthCareAdmin />,
-      },
+      { path: "/dashboard/grooming", element: <GroomingAdmin /> },
+      { path: "/dashboard/healthappointments", element: <HealthCareAdmin /> },
       {
         path: "/dashboard/profile",
         element: (
@@ -155,18 +122,11 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: "/dashboard/mygroomingappointments",
-        element: <MyGroomingAppointments />,
-      },
-      {
-        path: "/dashboard/admin-analytics",
-        element: <AdminAnalytics />,
-      },
-      {
-        path: "/dashboard/add-product",
-        element: <AdminProductDashboard />,
-      },
+      { path: "/dashboard/mygroomingappointments", element: <MyGroomingAppointments /> },
+      { path: "/dashboard/admin-analytics", element: <AdminAnalytics /> },
+      { path: "/dashboard/my-orders", element: <MyOrders /> },
+      { path: "/dashboard/add-product", element: <AddProduct /> },
+      { path: "/dashboard/admin-products", element: <AdminProductDashboard /> },
     ],
   },
 ]);

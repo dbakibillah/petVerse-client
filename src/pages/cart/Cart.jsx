@@ -7,7 +7,7 @@ import {
     FaShoppingCart,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
@@ -97,8 +97,14 @@ const Cart = () => {
         totalItems,
         refetchCart,
     } = useCart();
-
-    const axiosPublic = useAxiosPublic();
+    // Scroll to top only on initial load
+    const [hasInitialScroll, setHasInitialScroll] = useState(false);
+    useEffect(() => {
+        if (!hasInitialScroll) {
+            window.scrollTo(0, 0);
+            setHasInitialScroll(true);
+        }
+    }, [hasInitialScroll]);
 
     useEffect(() => {
         refetchCart();
