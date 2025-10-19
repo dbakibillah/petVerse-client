@@ -22,7 +22,7 @@ const MyOrders = () => {
     } = useQuery({
         queryKey: ["orders", user?.email],
         queryFn: async () => {
-            const res = await axiosPublic.get(`/orders?email=${user?.email}`);
+            const res = await axiosPublic.get(`/my-orders?email=${user?.email}`);
             return res.data;
         },
         enabled: !!user?.email,
