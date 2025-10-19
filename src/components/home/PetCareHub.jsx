@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Link } from "react-router-dom";
 
 const PetCareHub = () => {
     useEffect(() => {
@@ -107,7 +108,7 @@ const PetCareHub = () => {
                                 {feature.description}
                             </p>
                             <div className="mt-4">
-                                <button
+                                <Link to="/pethealthwellness" 
                                     className="text-sm font-medium text-primary dark:hover:text-primary transition-colors flex items-center"
                                     data-aos="fade-left"
                                     data-aos-delay={index * 100 + 300}
@@ -127,7 +128,7 @@ const PetCareHub = () => {
                                             d="M9 5l7 7-7 7"
                                         />
                                     </svg>
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     ))}
