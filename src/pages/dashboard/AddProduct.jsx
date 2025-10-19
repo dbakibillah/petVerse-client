@@ -288,7 +288,7 @@ const AddProduct = () => {
                             <button
                                 type="button"
                                 onClick={handleAddPetType}
-                                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                                className="px-4 py-2 bg-primary text-white rounded-md hover:bg-secondary"
                             >
                                 Add
                             </button>
@@ -331,7 +331,7 @@ const AddProduct = () => {
                         <button
                             type="button"
                             onClick={handleAddTag}
-                            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                            className="px-4 py-2 bg-primary text-white rounded-md hover:bg-secondary"
                         >
                             Add
                         </button>
@@ -486,7 +486,7 @@ const AddProduct = () => {
                 <div className="flex justify-end pt-6 border-t">
                     <button
                         type="submit"
-                        className="px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        className="px-6 py-3 bg-primary text-white font-medium rounded-md hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-bg-secondary focus:ring-offset-2"
                     >
                         Add Product
                     </button>

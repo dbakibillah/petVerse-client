@@ -28,7 +28,9 @@ const DashboardSidebar = () => {
     const { data: currentUser, isLoading } = useQuery({
         queryKey: ["currentUser", user?.email],
         queryFn: async () => {
-            const res = await axiosPublic.get(`/singleuser?email=${user.email}`);
+            const res = await axiosPublic.get(
+                `/singleuser?email=${user.email}`
+            );
             return res.data.data;
         },
         enabled: !!user?.email,
@@ -48,23 +50,56 @@ const DashboardSidebar = () => {
     const isActive = (path) => pathname.startsWith(path);
 
     const adminLinks = [
-        { path: "/dashboard/admin-analytics", name: "Analytics", icon: <FiPieChart className="text-lg" /> },
-        { path: "/dashboard/profile", name: "Profile", icon: <FiUser className="text-lg" /> },
-        { path: "/dashboard/add-product", name: "Add Product", icon: <FiPlus className="text-lg" /> },
-        { path: "/dashboard/healthappointments", name: "Health Appointments", icon: <FiFileText className="text-lg" /> },
-        { path: "/dashboard/grooming", name: "Grooming", icon: <FiSettings className="text-lg" /> },
+        {
+            path: "/dashboard/admin-analytics",
+            name: "Analytics",
+            icon: <FiPieChart className="text-lg" />,
+        },
+        {
+            path: "/dashboard/profile",
+            name: "Profile",
+            icon: <FiUser className="text-lg" />,
+        },
+        {
+            path: "/dashboard/add-product",
+            name: "Add Product",
+            icon: <FiPlus className="text-lg" />,
+        },
+        {
+            path: "/dashboard/healthappointments",
+            name: "Health Appointments",
+            icon: <FiFileText className="text-lg" />,
+        },
+        {
+            path: "/dashboard/grooming",
+            name: "Grooming",
+            icon: <FiSettings className="text-lg" />,
+        },
     ];
 
     const userLinks = [
-        { path: "/dashboard/profile", name: "Profile", icon: <FiUser className="text-lg" /> },
-        { path: "/dashboard/mygroomingappointments", name: "My Appointments", icon: <FiCalendar className="text-lg" /> },
-        { path: "/dashboard/my-orders", name: "My Orders", icon: <FiShoppingCart className="text-lg" /> },
+        {
+            path: "/dashboard/profile",
+            name: "Profile",
+            icon: <FiUser className="text-lg" />,
+        },
+        {
+            path: "/dashboard/mygroomingappointments",
+            name: "My Appointments",
+            icon: <FiCalendar className="text-lg" />,
+        },
+        {
+            path: "/dashboard/my-orders",
+            name: "My Orders",
+            icon: <FiShoppingCart className="text-lg" />,
+        },
     ];
 
     // Show nothing while loading user role
     if (isLoading) return null;
 
-    const linksToRender = currentUser?.role === "admin" ? adminLinks : userLinks;
+    const linksToRender =
+        currentUser?.role === "admin" ? adminLinks : userLinks;
 
     return (
         <section className="w-80 h-screen sticky top-0 flex flex-col bg-[#FFFBEE] border-r border-gray-200">
@@ -75,7 +110,9 @@ const DashboardSidebar = () => {
                         <FiAward className="text-white text-xl" />
                     </div>
                     <h3 className="text-2xl font-bold bg-gradient-to-r from-[#FF552A] to-[#FF7350] bg-clip-text text-transparent">
-                        {currentUser?.role === "admin" ? "AdminPanel" : "UserPanel"}
+                        {currentUser?.role === "admin"
+                            ? "AdminPanel"
+                            : "UserPanel"}
                     </h3>
                 </div>
             </div>
@@ -103,7 +140,9 @@ const DashboardSidebar = () => {
                                     >
                                         {link.icon}
                                     </span>
-                                    <span className="font-medium">{link.name}</span>
+                                    <span className="font-medium">
+                                        {link.name}
+                                    </span>
                                 </div>
                                 <FiChevronRight
                                     className={`text-sm transition-transform ${
@@ -144,7 +183,9 @@ const DashboardSidebar = () => {
                             <div className="relative">
                                 <div className="w-10 h-10 rounded-full flex items-center justify-center text-white bg-gradient-to-br from-[#FF552A] to-[#FF7350] shadow-md">
                                     <span className="text-xs font-bold">
-                                        {currentUser?.role === "admin" ? "AD" : "US"}
+                                        {currentUser?.role === "admin"
+                                            ? "AD"
+                                            : "US"}
                                     </span>
                                 </div>
                                 <div className="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-green-400 border-2 border-white"></div>

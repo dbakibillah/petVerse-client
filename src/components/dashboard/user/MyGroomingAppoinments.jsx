@@ -1,24 +1,25 @@
-import React, { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
+import { useContext } from "react";
+import {
+    FaBone,
+    FaCat,
+    FaCheckCircle,
+    FaClock,
+    FaDog,
+    FaFeatherAlt,
+    FaGraduationCap,
+    FaHourglassHalf,
+    FaNotesMedical,
+    FaPaw,
+    FaShieldAlt,
+    FaSmile,
+    FaTimesCircle,
+    FaTruck,
+} from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { AuthContext } from "../../../providers/AuthProviders";
-import {
-    FaPaw,
-    FaDog,
-    FaCat,
-    FaBone,
-    FaFeatherAlt,
-    FaShieldAlt,
-    FaGraduationCap,
-    FaSmile,
-    FaNotesMedical,
-    FaClock,
-    FaTruck,
-    FaCheckCircle,
-    FaHourglassHalf,
-    FaTimesCircle,
-} from "react-icons/fa";
-import { motion } from "framer-motion";
 
 const MyGroomingAppointments = () => {
     const axiosSecure = useAxiosSecure();
@@ -41,7 +42,7 @@ const MyGroomingAppointments = () => {
         Bird: <FaFeatherAlt className="text-blue-500" />,
     };
 
-    // Status configurations
+    // Status configurations with default fallback
     const statusConfig = {
         pending: {
             icon: <FaHourglassHalf />,
@@ -58,6 +59,17 @@ const MyGroomingAppointments = () => {
             color: "bg-red-100 text-red-800",
             border: "border-red-200",
         },
+        // Add a default configuration for unknown statuses
+        default: {
+            icon: <FaClock />,
+            color: "bg-gray-100 text-gray-800",
+            border: "border-gray-200",
+        },
+    };
+
+    // Helper function to get status config safely
+    const getStatusConfig = (status) => {
+        return statusConfig[status] || statusConfig.default;
     };
 
     if (isLoading) {
@@ -108,167 +120,169 @@ const MyGroomingAppointments = () => {
                     </motion.div>
                 ) : (
                     <div className="space-y-6">
-                        {appointments.map((appointment, index) => (
-                            <motion.div
-                                key={appointment._id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.1 }}
-                                className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-md transition-all duration-200"
-                            >
-                                {/* Pet Header */}
-                                <div className="p-5 border-b border-gray-100">
-                                    <div className="flex justify-between items-start">
-                                        <div className="flex items-center">
-                                            <div className="mr-3 text-xl">
-                                                {petTypeIcons[
-                                                    appointment.petType
-                                                ] || (
-                                                    <FaPaw className="text-blue-500" />
-                                                )}
+                        {appointments.map((appointment, index) => {
+                            const status = getStatusConfig(appointment.status);
+                            const formattedStatus = appointment.status
+                                ? appointment.status.charAt(0).toUpperCase() +
+                                  appointment.status.slice(1)
+                                : "Unknown";
+
+                            return (
+                                <motion.div
+                                    key={appointment._id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.1 }}
+                                    className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-md transition-all duration-200"
+                                >
+                                    {/* Pet Header */}
+                                    <div className="p-5 border-b border-gray-100">
+                                        <div className="flex justify-between items-start">
+                                            <div className="flex items-center">
+                                                <div className="mr-3 text-xl">
+                                                    {petTypeIcons[
+                                                        appointment.petType
+                                                    ] || (
+                                                        <FaPaw className="text-blue-500" />
+                                                    )}
+                                                </div>
+                                                <div>
+                                                    <h3 className="text-xl font-semibold text-gray-800">
+                                                        {appointment.petName ||
+                                                            "Unnamed Pet"}
+                                                    </h3>
+                                                    <p className="text-sm text-gray-500">
+                                                        {appointment.petType ||
+                                                            "Unknown Type"}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h3 className="text-xl font-semibold text-gray-800">
-                                                    {appointment.petName}
-                                                </h3>
-                                                <p className="text-sm text-gray-500">
-                                                    {appointment.petType}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <span
-                                            className={`px-3 py-1 rounded-full text-xs font-medium flex items-center ${
-                                                statusConfig[appointment.status]
-                                                    .color
-                                            } ${
-                                                statusConfig[appointment.status]
-                                                    .border
-                                            } border`}
-                                        >
-                                            <span className="mr-1.5">
-                                                {
-                                                    statusConfig[
-                                                        appointment.status
-                                                    ].icon
-                                                }
+                                            <span
+                                                className={`px-3 py-1 rounded-full text-xs font-medium flex items-center ${status.color} ${status.border} border`}
+                                            >
+                                                <span className="mr-1.5">
+                                                    {status.icon}
+                                                </span>
+                                                {formattedStatus}
                                             </span>
-                                            {appointment.status
-                                                .charAt(0)
-                                                .toUpperCase() +
-                                                appointment.status.slice(1)}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {/* Pet Details */}
-                                <div className="p-5">
-                                    <div className="flex flex-wrap gap-3 mb-4">
-                                        <DetailCard
-                                            label="Breed"
-                                            value={appointment.breed || "—"}
-                                        />
-                                        <DetailCard
-                                            label="Age"
-                                            value={
-                                                appointment.age
-                                                    ? `${appointment.age} yrs`
-                                                    : "—"
-                                            }
-                                        />
-                                        <DetailCard
-                                            label="Weight"
-                                            value={
-                                                appointment.weight
-                                                    ? `${appointment.weight} kg`
-                                                    : "—"
-                                            }
-                                        />
-                                        <DetailCard
-                                            label="Vaccinated"
-                                            value={
-                                                appointment.vaccinated || "—"
-                                            }
-                                            icon={
-                                                <FaShieldAlt className="text-blue-400" />
-                                            }
-                                        />
+                                        </div>
                                     </div>
 
-                                    <div className="space-y-3 text-sm">
-                                        <InfoItem
-                                            icon={
-                                                <FaGraduationCap className="text-gray-400" />
-                                            }
-                                            text={`Trained: ${appointment.trained}`}
-                                        />
-                                        <InfoItem
-                                            icon={
-                                                <FaSmile className="text-gray-400" />
-                                            }
-                                            text={`Friendly: ${appointment.friendly}`}
-                                        />
-                                        {appointment.temperament && (
-                                            <InfoItem
-                                                icon={
-                                                    <FaNotesMedical className="text-gray-400" />
-                                                }
-                                                text={`Temperament: ${appointment.temperament}`}
+                                    {/* Pet Details */}
+                                    <div className="p-5">
+                                        <div className="flex flex-wrap gap-3 mb-4">
+                                            <DetailCard
+                                                label="Breed"
+                                                value={appointment.breed || "—"}
                                             />
-                                        )}
-                                        {appointment.medical && (
-                                            <InfoItem
-                                                icon={
-                                                    <FaNotesMedical className="text-gray-400" />
-                                                }
-                                                text={`Medical: ${appointment.medical}`}
-                                            />
-                                        )}
-                                    </div>
-
-                                    {/* Appointment Times */}
-                                    <div className="mt-6 pt-4 border-t border-gray-100">
-                                        <div className="flex flex-col sm:flex-row justify-between gap-3">
-                                            <InfoItem
-                                                icon={
-                                                    <FaClock className="text-gray-400" />
-                                                }
-                                                text={
-                                                    <span className="text-gray-700">
-                                                        Pickup:{" "}
-                                                        <span className="font-medium">
-                                                            {
-                                                                appointment.pickupTime
-                                                            }
-                                                        </span>
-                                                    </span>
+                                            <DetailCard
+                                                label="Age"
+                                                value={
+                                                    appointment.age
+                                                        ? `${appointment.age} yrs`
+                                                        : "—"
                                                 }
                                             />
-                                            <InfoItem
-                                                icon={
-                                                    <FaTruck className="text-gray-400" />
+                                            <DetailCard
+                                                label="Weight"
+                                                value={
+                                                    appointment.weight
+                                                        ? `${appointment.weight} kg`
+                                                        : "—"
                                                 }
-                                                text={
-                                                    <span className="text-gray-700">
-                                                        Delivery:{" "}
-                                                        <span className="font-medium">
-                                                            {
-                                                                appointment.deliveryTime
-                                                            }
-                                                        </span>
-                                                    </span>
+                                            />
+                                            <DetailCard
+                                                label="Vaccinated"
+                                                value={
+                                                    appointment.vaccinated ||
+                                                    "—"
+                                                }
+                                                icon={
+                                                    <FaShieldAlt className="text-blue-400" />
                                                 }
                                             />
                                         </div>
-                                        <p className="text-xs text-gray-400 mt-3">
-                                            Booked on{" "}
-                                            {new Date(
-                                                appointment.createdAt
-                                            ).toLocaleDateString()}
-                                        </p>
+
+                                        <div className="space-y-3 text-sm">
+                                            <InfoItem
+                                                icon={
+                                                    <FaGraduationCap className="text-gray-400" />
+                                                }
+                                                text={`Trained: ${
+                                                    appointment.trained || "—"
+                                                }`}
+                                            />
+                                            <InfoItem
+                                                icon={
+                                                    <FaSmile className="text-gray-400" />
+                                                }
+                                                text={`Friendly: ${
+                                                    appointment.friendly || "—"
+                                                }`}
+                                            />
+                                            {appointment.temperament && (
+                                                <InfoItem
+                                                    icon={
+                                                        <FaNotesMedical className="text-gray-400" />
+                                                    }
+                                                    text={`Temperament: ${appointment.temperament}`}
+                                                />
+                                            )}
+                                            {appointment.medical && (
+                                                <InfoItem
+                                                    icon={
+                                                        <FaNotesMedical className="text-gray-400" />
+                                                    }
+                                                    text={`Medical: ${appointment.medical}`}
+                                                />
+                                            )}
+                                        </div>
+
+                                        {/* Appointment Times */}
+                                        <div className="mt-6 pt-4 border-t border-gray-100">
+                                            <div className="flex flex-col sm:flex-row justify-between gap-3">
+                                                <InfoItem
+                                                    icon={
+                                                        <FaClock className="text-gray-400" />
+                                                    }
+                                                    text={
+                                                        <span className="text-gray-700">
+                                                            Pickup:{" "}
+                                                            <span className="font-medium">
+                                                                {appointment.pickupTime ||
+                                                                    "—"}
+                                                            </span>
+                                                        </span>
+                                                    }
+                                                />
+                                                <InfoItem
+                                                    icon={
+                                                        <FaTruck className="text-gray-400" />
+                                                    }
+                                                    text={
+                                                        <span className="text-gray-700">
+                                                            Delivery:{" "}
+                                                            <span className="font-medium">
+                                                                {appointment.deliveryTime ||
+                                                                    "—"}
+                                                            </span>
+                                                        </span>
+                                                    }
+                                                />
+                                            </div>
+                                            <p className="text-xs text-gray-400 mt-3">
+                                                Booked on{" "}
+                                                {appointment.createdAt
+                                                    ? new Date(
+                                                          appointment.createdAt
+                                                      ).toLocaleDateString()
+                                                    : "Unknown date"}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            </motion.div>
-                        ))}
+                                </motion.div>
+                            );
+                        })}
                     </div>
                 )}
             </div>
