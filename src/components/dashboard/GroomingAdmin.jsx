@@ -45,7 +45,7 @@ const GroomingAdmin = () => {
         queryKey: ["groomings"],
         queryFn: async () => {
             try {
-                const response = await axiosPublic.get("/grooming");
+                const response = await axiosPublic.get("/all-grooming");
                 return response.data;
             } catch (error) {
                 toast.error("Failed to fetch grooming appointments");
