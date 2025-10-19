@@ -18,6 +18,7 @@ import {
     FaTimesCircle,
     FaTruck,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { AuthContext } from "../../../providers/AuthProviders";
 
@@ -114,9 +115,12 @@ const MyGroomingAppointments = () => {
                         <p className="text-gray-500 mb-6">
                             You don't have any grooming appointments booked yet.
                         </p>
-                        <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition duration-200">
+                        <Link
+                            to="/grooming-appointment"
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition duration-200"
+                        >
                             Book Appointment
-                        </button>
+                        </Link>
                     </motion.div>
                 ) : (
                     <div className="space-y-6">
